@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "title": "NovaPay",
+    "logo": "💳",
+    "url": "https://novapay.example.com",
+    "description": "Fintech SaaS — payment orchestration platform",
+    "tech": ["React", "Node.js", "PostgreSQL"]
+  },
+  {
+    "id": "2",
+    "title": "Orbita",
+    "logo": "🌐",
+    "url": "https://orbita.example.com",
+    "description": "B2B logistics dashboard with real-time tracking",
+    "tech": ["Vue.js", "Python", "Redis"]
+  },
+  {
+    "id": "3",
+    "title": "Lumina CMS",
+    "logo": "✦",
+    "url": "https://lumina.example.com",
+    "description": "Headless CMS built for editorial teams",
+    "tech": ["Next.js", "GraphQL", "MongoDB"]
+  },
+  {
+    "id": "4",
+    "title": "Quark API",
+    "logo": "⚡",
+    "url": "https://quark.example.com",
+    "description": "Developer API gateway with analytics built-in",
+    "tech": ["Express", "TypeScript", "ClickHouse"]
+  },
+  {
+    "id": "5",
+    "title": "Stellarform",
+    "logo": "◈",
+    "url": "https://stellarform.example.com",
+    "description": "Form builder with conditional logic & webhooks",
+    "tech": ["React", "Supabase", "Tailwind"]
+  },
+  {
+    "id": "6",
+    "title": "Voidcast",
+    "logo": "📡",
+    "url": "https://voidcast.example.com",
+    "description": "Podcast hosting & analytics platform",
+    "tech": ["Remix", "Cloudflare Workers", "R2"]
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Why I Choose TypeScript for Every New Project",
+    "slug": "why-typescript-every-project",
+    "category": "Engineering",
+    "date": "2024-03-15",
+    "excerpt": "After years of JavaScript, TypeScript transformed how I ship reliable production code. Here's the pragmatic case for adopting it.",
+    "content": "TypeScript isn't just about types — it's about confidence. When you refactor a large codebase, the compiler becomes your co-pilot. When you onboard a new developer, the types become your documentation.\n\nOver the last four years, I've shipped TypeScript across fintech, logistics, and SaaS products. The pattern is consistent: fewer runtime bugs, faster onboarding, and a codebase that scales without fear.\n\n## The Real Value Is DX\n\nDeveloper experience is a product metric. When your team moves faster with fewer bugs, you ship more value. TypeScript's autocomplete, refactoring safety, and inline errors pay dividends on every sprint.\n\n## When to Skip It\n\nSmall scripts, rapid prototypes, or solo weekend projects don't always need the overhead. But for anything that lives beyond a week in production — TypeScript is always worth it.\n\n## Getting Started\n\nStart with `strict: false`, enable rules incrementally. Don't let the config intimidate you. The migration can be gradual, and every file you convert is a win."
+  },
+  {
+    "id": "2",
+    "title": "The Anatomy of a Great API Contract",
+    "slug": "anatomy-great-api-contract",
+    "category": "Backend",
+    "date": "2024-02-20",
+    "excerpt": "A well-designed API contract is the difference between a system that scales and one that becomes technical debt overnight.",
+    "content": "API design is product design. Every endpoint you expose is a commitment — to your consumers, your team, and your future self.\n\nThe best APIs I've worked with share three things: predictability, versioning from day one, and error messages that actually help.\n\n## Predictability\n\nUse consistent naming, consistent response shapes, and consistent error formats. If `GET /users` returns `{ data: [] }`, then `GET /posts` should too.\n\n## Version Early\n\nAdd `/v1/` to your base path before you ship anything. You'll thank yourself when a breaking change becomes necessary six months later.\n\n## Error Messages Are UX\n\nA `400 Bad Request` with no body is useless. A `400` with `{ error: 'email_invalid', field: 'email', message: 'Must be a valid email address' }` is actionable. Your API consumers are developers — treat them with respect."
+  },
+  {
+    "id": "3",
+    "title": "Freelancing as a Developer: Year One Lessons",
+    "slug": "freelancing-developer-year-one",
+    "category": "Business",
+    "date": "2024-01-10",
+    "excerpt": "What I wish I knew before going independent. On pricing, clients, contracts, and staying sane.",
+    "content": "The first year of freelancing is humbling. You learn that technical skill is table stakes — communication, pricing, and expectations management are what separate sustainable freelancers from burned-out ones.\n\n## Charge More Than You Think\n\nYour day rate should account for: taxes, benefits you no longer get, unpaid admin time, gaps between contracts, and the value you deliver (not just the hours you bill). Double your instinct. Then add 20%.\n\n## Contracts Protect Everyone\n\nA clear statement of work prevents scope creep, misalignment, and awkward conversations. It's not about distrust — it's about clarity.\n\n## Choose Clients Like Employees Choose Employers\n\nYou have more leverage than you think. A client who respects your time and trusts your judgment is worth far more than one paying 20% more but micromanaging every commit.\n\n## Communication Is the Product\n\nWeekly updates, clear milestone reports, honest timelines. Your clients aren't just paying for code — they're paying to sleep well knowing their project is in good hands."
+  },
+  {
+    "id": "4",
+    "title": "Building for Performance: A Practical Checklist",
+    "slug": "building-for-performance-checklist",
+    "category": "Engineering",
+    "date": "2023-12-05",
+    "excerpt": "Performance isn't a feature — it's a baseline. A no-nonsense checklist for web apps that load fast and stay fast.",
+    "content": "Every millisecond of load time costs conversions. Studies are consistent: sub-1s loads drive measurably higher engagement. Here's my go-to checklist before any production deploy.\n\n## Images\n\n- Use WebP or AVIF formats\n- Lazy-load everything below the fold\n- Set explicit width/height to prevent layout shift\n- Use CDN delivery with aggressive cache headers\n\n## JavaScript\n\n- Code-split by route\n- Defer non-critical scripts\n- Audit your bundle with `vite-bundle-visualizer`\n- Remove unused dependencies ruthlessly\n\n## CSS\n\n- Inline critical CSS for above-the-fold content\n- Avoid render-blocking stylesheets\n- Use CSS animations over JS animations where possible\n\n## Network\n\n- Enable Brotli compression\n- Use HTTP/2 or HTTP/3\n- Prefetch next routes on hover\n- Cache API responses aggressively with proper invalidation"
+  }
+]
