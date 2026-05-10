@@ -86,19 +86,25 @@ input, textarea, select {
 }
 
 /* ============================================================
-   SCROLL REVEAL ANIMATION
+   SCROLL REVEAL ANIMATION (CORRIGÉ)
    ============================================================ */
+
+/* 1. L'état caché par défaut */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  will-change: opacity, transform; /* Améliore la fluidité */
 }
 
+/* 2. L'affichage quand le PARENT ou l'élément lui-même est révélé */
+.revealed .reveal, 
 .reveal.revealed {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* Delays */
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }

@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import projects from '../data/projects.json'
+import projectsData from '../data/projects.json'
 import './Projects.css'
 
 export default function Projects() {
@@ -15,6 +15,9 @@ export default function Projects() {
     trackRef.current.scrollBy({ left: dir === 'right' ? amount : -amount, behavior: 'smooth' })
   }
 
+  const projects = Array.isArray(projectsData) ? projectsData : []
+  console.log(projects)
+  
   return (
     <section id="projects" className="projects" ref={sectionRef}>
       <div className="container">
