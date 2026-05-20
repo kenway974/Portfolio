@@ -1,50 +1,26 @@
 [
   {
     "id": "1",
-    "title": "NovaPay",
+    "title": "Selfly",
     "logo": "💳",
-    "url": "https://novapay.example.com",
+    "url": "https://www.selfly.fr",
     "description": "Fintech SaaS — payment orchestration platform",
-    "tech": ["React", "Node.js", "PostgreSQL"]
+    "tech": ["PHP", "HTML", "CSS", "JavaScript", "MySQL", "Stripe API"]
   },
   {
     "id": "2",
-    "title": "Orbita",
+    "title": "Ephemeral Gallery",
     "logo": "🌐",
-    "url": "https://orbita.example.com",
+    "url": "https://ephemeral-gallery.vercel.app",
     "description": "B2B logistics dashboard with real-time tracking",
-    "tech": ["Vue.js", "Python", "Redis"]
+    "tech": ["React", "Next.js", "PostgreSQL", "Stripe API"]
   },
   {
     "id": "3",
-    "title": "Lumina CMS",
+    "title": "Little Stars",
     "logo": "✦",
-    "url": "https://lumina.example.com",
+    "url": "https://daycare-three.vercel.app",
     "description": "Headless CMS built for editorial teams",
-    "tech": ["Next.js", "GraphQL", "MongoDB"]
-  },
-  {
-    "id": "4",
-    "title": "Quark API",
-    "logo": "⚡",
-    "url": "https://quark.example.com",
-    "description": "Developer API gateway with analytics built-in",
-    "tech": ["Express", "TypeScript", "ClickHouse"]
-  },
-  {
-    "id": "5",
-    "title": "Stellarform",
-    "logo": "◈",
-    "url": "https://stellarform.example.com",
-    "description": "Form builder with conditional logic & webhooks",
-    "tech": ["React", "Supabase", "Tailwind"]
-  },
-  {
-    "id": "6",
-    "title": "Voidcast",
-    "logo": "📡",
-    "url": "https://voidcast.example.com",
-    "description": "Podcast hosting & analytics platform",
-    "tech": ["Remix", "Cloudflare Workers", "R2"]
+    "tech": ["React", "Next.js"]
   }
 ]
