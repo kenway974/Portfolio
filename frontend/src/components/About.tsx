@@ -6,7 +6,7 @@ export default function About() {
   const { t } = useTranslation()
   const ref = useScrollReveal<HTMLElement>()
 
-  const stats = [
+  const props = [
     { value: t('about.stat1_value'), label: t('about.stat1_label') },
     { value: t('about.stat2_value'), label: t('about.stat2_label') },
     { value: t('about.stat3_value'), label: t('about.stat3_label') },
@@ -30,13 +30,13 @@ export default function About() {
           </div>
 
           <div className="about__stats">
-            {stats.map((stat, i) => (
+            {props.map((prop, i) => (
               <div
-                key={stat.label}
+                key={prop.label}
                 className={`about__stat reveal reveal-delay-${i + 2}`}
               >
-                <span className="about__stat-value">{stat.value}</span>
-                <span className="about__stat-label">{stat.label}</span>
+                <span className="about__stat-value">{prop.value}</span>
+                <span className="about__stat-label">{prop.label}</span>
               </div>
             ))}
           </div>

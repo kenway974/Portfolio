@@ -9,11 +9,11 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__left">
-          <span className="footer__logo">✦ Alex Moreau</span>
+          <span className="footer__logo">✦ Kenny Pignolet</span>
           <span className="footer__available">{t('footer.available')}</span>
         </div>
         <p className="footer__copy">
-          © {year} Alex Moreau — {t('footer.rights')}
+          © {year} Kenny Pignolet — {t('footer.rights')}
         </p>
       </div>
     </footer>

@@ -4,15 +4,15 @@
     "title": "Selfly",
     "logo": "💳",
     "url": "https://www.selfly.fr",
-    "description": "Fintech SaaS — payment orchestration platform",
-    "tech": ["PHP", "HTML", "CSS", "JavaScript", "MySQL", "Stripe API"]
+    "description": "Plateforme SaaS de gestion de paiements avec orchestration multi-prestataires et intégration Stripe",
+    "tech": ["PHP", "HTML/CSS", "JavaScript", "MySQL", "Stripe API"]
   },
   {
     "id": "2",
     "title": "Ephemeral Gallery",
-    "logo": "🌐",
+    "logo": "🖼",
     "url": "https://ephemeral-gallery.vercel.app",
-    "description": "B2B logistics dashboard with real-time tracking",
+    "description": "Galerie d'art numérique avec espace d'administration, gestion de contenu et suivi en temps réel",
     "tech": ["React", "Next.js", "PostgreSQL", "Stripe API"]
   },
   {
@@ -20,7 +20,7 @@
     "title": "Little Stars",
     "logo": "✦",
     "url": "https://daycare-three.vercel.app",
-    "description": "Headless CMS built for editorial teams",
+    "description": "Site vitrine pour une micro-crèche avec CMS intégré et gestion des informations en ligne",
     "tech": ["React", "Next.js"]
   }
 ]

@@ -48,11 +48,11 @@ export default function Contact() {
   }
 
   const services = [
-    { value: 'full', label: t('contact.services.full') },
-    { value: 'redesign', label: t('contact.services.redesign') },
-    { value: 'frontend', label: t('contact.services.frontend') },
-    { value: 'backend', label: t('contact.services.backend') },
-    { value: 'review', label: t('contact.services.review') },
+    { value: 'vitrine', label: t('contact.services.vitrine') },
+    { value: 'ecommerce', label: t('contact.services.ecommerce') },
+    { value: 'landing', label: t('contact.services.landing') },
+    { value: 'api', label: t('contact.services.api') },
+    { value: 'other', label: t('contact.services.other') },
   ]
 
   return (

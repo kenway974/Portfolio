@@ -15,7 +15,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close menu on route change
   useEffect(() => { setMenuOpen(false) }, [location])
 
   const toggleLang = () => {
@@ -33,21 +32,18 @@ export default function Navbar() {
   return (
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
       <div className="container navbar__inner">
-        {/* Wordmark */}
         <Link to="/" className="navbar__logo">
-          <span className="navbar__logo-mark">✦</span> Alex Moreau
+          <span className="navbar__logo-mark">✦</span> Kenny Pignolet
         </Link>
 
-        {/* Desktop nav */}
         <nav className="navbar__links" aria-label="Primary navigation">
-          <button onClick={() => scrollTo('about')}>{t('nav.about')}</button>
+          <button onClick={() => scrollTo('services')}>{t('nav.services')}</button>
           <button onClick={() => scrollTo('projects')}>{t('nav.projects')}</button>
           <Link to="/blog">{t('nav.blog')}</Link>
           <button onClick={() => scrollTo('contact')}>{t('nav.contact')}</button>
         </nav>
 
         <div className="navbar__actions">
-          {/* Language toggle */}
           <button
             className="lang-toggle"
             onClick={toggleLang}
@@ -56,15 +52,13 @@ export default function Navbar() {
             {i18n.language === 'en' ? 'FR' : 'EN'}
           </button>
 
-          {/* CTA */}
           <button
             className="btn-primary navbar__cta"
             onClick={() => scrollTo('contact')}
           >
-            {t('hero.cta')}
+            {t('nav.cta')}
           </button>
 
-          {/* Hamburger */}
           <button
             className={`hamburger${menuOpen ? ' hamburger--open' : ''}`}
             onClick={() => setMenuOpen(v => !v)}
@@ -76,9 +70,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <div className={`mobile-menu${menuOpen ? ' mobile-menu--open' : ''}`}>
-        <button onClick={() => scrollTo('about')}>{t('nav.about')}</button>
+        <button onClick={() => scrollTo('services')}>{t('nav.services')}</button>
         <button onClick={() => scrollTo('projects')}>{t('nav.projects')}</button>
         <Link to="/blog">{t('nav.blog')}</Link>
         <button onClick={() => scrollTo('contact')}>{t('nav.contact')}</button>

@@ -16,7 +16,6 @@ export default function Projects() {
   }
 
   const projects = Array.isArray(projectsData) ? projectsData : []
-  console.log(projects)
   
   return (
     <section id="projects" className="projects" ref={sectionRef}>
