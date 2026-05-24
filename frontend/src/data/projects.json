@@ -1,26 +1,42 @@
 [
   {
     "id": "1",
-    "title": "Selfly",
-    "logo": "💳",
-    "url": "https://www.selfly.fr",
-    "description": "Plateforme SaaS de gestion de paiements avec orchestration multi-prestataires et intégration Stripe",
-    "tech": ["PHP", "HTML/CSS", "JavaScript", "MySQL", "Stripe API"]
+    "title": "EstimoServer",
+    "logo": "🏠",
+    "url": "https://estimoserver-production.up.railway.app",
+    "description": "API d'estimation immobilière intégrable à tout site d'agence. Calcul automatisé du prix au m² avec démonstration live sur le marché Île-de-France.",
+    "tech": ["Node.js", "Express", "Railway", "API REST"]
   },
   {
     "id": "2",
     "title": "Ephemeral Gallery",
     "logo": "🖼",
     "url": "https://ephemeral-gallery.vercel.app",
-    "description": "Galerie d'art numérique avec espace d'administration, gestion de contenu et suivi en temps réel",
-    "tech": ["React", "Next.js", "PostgreSQL", "Stripe API"]
+    "description": "Template de site vitrine pour propriétaires de galeries, salles et espaces à louer. Design moderne, gestion de contenu et prise de contact.",
+    "tech": ["React", "Next.js", "PostgreSQL", "Stripe"]
   },
   {
     "id": "3",
     "title": "Little Stars",
-    "logo": "✦",
+    "logo": "🌱",
     "url": "https://daycare-three.vercel.app",
-    "description": "Site vitrine pour une micro-crèche avec CMS intégré et gestion des informations en ligne",
+    "description": "Site vitrine pour une assistante maternelle : présentation des services, informations pratiques et formulaire de contact.",
+    "tech": ["React", "Vite"]
+  },
+  {
+    "id": "4",
+    "title": "Life Quest",
+    "logo": "🎮",
+    "url": "https://life-quest-three.vercel.app",
+    "description": "Application web qui gamifie la vie quotidienne — objectifs, progression, défis. Projet en développement actif.",
     "tech": ["React", "Next.js"]
+  },
+  {
+    "id": "5",
+    "title": "Selfly",
+    "logo": "⚡",
+    "url": "https://www.selfly.fr",
+    "description": "Sandbox full-stack de A à Z : front-end, back-end, intégration API, base de données SQL et sécurité — mon premier vrai projet.",
+    "tech": ["PHP", "HTML/CSS", "JavaScript", "MySQL", "Stripe"]
   }
 ]
