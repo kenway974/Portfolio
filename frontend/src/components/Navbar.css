@@ -98,10 +98,13 @@
 .navbar__cta {
   padding: 0.6rem 1.25rem;
   font-size: 0.82rem;
+}
+
+.btn-primary.navbar__cta {
   background: #1a4fa0;
 }
 
-.navbar__cta:hover {
+.btn-primary.navbar__cta:hover {
   background: #2260c4;
   box-shadow: 0 6px 24px rgba(26, 79, 160, 0.35);
 }
