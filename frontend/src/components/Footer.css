@@ -49,6 +49,35 @@
   50% { opacity: 0.4; }
 }
 
+.footer__social {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.footer__social-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+.footer__social-link:hover {
+  color: var(--accent-bright);
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+}
+
 .footer__copy {
   font-size: 0.8rem;
   color: var(--text-muted);
