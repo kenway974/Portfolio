@@ -11,7 +11,7 @@ import { sendContactEmail } from '../mailer.js'
 
 export const contactRouter = Router()
 
-const SERVICE_TYPES = ['full', 'redesign', 'frontend', 'backend', 'review']
+const SERVICE_TYPES = ['vitrine', 'ecommerce', 'landing', 'api', 'other']
 
 contactRouter.post('/', async (req, res) => {
   // ── Validate ────────────────────────────────────────────
