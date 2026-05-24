@@ -6,6 +6,7 @@
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
+import rateLimit from 'express-rate-limit'
 import { contactRouter } from './routes/contact.js'
 
 const app = express()
@@ -20,8 +21,17 @@ app.use(cors({
 
 app.use(express.json({ limit: '16kb' }))
 
+// ── Rate limiting ────────────────────────────────────────────
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5,                    // 5 soumissions max par IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'too_many_requests', message: 'Trop de tentatives. Réessayez dans 15 minutes.' },
+})
+
 // ── Routes ──────────────────────────────────────────────────
-app.use('/api/contact', contactRouter)
+app.use('/api/contact', contactLimiter, contactRouter)
 
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'ok' }))
