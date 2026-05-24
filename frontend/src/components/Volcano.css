@@ -1,0 +1,109 @@
+/* ── Volcano — inspiré de Little Stars / Daycare ── */
+
+/* Apex position : 76 % depuis la gauche, 68 % depuis le haut */
+:root {
+  --v-left:   76%;
+  --v-top:    68%;
+  --v-bottom: 32%;   /* 100% - 68% */
+}
+
+.volcano {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Triangle rouge-cramoisi */
+.volcano__mountain {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(76% 68%, 60% 100%, 100% 100%);
+  background: linear-gradient(
+    160deg,
+    rgba(230, 57, 70, 0.60) 0%,
+    rgba(192, 32, 48, 0.50) 50%,
+    rgba(139, 15, 26, 0.35) 100%
+  );
+  filter: drop-shadow(0 0 24px rgba(230, 57, 70, 0.18));
+  opacity: 0;
+  animation: v-fade 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+/* Lueur ambiante au sommet */
+.volcano__apex-glow {
+  position: absolute;
+  left: var(--v-left);
+  top:  var(--v-top);
+  width:  110px;
+  height: 110px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(244, 162, 40, 0.22) 0%,
+    rgba(244, 162, 40, 0.06) 40%,
+    transparent 65%
+  );
+  opacity: 0;
+  animation: v-fade 2.5s ease 0.5s forwards;
+}
+
+/* Point brillant au sommet — cratère */
+.volcano__apex-dot {
+  position: absolute;
+  left: var(--v-left);
+  top:  var(--v-top);
+  width:  5px;
+  height: 5px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #FFD166;
+  box-shadow: 0 0 10px 4px rgba(255, 209, 102, 0.55);
+  opacity: 0;
+  animation: v-fade 1.5s ease 0.8s forwards;
+}
+
+/* Wrapper de chaque rayon — positionné au sommet, rotate depuis le bas */
+.volcano__ray-wrap {
+  position: absolute;
+  left:   var(--v-left);
+  bottom: var(--v-bottom);
+  transform-origin: bottom center;
+}
+
+/* Le rayon lui-même */
+.volcano__ray {
+  width:  100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(247, 184, 75, 0.88),
+    rgba(247, 184, 75, 0.12),
+    transparent
+  );
+  opacity: 0;
+  animation: ray-pulse var(--ray-duration, 5s) var(--ray-delay, 0s) ease-in-out infinite alternate;
+}
+
+/* ── Keyframes ── */
+@keyframes v-fade {
+  to { opacity: 1; }
+}
+
+@keyframes ray-pulse {
+  from { opacity: 0; }
+  to   { opacity: var(--ray-max-opacity, 0.18); }
+}
+
+/* Mobile : volcano plus discret */
+@media (max-width: 768px) {
+  .volcano__mountain { opacity: 0; animation: v-fade-mobile 1.6s cubic-bezier(0.22,1,0.36,1) 0.2s forwards; }
+  .volcano__ray-wrap  { display: none; }
+  .volcano__apex-glow { display: none; }
+  .volcano__apex-dot  { display: none; }
+}
+
+@keyframes v-fade-mobile {
+  to { opacity: 0.45; }
+}

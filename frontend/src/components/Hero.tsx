@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import Volcano from './Volcano'
 import './Hero.css'
 
 export default function Hero() {
@@ -10,9 +11,7 @@ export default function Hero() {
 
   return (
     <section className="hero" aria-label="Introduction">
-      <div className="hero__orb hero__orb--1" aria-hidden="true" />
-      <div className="hero__orb hero__orb--2" aria-hidden="true" />
-      <div className="hero__orb hero__orb--3" aria-hidden="true" />
+      <Volcano />
 
       <div className="hero__stars" aria-hidden="true">
         {Array.from({ length: 60 }).map((_, i) => (
