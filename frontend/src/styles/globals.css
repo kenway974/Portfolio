@@ -2,25 +2,25 @@
    DESIGN TOKENS
    ============================================================ */
 :root {
-  /* Colors */
-  --black: #040407;
-  --surface: #0a0a10;
-  --surface-2: #10101a;
-  --surface-3: #161622;
-  --border: rgba(255, 255, 255, 0.07);
-  --border-accent: rgba(108, 92, 231, 0.35);
+  /* Colors — Réunion sombre : océan, lagon, lave */
+  --black: #03090b;
+  --surface: #07121a;
+  --surface-2: #0c1b22;
+  --surface-3: #11222b;
+  --border: rgba(61, 219, 209, 0.07);
+  --border-accent: rgba(0, 180, 160, 0.32);
 
-  /* Accent palette — blue/violet galaxy */
-  --accent: #6c5ce7;
-  --accent-bright: #a29bfe;
-  --accent-blue: #0984e3;
-  --accent-glow: rgba(108, 92, 231, 0.25);
-  --accent-glow-bright: rgba(162, 155, 254, 0.15);
+  /* Accent palette — lagon / turquoise profond */
+  --accent: #00b4a0;
+  --accent-bright: #3ddbd1;
+  --accent-blue: #0a7e73;
+  --accent-glow: rgba(0, 180, 160, 0.22);
+  --accent-glow-bright: rgba(61, 219, 209, 0.1);
 
   /* Text */
-  --text-primary: #f0eeff;
-  --text-secondary: rgba(240, 238, 255, 0.55);
-  --text-muted: rgba(240, 238, 255, 0.3);
+  --text-primary: #e2eeec;
+  --text-secondary: rgba(226, 238, 236, 0.55);
+  --text-muted: rgba(226, 238, 236, 0.3);
 
   /* Typography */
   --font-display: 'Syne', sans-serif;
@@ -187,7 +187,7 @@ section {
 }
 
 .btn-primary:hover {
-  background: #7c6cf0;
+  background: #00c9b1;
   transform: translateY(-2px);
   box-shadow: 0 8px 32px var(--accent-glow);
 }
