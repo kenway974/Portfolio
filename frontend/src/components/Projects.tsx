@@ -15,7 +15,11 @@ export default function Projects() {
     trackRef.current.scrollBy({ left: dir === 'right' ? amount : -amount, behavior: 'smooth' })
   }
 
-  const projects = Array.isArray(projectsData) ? projectsData : []
+  type Project = {
+    id: string; title: string; logo: string; url: string
+    description: string; tech: string[]; status?: string
+  }
+  const projects = (Array.isArray(projectsData) ? projectsData : []) as Project[]
   
   return (
     <section id="projects" className="projects" ref={sectionRef}>
@@ -57,7 +61,12 @@ export default function Projects() {
                 {project.logo}
               </div>
               <div className="project-card__body">
-                <h3 className="project-card__title">{project.title}</h3>
+                <div className="project-card__title-row">
+                  <h3 className="project-card__title">{project.title}</h3>
+                  {project.status === 'wip' && (
+                    <span className="project-card__wip">En cours</span>
+                  )}
+                </div>
                 <p className="project-card__desc">{project.description}</p>
                 <div className="project-card__tech">
                   {project.tech.map(t => (

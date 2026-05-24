@@ -99,11 +99,30 @@
   gap: 0.5rem;
 }
 
+.project-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 .project-card__title {
   font-family: var(--font-display);
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-primary);
+}
+
+.project-card__wip {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e89c1a;
+  border: 1px solid rgba(232, 156, 26, 0.35);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  flex-shrink: 0;
 }
 
 .project-card__desc {

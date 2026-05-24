@@ -29,7 +29,8 @@
     "logo": "🎮",
     "url": "https://life-quest-three.vercel.app",
     "description": "Application web qui gamifie la vie quotidienne — objectifs, progression, défis. Projet en développement actif.",
-    "tech": ["React", "Next.js"]
+    "tech": ["React", "Next.js"],
+    "status": "wip"
   },
   {
     "id": "5",
