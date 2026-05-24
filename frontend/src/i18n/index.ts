@@ -70,8 +70,8 @@ const resources = {
       about: {
         label: 'À propos',
         heading: 'Un développeur, pas une agence.',
-        body1: 'Je m\'appelle Kenny, développeur web freelance. J\'accompagne les entreprises qui veulent une vraie présence en ligne — sans se perdre dans la complexité d\'une agence.',
-        body2: 'Je prends en main vos projets de A à Z : du premier brief à la mise en ligne. Mon approche : pas de jargon, des solutions adaptées à votre réalité, et un suivi simple.',
+        body1: 'Je m\'appelle Kenny, développeur web freelance originaire de La Réunion. J\'accompagne les entreprises qui veulent une vraie présence en ligne — sans se perdre dans la complexité d\'une agence.',
+        body2: 'Je prends en main vos projets de A à Z : du premier brief à la mise en ligne. Pas de jargon, des solutions adaptées à votre réalité, et un suivi simple — où que vous soyez.',
         stat1_value: '2–4 sem.',
         stat1_label: 'Délai de livraison',
         stat2_value: '< 48h',
@@ -180,8 +180,8 @@ const resources = {
       about: {
         label: 'About',
         heading: 'A developer, not an agency.',
-        body1: 'I\'m Kenny, a freelance web developer. I help businesses build a real online presence — without getting lost in agency complexity.',
-        body2: 'I handle your projects from A to Z: from the first brief to going live. No jargon, solutions adapted to your reality, and straightforward support.',
+        body1: 'I\'m Kenny, a freelance web developer from La Réunion island. I help businesses build a real online presence — without getting lost in agency complexity.',
+        body2: 'I handle your projects from A to Z: from the first brief to going live. No jargon, solutions adapted to your reality, and straightforward support — wherever you are.',
         stat1_value: '2–4 wks',
         stat1_label: 'Delivery time',
         stat2_value: '< 48h',
