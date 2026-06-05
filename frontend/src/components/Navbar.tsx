@@ -43,6 +43,7 @@ export default function Navbar() {
         <nav className="navbar__links" aria-label="Primary navigation">
           <button onClick={() => scrollTo('services')}>{t('nav.services')}</button>
           <button onClick={() => scrollTo('projects')}>{t('nav.projects')}</button>
+          <Link to="/til">{t('nav.til')}</Link>
           <Link to="/blog">{t('nav.blog')}</Link>
           <button onClick={() => scrollTo('contact')}>{t('nav.contact')}</button>
         </nav>
@@ -77,6 +78,7 @@ export default function Navbar() {
       <div className={`mobile-menu${menuOpen ? ' mobile-menu--open' : ''}`}>
         <button onClick={() => scrollTo('services')}>{t('nav.services')}</button>
         <button onClick={() => scrollTo('projects')}>{t('nav.projects')}</button>
+        <Link to="/til">{t('nav.til')}</Link>
         <Link to="/blog">{t('nav.blog')}</Link>
         <button onClick={() => scrollTo('contact')}>{t('nav.contact')}</button>
         <button className="lang-toggle" onClick={toggleLang}>

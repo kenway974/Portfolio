@@ -4,6 +4,7 @@ import Projects from '../components/Projects'
 import Process from '../components/Process'
 import About from '../components/About'
 import BlogPreview from '../components/BlogPreview'
+import TILPreview from '../components/TILPreview'
 import Contact from '../components/Contact'
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <Projects />
       <Process />
       <About />
+      <TILPreview />
       <BlogPreview />
       <Contact />
     </>

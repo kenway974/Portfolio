@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Le Virtual DOM — comment React évite de tout redessiner",
+    "slug": "virtual-dom-react",
+    "domaine": "Front",
+    "date": "2026-06-05",
+    "synthese": "Le Virtual DOM est une copie légère du vrai DOM en mémoire ; React compare les deux versions avant de n'appliquer que les changements strictement nécessaires.",
+    "explication": "À chaque fois que l'état d'un composant change, React ne modifie pas directement le DOM du navigateur — c'est une opération lente. Il construit d'abord une nouvelle version virtuelle (un simple objet JavaScript), compare cette nouvelle version à l'ancienne via un algorithme qu'on appelle le \"diffing\", puis ne touche au vrai DOM que pour les différences trouvées. Ce processus s'appelle la réconciliation.",
+    "metaphore": "Imagine que tu dois corriger un long document Word. Plutôt que de réécrire entièrement le fichier à chaque correction, tu fais d'abord toutes tes modifications sur un brouillon, tu compares le brouillon à l'original, puis tu n'apportes que les changements identifiés. C'est exactement ce que fait React avec le DOM.",
+    "exemple": "Sur Twitter/X, quand tu likes un tweet, seul le compteur de likes se met à jour visuellement — pas le reste de la page. React calcule que seul ce nœud du DOM a changé et ne met à jour que lui. Sans Virtual DOM, une mise à jour d'état pourrait provoquer un re-rendu complet de toute la timeline.",
+    "pratique": "Pour observer le Virtual DOM en action :\n1. Installe l'extension React Developer Tools dans Chrome\n2. Ouvre l'onglet Profiler\n3. Lance un enregistrement, interagis avec ton app\n4. Stoppe l'enregistrement — tu vois exactement quels composants ont re-rendu, combien de fois, et pourquoi\n\nTu peux aussi wrapper des composants dans React.memo() pour éviter des re-renders inutiles quand les props n'ont pas changé."
+  },
+  {
+    "id": "2",
+    "title": "Le DNS — l'annuaire téléphonique d'internet",
+    "slug": "dns-explication",
+    "domaine": "Infrastructure",
+    "date": "2026-06-04",
+    "synthese": "Le DNS traduit un nom de domaine lisible (example.com) en adresse IP (93.184.216.34) pour que les machines puissent se trouver sur le réseau.",
+    "explication": "Le Domain Name System (DNS) est un système distribué qui fait la correspondance entre les noms de domaine que les humains utilisent et les adresses IP que les machines comprennent. Quand tu tapes une URL dans ton navigateur, une requête DNS est envoyée à un résolveur (souvent fourni par ton FAI ou Google), qui interroge une chaîne de serveurs jusqu'à trouver l'IP correspondante. Ce résultat est ensuite mis en cache pour éviter de répéter la requête à chaque visite.",
+    "metaphore": "C'est l'annuaire téléphonique d'internet. Tu connais le nom de la personne (example.com) mais pas son numéro de téléphone (l'adresse IP). Tu ouvres l'annuaire (le DNS), tu trouves le numéro, tu appelles. Sauf qu'internet le fait en quelques millisecondes, et ton téléphone retient le numéro un moment pour ne pas consulter l'annuaire à chaque fois.",
+    "exemple": "Quand Cloudflare a subi une panne en juillet 2023, des millions de sites sont devenus inaccessibles même si leurs serveurs fonctionnaient parfaitement — les résolveurs DNS ne pouvaient plus trouver leurs IPs. C'est aussi pour ça que changer de registrar (Namecheap, OVH, Cloudflare...) peut prendre jusqu'à 48h à propager : chaque serveur DNS dans le monde doit mettre à jour son cache.",
+    "pratique": "Inspecter le DNS d'un domaine depuis le terminal :\n\nnslookup example.com\n# ou plus détaillé :\ndig example.com\n\nVérifier la propagation DNS après un changement :\ndig @8.8.8.8 example.com   # via Google\ndig @1.1.1.1 example.com   # via Cloudflare\n\nLes types d'enregistrements essentiels :\n- A record : pointe vers une IPv4\n- CNAME : alias vers un autre domaine\n- MX : serveurs de messagerie\n- TXT : vérifications (Google, SPF, DKIM)"
+  },
+  {
+    "id": "3",
+    "title": "Les index SQL — accélérer les requêtes sans tout refaire",
+    "slug": "index-sql",
+    "domaine": "Base de données",
+    "date": "2026-06-03",
+    "synthese": "Un index SQL est une structure de données auxiliaire qui permet à la base de trouver des lignes rapidement sans parcourir toute la table, au prix d'un espace disque et d'un temps d'écriture supplémentaires.",
+    "explication": "Sans index, une requête SELECT avec un WHERE doit parcourir chaque ligne de la table pour trouver les correspondances — c'est un full table scan. Avec un index sur la colonne filtrée, la base maintient une structure triée (souvent un B-tree) qui permet une recherche en O(log n) au lieu de O(n). Les index sont automatiquement créés sur les clés primaires, mais doivent être ajoutés manuellement sur les autres colonnes fréquemment filtrées ou jointes.",
+    "metaphore": "C'est l'index à la fin d'un livre. Sans lui, pour trouver toutes les pages qui mentionnent \"React\", tu devrais lire chaque page une par une. Avec l'index alphabétique, tu vas directement à R, tu trouves \"React — pages 42, 87, 134\", et tu sautes aux bonnes pages. Mais maintenir cet index a un coût : à chaque ajout de page, il faut le mettre à jour.",
+    "exemple": "Sur une table users avec 5 millions de lignes, une requête SELECT * FROM users WHERE email = 'test@example.com' sans index peut prendre plusieurs secondes. Avec un index sur email, la même requête s'exécute en quelques millisecondes. LinkedIn utilise des index composites sur (user_id, connection_date) pour accélérer les requêtes de réseau social. L'EXPLAIN ANALYZE de PostgreSQL permet de voir si ta requête utilise un index ou fait un seq scan.",
+    "pratique": "Créer un index simple :\nCREATE INDEX idx_users_email ON users(email);\n\nIndex composé pour les requêtes multi-colonnes :\nCREATE INDEX idx_orders_user_date ON orders(user_id, created_at);\n\nVérifier l'utilisation des index avec EXPLAIN :\nEXPLAIN ANALYZE SELECT * FROM users WHERE email = 'test@example.com';\n\nTrouver les index inutilisés (PostgreSQL) :\nSELECT indexname, idx_scan FROM pg_stat_user_indexes WHERE idx_scan = 0;\n\nAttention : trop d'index ralentit les INSERT/UPDATE — chaque écriture doit mettre à jour tous les index concernés."
+  }
+]

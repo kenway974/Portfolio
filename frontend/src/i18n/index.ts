@@ -7,6 +7,7 @@ const resources = {
       nav: {
         services: 'Services',
         projects: 'Réalisations',
+        til: 'TIL',
         blog: 'Blog',
         contact: 'Contact',
         cta: 'Parlons de votre projet',
@@ -79,6 +80,21 @@ const resources = {
         stat3_value: 'A → Z',
         stat3_label: 'Brief à mise en ligne',
       },
+      til: {
+        label: 'Today I Learned',
+        heading: 'Ce que j\'apprends au quotidien.',
+        desc: 'Chaque sujet que je découvre, expliqué simplement — avec une métaphore, des exemples concrets et une mise en pratique.',
+        read: 'Lire →',
+        all: 'Tous les sujets',
+        back: '← Retour au TIL',
+        fields: {
+          explication: 'Explication',
+          metaphore: 'Métaphore',
+          exemple: 'Exemple concret',
+          pratique: 'Mise en pratique',
+          synthese: 'En résumé',
+        },
+      },
       blog: {
         label: 'Blog',
         heading: 'Ressources pour les entreprises.',
@@ -117,6 +133,7 @@ const resources = {
       nav: {
         services: 'Services',
         projects: 'Work',
+        til: 'TIL',
         blog: 'Blog',
         contact: 'Contact',
         cta: 'Let\'s talk',
@@ -188,6 +205,21 @@ const resources = {
         stat2_label: 'Response time',
         stat3_value: 'A → Z',
         stat3_label: 'Brief to launch',
+      },
+      til: {
+        label: 'Today I Learned',
+        heading: 'What I learn every day.',
+        desc: 'Every concept I discover, explained simply — with a metaphor, real-world examples and hands-on practice.',
+        read: 'Read →',
+        all: 'All topics',
+        back: '← Back to TIL',
+        fields: {
+          explication: 'Explanation',
+          metaphore: 'Metaphor',
+          exemple: 'Real-world example',
+          pratique: 'Hands-on practice',
+          synthese: 'Summary',
+        },
       },
       blog: {
         label: 'Blog',
