@@ -6,6 +6,8 @@ import Home from './pages/Home'
 
 const BlogList = lazy(() => import('./pages/BlogList'))
 const BlogPost = lazy(() => import('./pages/BlogPost'))
+const TILList  = lazy(() => import('./pages/TILList'))
+const TILPost  = lazy(() => import('./pages/TILPost'))
 
 export default function App() {
   return (
@@ -14,9 +16,11 @@ export default function App() {
       <main>
         <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
           <Routes>
-            <Route path="/"          element={<Home />} />
-            <Route path="/blog"      element={<BlogList />} />
+            <Route path="/"           element={<Home />} />
+            <Route path="/blog"       element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/til"        element={<TILList />} />
+            <Route path="/til/:slug"  element={<TILPost />} />
           </Routes>
         </Suspense>
       </main>
