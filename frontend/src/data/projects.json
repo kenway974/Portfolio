@@ -20,7 +20,7 @@
     "title": "Smoltolk",
     "logo": "💬",
     "url": "https://smoltolk.vercel.app",
-    "description": "Application de messagerie légère et rapide. Interface minimaliste centrée sur l'essentiel — des conversations simples et fluides.",
+    "description": "Web app qui génère des sujets de conversation sur mesure selon le mood, la proximité avec l'interlocuteur, le lieu et d'autres critères. Plus jamais à court d'idées.",
     "tech": ["React", "Vite", "Vercel"]
   },
   {
@@ -52,7 +52,7 @@
     "title": "Summer 2026",
     "logo": "☀️",
     "url": "https://summer-2026-phi.vercel.app",
-    "description": "Projet en cours de développement.",
+    "description": "App qui aide à trouver quoi faire selon son mood, ses préférences et son budget. Suggestions d'activités personnalisées pour ne plus jamais s'ennuyer.",
     "tech": ["Next.js", "TypeScript"],
     "status": "wip"
   },
