@@ -4,40 +4,65 @@
     "title": "EstimoServer",
     "logo": "🏠",
     "url": "https://estimoserver-production.up.railway.app",
-    "description": "API d'estimation immobilière intégrable à tout site d'agence. Calcul automatisé du prix au m² avec démonstration live sur le marché Île-de-France.",
+    "description": "Widget d'estimation immobilière multi-agences. API REST intégrable à tout site : calcul automatisé du prix au m² avec démonstration live sur le marché Île-de-France.",
     "tech": ["Node.js", "Express", "Railway", "API REST"]
   },
   {
     "id": "2",
+    "title": "Opticiens",
+    "logo": "👓",
+    "url": "https://opticiens.vercel.app",
+    "description": "Site vitrine pour un opticien : présentation des services, des collections de montures et formulaire de contact. Design soigné et optimisé mobile.",
+    "tech": ["Next.js", "TypeScript", "Vercel"]
+  },
+  {
+    "id": "3",
+    "title": "Smoltolk",
+    "logo": "💬",
+    "url": "https://smoltolk.vercel.app",
+    "description": "Application de messagerie légère et rapide. Interface minimaliste centrée sur l'essentiel — des conversations simples et fluides.",
+    "tech": ["React", "Vite", "Vercel"]
+  },
+  {
+    "id": "4",
     "title": "Ephemeral Gallery",
     "logo": "🖼",
     "url": "https://ephemeral-gallery.vercel.app",
     "description": "Template de site vitrine pour propriétaires de galeries, salles et espaces à louer. Design moderne, gestion de contenu et prise de contact.",
-    "tech": ["React", "Next.js", "PostgreSQL", "Stripe"]
+    "tech": ["Next.js", "TypeScript", "PostgreSQL", "Stripe"]
   },
   {
-    "id": "3",
+    "id": "5",
+    "title": "Dispatch",
+    "logo": "🚲",
+    "url": "https://github.com/kenway974/dispatch",
+    "description": "Moteur de dispatch automatique pour coursiers écologiques à Paris. Algorithme VRP avec scoring Haversine et groupage intelligent des livraisons.",
+    "tech": ["Python", "VRP", "Algorithmes"]
+  },
+  {
+    "id": "6",
     "title": "Little Stars",
     "logo": "🌱",
     "url": "https://daycare-three.vercel.app",
     "description": "Site vitrine pour une assistante maternelle : présentation des services, informations pratiques et formulaire de contact.",
-    "tech": ["React", "Vite"]
+    "tech": ["React", "Vite", "TypeScript"]
   },
   {
-    "id": "4",
+    "id": "7",
+    "title": "Summer 2026",
+    "logo": "☀️",
+    "url": "https://summer-2026-phi.vercel.app",
+    "description": "Projet en cours de développement.",
+    "tech": ["Next.js", "TypeScript"],
+    "status": "wip"
+  },
+  {
+    "id": "8",
     "title": "Life Quest",
     "logo": "🎮",
     "url": "https://life-quest-three.vercel.app",
     "description": "Application web qui gamifie la vie quotidienne — objectifs, progression, défis. Projet en développement actif.",
-    "tech": ["React", "Next.js"],
+    "tech": ["React", "Next.js", "TypeScript"],
     "status": "wip"
-  },
-  {
-    "id": "5",
-    "title": "Selfly",
-    "logo": "⚡",
-    "url": "https://www.selfly.fr",
-    "description": "Sandbox full-stack de A à Z : front-end, back-end, intégration API, base de données SQL et sécurité — mon premier vrai projet.",
-    "tech": ["PHP", "HTML/CSS", "JavaScript", "MySQL", "Stripe"]
   }
 ]
