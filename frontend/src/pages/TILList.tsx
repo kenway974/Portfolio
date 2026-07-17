@@ -11,6 +11,10 @@ const DOMAIN_COLORS: Record<string, string> = {
   'Base de données': 'domain--db',
   'DevOps': 'domain--devops',
   'Outils': 'domain--tools',
+  'Fondamentaux': 'domain--fondamentaux',
+  'Tests': 'domain--tests',
+  'Qualité': 'domain--qualite',
+  'IA & Automatisation': 'domain--ia',
 }
 
 export default function TILList() {

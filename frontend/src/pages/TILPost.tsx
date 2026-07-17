@@ -10,18 +10,27 @@ const DOMAIN_COLORS: Record<string, string> = {
   'Base de données': 'domain--db',
   'DevOps': 'domain--devops',
   'Outils': 'domain--tools',
+  'Fondamentaux': 'domain--fondamentaux',
+  'Tests': 'domain--tests',
+  'Qualité': 'domain--qualite',
+  'IA & Automatisation': 'domain--ia',
 }
+
+const CODE_STARTS = /^(CREATE|SELECT|INSERT|UPDATE|DELETE|EXPLAIN|ALTER|BEGIN|COMMIT|ROLLBACK|nslookup|dig|npm|yarn|git|pip\d*|python\d*|source|uvicorn|docker|gcc|valgrind|curl|pg_dump|aws|php|FROM\s|WORKDIR|COPY\s|RUN\s|EXPOSE|CMD|ENV\s|\d+\.)/
 
 function renderPratique(text: string): React.ReactNode[] {
   return text.split('\n').map((line, i) => {
     if (line.trim() === '') return <br key={i} />
-    if (/^(CREATE|SELECT|INSERT|UPDATE|DELETE|EXPLAIN|nslookup|dig|npm|yarn|git|\d+\.)/.test(line.trim())) {
-      return <code key={i} className="til-code-line">{line}</code>
-    }
-    if (line.startsWith('#')) {
-      return <span key={i} className="til-code-comment">{line}</span>
-    }
-    return <p key={i} className="til-pratique-text">{line}</p>
+    if (line.startsWith('#')) return <span key={i} className="til-code-comment">{line}</span>
+    const trimmed = line.trimStart()
+    const isCode =
+      CODE_STARTS.test(trimmed) ||
+      trimmed.startsWith('//') ||
+      /^[{}$@|><!]/.test(trimmed) ||
+      line !== trimmed
+    return isCode
+      ? <code key={i} className="til-code-line">{line}</code>
+      : <p key={i} className="til-pratique-text">{line}</p>
   })
 }
 
