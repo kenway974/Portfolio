@@ -49,6 +49,22 @@
   },
   {
     "id": "7",
+    "title": "Robin des Bois",
+    "logo": "🏹",
+    "url": "https://robin-des-bois-api.vercel.app",
+    "description": "Plateforme citoyenne de suivi de l'activité politique française. API publique REST avec documentation OpenAPI : votes, textes de loi, mandats et statistiques en temps réel.",
+    "tech": ["Fastify", "Next.js", "Node.js", "API REST"]
+  },
+  {
+    "id": "8",
+    "title": "MonChauff",
+    "logo": "🔥",
+    "url": "https://jp-topaz.vercel.app",
+    "description": "Template de site vitrine pour chauffagiste : présentation des services d'installation, d'entretien et de dépannage. Design professionnel orienté conversion et prise de contact.",
+    "tech": ["Next.js", "TypeScript", "Vercel"]
+  },
+  {
+    "id": "9",
     "title": "Summer 2026",
     "logo": "☀️",
     "url": "https://summer-2026-phi.vercel.app",
@@ -57,7 +73,7 @@
     "status": "wip"
   },
   {
-    "id": "8",
+    "id": "10",
     "title": "Life Quest",
     "logo": "🎮",
     "url": "https://life-quest-three.vercel.app",
