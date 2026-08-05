@@ -80,5 +80,21 @@
     "description": "Application web qui gamifie la vie quotidienne — objectifs, progression, défis. Projet en développement actif.",
     "tech": ["React", "Next.js", "TypeScript"],
     "status": "wip"
+  },
+  {
+    "id": "11",
+    "title": "NoutKozé",
+    "logo": "🦜",
+    "url": "https://github.com/kenway974/noutKoz-",
+    "description": "Application d'apprentissage du créole, façon Duolingo. Leçons interactives, progression gamifiée et immersion culturelle.",
+    "tech": ["React", "TypeScript", "Gamification"]
+  },
+  {
+    "id": "12",
+    "title": "RunSorties",
+    "logo": "🌴",
+    "url": "https://github.com/kenway974/RunSorties",
+    "description": "Découverte des meilleures sorties et activités à La Réunion, sur le modèle de Paris Sorties. Filtres par humeur, budget et type d'activité.",
+    "tech": ["Next.js", "TypeScript", "Vercel"]
   }
 ]
