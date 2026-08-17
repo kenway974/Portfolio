@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Head } from 'vite-react-ssg'
 import posts from '../data/blog.json'
 import './BlogPost.css'
 
@@ -36,6 +37,14 @@ export default function BlogPost() {
 
   return (
     <div className="blog-post-page">
+      <Head>
+        <title>{post.title} — Kenny Pignolet</title>
+        <meta name="description" content={post.excerpt} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:url" content={`https://portfolio-jet-tau-73.vercel.app/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://portfolio-jet-tau-73.vercel.app/blog/${post.slug}`} />
+      </Head>
       <div className="container">
         {/* Back link */}
         <Link to="/blog" className="post-back">{t('blog.back')}</Link>

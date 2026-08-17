@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Head } from 'vite-react-ssg'
 import entries from '../data/til.json'
 import './TILList.css'
 
@@ -28,6 +29,13 @@ export default function TILList() {
 
   return (
     <div className="til-list-page">
+      <Head>
+        <title>Today I Learned — Kenny Pignolet</title>
+        <meta name="description" content="39 concepts techniques appris et synthétisés : front-end, back-end, bases de données, DevOps, tests et IA. Le journal d'apprentissage d'un développeur fullstack." />
+        <meta property="og:title" content="Today I Learned — Kenny Pignolet" />
+        <meta property="og:url" content="https://portfolio-jet-tau-73.vercel.app/til" />
+        <link rel="canonical" href="https://portfolio-jet-tau-73.vercel.app/til" />
+      </Head>
       <div className="container">
         <div className="til-list-page__header">
           <p className="label">{t('til.label')}</p>

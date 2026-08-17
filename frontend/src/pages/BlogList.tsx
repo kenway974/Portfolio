@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Head } from 'vite-react-ssg'
 import posts from '../data/blog.json'
 import './BlogList.css'
 
@@ -15,6 +16,13 @@ export default function BlogList() {
 
   return (
     <div className="blog-list-page">
+      <Head>
+        <title>Blog — Kenny Pignolet</title>
+        <meta name="description" content="Conseils pratiques pour les TPE et PME : performance web, SEO et automatisation. Par un développeur freelance, pour des décideurs non-techniques." />
+        <meta property="og:title" content="Blog — Kenny Pignolet" />
+        <meta property="og:url" content="https://portfolio-jet-tau-73.vercel.app/blog" />
+        <link rel="canonical" href="https://portfolio-jet-tau-73.vercel.app/blog" />
+      </Head>
       <div className="container">
         {/* Header */}
         <div className="blog-list-page__header">

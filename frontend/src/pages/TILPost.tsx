@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Head } from 'vite-react-ssg'
 import entries from '../data/til.json'
 import './TILPost.css'
 
@@ -43,6 +44,14 @@ export default function TILPost() {
 
   return (
     <div className="til-post-page">
+      <Head>
+        <title>{entry.title} — TIL | Kenny Pignolet</title>
+        <meta name="description" content={entry.synthese} />
+        <meta property="og:title" content={`${entry.title} — TIL`} />
+        <meta property="og:description" content={entry.synthese} />
+        <meta property="og:url" content={`https://portfolio-jet-tau-73.vercel.app/til/${entry.slug}`} />
+        <link rel="canonical" href={`https://portfolio-jet-tau-73.vercel.app/til/${entry.slug}`} />
+      </Head>
       <div className="container">
         <Link to="/til" className="post-back">{t('til.back')}</Link>
 
