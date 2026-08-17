@@ -96,5 +96,13 @@
     "url": "https://github.com/kenway974/RunSorties",
     "description": "Découverte des meilleures sorties et activités à La Réunion, sur le modèle de Paris Sorties. Filtres par humeur, budget et type d'activité.",
     "tech": ["Next.js", "TypeScript", "Vercel"]
+  },
+  {
+    "id": "13",
+    "title": "Respusse",
+    "logo": "🤝",
+    "url": "https://www.respusse.com",
+    "description": "Plateforme associative de gestion des dons et échanges de matériel entre la France et le Congo. Suivi des dons, formulaires de contact et back-office Supabase.",
+    "tech": ["Next.js", "TypeScript", "Supabase", "Tailwind CSS", "Resend"]
   }
 ]
