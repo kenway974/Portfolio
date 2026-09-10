@@ -1,13 +1,5 @@
 [
   {
-    "id": "1",
-    "title": "EstimoServer",
-    "logo": "🏠",
-    "url": "https://estimoserver-production.up.railway.app",
-    "description": "Widget d'estimation immobilière multi-agences. API REST intégrable à tout site : calcul automatisé du prix au m² avec démonstration live sur le marché Île-de-France.",
-    "tech": ["Node.js", "Express", "Railway", "API REST"]
-  },
-  {
     "id": "2",
     "title": "Opticiens",
     "logo": "👓",
@@ -16,12 +8,20 @@
     "tech": ["Next.js", "TypeScript", "Vercel"]
   },
   {
-    "id": "3",
-    "title": "Smoltolk",
-    "logo": "💬",
-    "url": "https://smoltolk.vercel.app",
-    "description": "Web app qui génère des sujets de conversation sur mesure selon le mood, la proximité avec l'interlocuteur, le lieu et d'autres critères. Plus jamais à court d'idées.",
-    "tech": ["React", "Vite", "Vercel"]
+    "id": "8",
+    "title": "MonChauff",
+    "logo": "🔥",
+    "url": "https://jp-topaz.vercel.app",
+    "description": "Template de site vitrine pour chauffagiste : présentation des services d'installation, d'entretien et de dépannage. Design professionnel orienté conversion et prise de contact.",
+    "tech": ["Next.js", "TypeScript", "Vercel"]
+  },
+  {
+    "id": "13",
+    "title": "Respusse",
+    "logo": "🤝",
+    "url": "https://www.respusse.com",
+    "description": "Plateforme associative de gestion des dons et échanges de matériel entre la France et le Congo. Suivi des dons, formulaires de contact et back-office Supabase.",
+    "tech": ["Next.js", "TypeScript", "Supabase", "Tailwind CSS", "Resend"]
   },
   {
     "id": "4",
@@ -32,20 +32,12 @@
     "tech": ["Next.js", "TypeScript", "PostgreSQL", "Stripe"]
   },
   {
-    "id": "5",
-    "title": "Dispatch",
-    "logo": "🚲",
-    "url": "https://github.com/kenway974/dispatch",
-    "description": "Moteur de dispatch automatique pour coursiers écologiques à Paris. Algorithme VRP avec scoring Haversine et groupage intelligent des livraisons.",
-    "tech": ["Python", "VRP", "Algorithmes"]
-  },
-  {
-    "id": "6",
-    "title": "Little Stars",
-    "logo": "🌱",
-    "url": "https://daycare-three.vercel.app",
-    "description": "Site vitrine pour une assistante maternelle : présentation des services, informations pratiques et formulaire de contact.",
-    "tech": ["React", "Vite", "TypeScript"]
+    "id": "1",
+    "title": "EstimoServer",
+    "logo": "🏠",
+    "url": "https://estimoserver-production.up.railway.app",
+    "description": "Widget d'estimation immobilière multi-agences. API REST intégrable à tout site : calcul automatisé du prix au m² avec démonstration live sur le marché Île-de-France.",
+    "tech": ["Node.js", "Express", "Railway", "API REST"]
   },
   {
     "id": "7",
@@ -56,11 +48,43 @@
     "tech": ["Fastify", "Next.js", "Node.js", "API REST"]
   },
   {
-    "id": "8",
-    "title": "MonChauff",
-    "logo": "🔥",
-    "url": "https://jp-topaz.vercel.app",
-    "description": "Template de site vitrine pour chauffagiste : présentation des services d'installation, d'entretien et de dépannage. Design professionnel orienté conversion et prise de contact.",
+    "id": "6",
+    "title": "Little Stars",
+    "logo": "🌱",
+    "url": "https://daycare-three.vercel.app",
+    "description": "Site vitrine pour une assistante maternelle : présentation des services, informations pratiques et formulaire de contact.",
+    "tech": ["React", "Vite", "TypeScript"]
+  },
+  {
+    "id": "5",
+    "title": "Dispatch",
+    "logo": "🚲",
+    "url": "https://github.com/kenway974/dispatch",
+    "description": "Moteur de dispatch automatique pour coursiers écologiques à Paris. Algorithme VRP avec scoring Haversine et groupage intelligent des livraisons.",
+    "tech": ["Python", "VRP", "Algorithmes"]
+  },
+  {
+    "id": "3",
+    "title": "Smoltolk",
+    "logo": "💬",
+    "url": "https://smoltolk.vercel.app",
+    "description": "Web app qui génère des sujets de conversation sur mesure selon le mood, la proximité avec l'interlocuteur, le lieu et d'autres critères. Plus jamais à court d'idées.",
+    "tech": ["React", "Vite", "Vercel"]
+  },
+  {
+    "id": "11",
+    "title": "NoutKozé",
+    "logo": "🦜",
+    "url": "https://github.com/kenway974/noutKoz-",
+    "description": "Application d'apprentissage du créole, façon Duolingo. Leçons interactives, progression gamifiée et immersion culturelle.",
+    "tech": ["React", "TypeScript", "Gamification"]
+  },
+  {
+    "id": "12",
+    "title": "RunSorties",
+    "logo": "🌴",
+    "url": "https://github.com/kenway974/RunSorties",
+    "description": "Découverte des meilleures sorties et activités à La Réunion, sur le modèle de Paris Sorties. Filtres par humeur, budget et type d'activité.",
     "tech": ["Next.js", "TypeScript", "Vercel"]
   },
   {
@@ -80,29 +104,5 @@
     "description": "Application web qui gamifie la vie quotidienne — objectifs, progression, défis. Projet en développement actif.",
     "tech": ["React", "Next.js", "TypeScript"],
     "status": "wip"
-  },
-  {
-    "id": "11",
-    "title": "NoutKozé",
-    "logo": "🦜",
-    "url": "https://github.com/kenway974/noutKoz-",
-    "description": "Application d'apprentissage du créole, façon Duolingo. Leçons interactives, progression gamifiée et immersion culturelle.",
-    "tech": ["React", "TypeScript", "Gamification"]
-  },
-  {
-    "id": "12",
-    "title": "RunSorties",
-    "logo": "🌴",
-    "url": "https://github.com/kenway974/RunSorties",
-    "description": "Découverte des meilleures sorties et activités à La Réunion, sur le modèle de Paris Sorties. Filtres par humeur, budget et type d'activité.",
-    "tech": ["Next.js", "TypeScript", "Vercel"]
-  },
-  {
-    "id": "13",
-    "title": "Respusse",
-    "logo": "🤝",
-    "url": "https://www.respusse.com",
-    "description": "Plateforme associative de gestion des dons et échanges de matériel entre la France et le Congo. Suivi des dons, formulaires de contact et back-office Supabase.",
-    "tech": ["Next.js", "TypeScript", "Supabase", "Tailwind CSS", "Resend"]
   }
 ]

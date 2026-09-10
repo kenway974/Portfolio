@@ -14,7 +14,7 @@ const resources = {
       },
       hero: {
         badge: 'Développeur web freelance',
-        headline: 'Votre site web doit travailler pour vous.',
+        headline: 'Un site qui vend. Pas juste une vitrine.',
         sub: 'J\'aide les TPE et PME à construire une présence en ligne qui attire, convainc et convertit — sans la complexité ni les coûts d\'une agence.',
         cta: 'Parlons de votre projet',
         ctaSecondary: 'Voir mes réalisations',
@@ -140,7 +140,7 @@ const resources = {
       },
       hero: {
         badge: 'Freelance web developer',
-        headline: 'Your website should work for you.',
+        headline: 'A site that sells. Not just a showcase.',
         sub: 'I help small businesses build an online presence that attracts, convinces and converts — without the complexity or cost of an agency.',
         cta: 'Let\'s talk about your project',
         ctaSecondary: 'See my work',
