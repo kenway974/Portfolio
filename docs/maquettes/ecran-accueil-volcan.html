@@ -1,0 +1,797 @@
+<title>Écran d'accueil volcan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+  /* Design unique et sombre, repris des tokens du portfolio (drapeau de La Réunion). */
+  :root {
+    color-scheme: dark;
+    --black: #060507;
+    --surface: #0d0b0f;
+    --line: rgba(245, 239, 232, 0.10);
+    --border: rgba(240, 165, 0, 0.10);
+    --border-accent: rgba(240, 165, 0, 0.34);
+    --accent: #e89c1a;
+    --accent-bright: #f5c842;
+    --lava: #e63946;
+    --lava-soft: #f08a93;
+    --text: #f5efe8;
+    --text-2: rgba(245, 239, 232, 0.66);
+    --text-3: rgba(245, 239, 232, 0.42);
+    --font-display: 'Syne', 'Arial Black', system-ui, sans-serif;
+    --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --reveal: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  [hidden] { display: none !important; }
+  html { background: var(--black); }
+  body {
+    background: var(--black); color: var(--text); font-family: var(--font-body);
+    font-size: 16px; line-height: 1.6; padding-inline: 16px; padding-block: 0 72px;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  button, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+  a { color: inherit; }
+
+  /* ---------- Page de maquettes ---------- */
+  .intro-page { padding-block: 56px 24px; display: grid; gap: 14px; }
+  .kicker { font-size: 0.9rem; color: var(--accent); margin: 0; font-weight: 500; }
+  h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.9rem, 4.6vw, 3rem); line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+  h2.sec { font-family: var(--font-display); font-weight: 700; font-size: 1.45rem; margin: 0; line-height: 1.2; }
+  .changes { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; color: var(--text-2); font-size: 0.95rem; max-width: 72ch; }
+  .changes li::marker { color: var(--accent-bright); }
+  .changes b { color: var(--text); font-weight: 600; }
+  .block { padding-block: 36px; border-top: 1px solid var(--border); display: grid; gap: 16px; }
+  .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+  .replay { background: transparent; border: 1px solid var(--border-accent); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 0.88rem; }
+  .replay:hover { color: var(--accent-bright); border-color: var(--accent); }
+  .note { font-size: 0.9rem; color: var(--text-2); margin: 0; max-width: 80ch; }
+
+  /* ---------- Scène de la roue ---------- */
+  .stage {
+    position: relative; height: clamp(620px, 80vh, 740px); border-radius: 16px; overflow: hidden;
+    background: radial-gradient(120% 90% at 50% 105%, #1d0c10 0%, #0b080d 55%, var(--black) 100%);
+    border: 1px solid var(--border); isolation: isolate; user-select: none; -webkit-user-select: none; touch-action: pan-y;
+  }
+  .star { position: absolute; border-radius: 50%; background: var(--text); animation: twinkle var(--d) ease-in-out var(--delay) infinite alternate; }
+  @keyframes twinkle { from { opacity: var(--o); } to { opacity: calc(var(--o) * 0.25); } }
+  .mountain {
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: linear-gradient(160deg, rgba(230,57,70,.64) 0%, rgba(192,32,48,.52) 50%, rgba(139,15,26,.38) 100%);
+    filter: drop-shadow(0 0 24px rgba(230,57,70,.2)); animation: fadein 1.4s var(--ease) both;
+  }
+  @keyframes fadein { from { opacity: 0; } }
+  .crater {
+    position: absolute; z-index: 2; width: 150px; height: 150px; pointer-events: none; transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255,209,102,.55) 0%, rgba(244,162,40,.16) 36%, transparent 66%);
+    transition: transform .6s var(--ease);
+  }
+  .crater::after { content: ""; position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px; border-radius: 50%; background: #ffd166; box-shadow: 0 0 12px 5px rgba(255,209,102,.6); }
+  .beam-wrap { position: absolute; transform-origin: bottom center; pointer-events: none; }
+  .beam {
+    width: 100%; height: 100%; transform-origin: bottom center;
+    clip-path: polygon(47% 100%, 53% 100%, 100% 0, 0 0);
+    background: linear-gradient(to top, rgba(250,196,90,.95) 0%, rgba(247,184,75,.38) 30%, rgba(247,184,75,.10) 70%, transparent 100%);
+    opacity: 0; animation: beam var(--dur) ease-in-out var(--delay) infinite alternate;
+    transition: transform .5s var(--ease);
+  }
+  .beam::after {
+    content: ""; position: absolute; left: 50%; bottom: 0; width: 2px; height: 100%; margin-left: -1px;
+    background: linear-gradient(to top, rgba(255,226,150,.9), rgba(255,226,150,.15) 60%, transparent);
+  }
+  @keyframes beam { from { opacity: calc(var(--max) * .45); } to { opacity: var(--max); } }
+  .ui { position: absolute; inset: 0; z-index: 4; transition: opacity .35s ease; }
+  .is-opening .ui { opacity: 0; pointer-events: none; }
+  .is-opening .beam { animation: none; opacity: .8; transform: scaleY(1.08); transition: opacity .4s ease, transform .5s var(--ease); }
+  .is-opening .crater { transform: translate(-50%, -50%) scale(2.4); }
+  .ring {
+    position: absolute; z-index: 9; border-radius: 50%; pointer-events: none; opacity: 0;
+    border: 1.5px solid rgba(255,220,140,.95);
+    box-shadow: 0 0 28px 6px rgba(245,200,66,.45), inset 0 0 28px 4px rgba(232,156,26,.35);
+  }
+  .hello { position: absolute; left: 0; right: 0; top: 4%; text-align: center; padding-inline: 16px; pointer-events: none; }
+  .hello .who { font-size: 0.8rem; color: var(--text-2); }
+  .hello .q { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.25rem, 3.2vw, 1.9rem); line-height: 1.05; margin-top: 4px; text-shadow: 0 2px 16px rgba(0,0,0,.7); }
+  .w-item {
+    position: absolute; left: 0; top: 0; background: rgba(6,5,7,.62); border: 1px solid transparent; cursor: pointer;
+    font-family: var(--font-display); font-weight: 700; white-space: nowrap; font-size: clamp(.78rem, 1.7vw, .98rem);
+    padding: 7px 13px; border-radius: 999px; will-change: transform, opacity;
+    transition: color .35s, background .35s, border-color .35s, box-shadow .35s;
+  }
+  .w-item:hover { border-color: var(--border-accent); }
+  .w-item.is-active { color: var(--black); background: var(--accent-bright); box-shadow: 0 0 0 6px rgba(245,200,66,.12), 0 0 30px rgba(245,200,66,.35); }
+  .w-bottom { position: absolute; left: 0; right: 0; bottom: 4%; display: grid; justify-items: center; gap: 10px; padding-inline: 16px; text-align: center; }
+  .w-pitch { margin: 0; max-width: 40ch; font-size: 0.95rem; text-shadow: 0 2px 12px rgba(0,0,0,.9); min-height: 3em; }
+  .w-controls { display: flex; align-items: center; gap: 10px; }
+  .round { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border-accent); background: rgba(6,5,7,.6); cursor: pointer; display: grid; place-items: center; font-size: 1.1rem; }
+  .round:hover { border-color: var(--accent-bright); color: var(--accent-bright); }
+  .btn {
+    background: var(--accent); color: var(--black); border: 0; border-radius: 999px; padding: 12px 24px;
+    font-weight: 600; cursor: pointer; transition: background .25s;
+  }
+  .btn:hover { background: var(--accent-bright); }
+
+  /* ---------- Page secteur ---------- */
+  .landing { position: absolute; inset: 0; z-index: 8; overflow-y: auto; background: var(--black); container-type: inline-size; }
+  .frame { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--black); }
+  .frame-body { max-height: 900px; overflow-y: auto; container-type: inline-size; }
+
+  .sp-nav {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 18px clamp(20px, 5vw, 48px); position: sticky; top: 0; z-index: 2;
+    background: rgba(6,5,7,.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+  }
+  .sp-brand { font-family: var(--font-display); font-weight: 700; }
+  .sp-back { background: none; border: 0; color: var(--text-2); cursor: pointer; font-size: 0.92rem; padding: 4px 0; }
+  .sp-back:hover { color: var(--accent-bright); }
+
+  .sp { max-width: 680px; margin: 0 auto; padding: clamp(48px, 9vw, 96px) clamp(20px, 5vw, 32px) 72px; }
+  .sp > * + * { margin-top: clamp(64px, 10vw, 96px); }
+  .sp-who { margin: 0 0 18px; color: var(--text-2); font-size: 1rem; }
+  .sp-hook {
+    margin: 0; font-family: var(--font-display); font-weight: 700; letter-spacing: -0.015em;
+    font-size: clamp(1.75rem, 4.6vw, 2.6rem); line-height: 1.12; text-wrap: balance;
+  }
+
+  /* Choix de la situation de départ */
+  .sit-q { margin: 0 0 16px; font-size: 1.05rem; color: var(--text-2); }
+  .sit { display: flex; flex-wrap: wrap; gap: 10px; border: 0; margin: 0; padding: 0; }
+  .sit label { position: relative; cursor: pointer; }
+  .sit input { position: absolute; opacity: 0; pointer-events: none; }
+  .sit span {
+    display: inline-block; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line);
+    color: var(--text-2); transition: border-color .25s, color .25s, background .25s;
+  }
+  .sit label:hover span { border-color: var(--border-accent); color: var(--text); }
+  .sit input:checked + span { border-color: var(--accent-bright); color: var(--text); background: rgba(245,200,66,.08); }
+  .sit input:focus-visible + span { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+
+  /* Chronologie */
+  .tl { list-style: none; margin: 40px 0 0; padding: 0 0 0 36px; position: relative; transition: opacity .25s ease; }
+  .tl.is-swapping { opacity: 0; }
+  .tl::before { content: ""; position: absolute; left: 6px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+  .tl::after {
+    content: ""; position: absolute; left: 6px; top: 10px; bottom: 10px; width: 2px; transform-origin: top;
+    background: linear-gradient(180deg, var(--lava), var(--accent) 30%, var(--accent-bright));
+  }
+  .landing.in .tl::after { animation: grow 1.6s var(--reveal) .6s both; }
+  @keyframes grow { from { transform: scaleY(0); } }
+  .tl li { position: relative; }
+  .tl li + li { margin-top: 44px; }
+  .tl li::before {
+    content: ""; position: absolute; left: -36px; top: 6px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--black); border: 2px solid var(--accent-bright); box-sizing: border-box;
+  }
+  .tl-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-bottom: 6px; }
+  .tl-when { font-size: 0.92rem; color: var(--text-2); }
+  .tl-pack { font-size: 0.82rem; color: var(--text-2); border: 1px solid var(--line); border-radius: 999px; padding: 1px 10px; }
+  .tl-title { display: block; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.15rem, 2.6vw, 1.35rem); line-height: 1.25; color: var(--accent-bright); }
+  .tl-text { margin: 10px 0 0; color: var(--text-2); max-width: 60ch; }
+  .tl li.is-today::before { background: var(--lava); border-color: var(--lava); }
+  .tl li.is-today .tl-when { color: var(--lava-soft); }
+  .tl li.is-today .tl-text { color: var(--text); margin-top: 0; }
+  .fn { font-size: 0.72em; vertical-align: super; line-height: 0; margin-left: 2px; color: var(--accent); text-decoration: none; }
+
+  /* Packs */
+  .sp-h2 { margin: 0 0 10px; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3.4vw, 1.8rem); line-height: 1.2; }
+  .sp-sub { margin: 0; color: var(--text-2); max-width: 60ch; }
+  .packs-wrap { position: relative; width: min(1040px, calc(100cqw - 40px)); left: 50%; transform: translateX(-50%); }
+  .packs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; align-items: start; }
+  .pack { border: 1px solid var(--line); border-radius: 14px; padding: 28px 24px; display: grid; gap: 16px; }
+  .pack-num { margin: 0; font-size: 0.88rem; color: var(--text-3); }
+  .pack-name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; line-height: 1.25; }
+  .pack-price { display: grid; gap: 4px; }
+  .pack-price b { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .pack-price .ads { color: var(--text-2); font-size: 0.9rem; }
+  .pack-price .delay { color: var(--text-2); font-size: 0.9rem; }
+  .pack ul { margin: 0; padding: 16px 0 0; list-style: none; display: grid; gap: 10px; border-top: 1px solid var(--line); }
+  .pack li { position: relative; padding-left: 18px; color: var(--text-2); font-size: 0.95rem; line-height: 1.45; }
+  .pack li::before { content: ""; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-bright); }
+  .pack li.is-base { color: var(--text-3); }
+  .pack li.is-base::before { background: var(--text-3); }
+  .packs-foot { margin: 24px 0 0; display: grid; gap: 8px; font-size: 0.92rem; color: var(--text-2); max-width: 72ch; }
+  .packs-foot p { margin: 0; }
+  .packs-foot b { color: var(--text); font-weight: 600; }
+  @media (max-width: 820px) { .packs { grid-template-columns: 1fr; } }
+
+  .sp-cta { display: grid; gap: 14px; justify-items: start; }
+  .sp-cta p { margin: 0; color: var(--text-2); }
+  .sp-sources { margin-bottom: 0; padding-left: 1.3em; display: grid; gap: 6px; font-size: 0.82rem; color: var(--text-3); }
+  .sp-sources a { text-underline-offset: 2px; }
+  .sp-draft { margin: 0; color: var(--text-2); border-left: 2px solid var(--accent); padding-left: 16px; }
+
+
+  /* Constats de la situation choisie */
+  .facts-box { margin-top: 36px; transition: opacity .25s ease; }
+  .facts-h { margin: 0 0 14px; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--lava-soft); }
+  .facts { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+  .facts li { position: relative; padding-left: 22px; color: var(--text); max-width: 62ch; }
+  .facts li::before { content: ""; position: absolute; left: 0; top: .6em; width: 8px; height: 8px; border-radius: 50%; background: var(--lava); }
+  .swap { transition: opacity .25s ease; }
+  .swap.is-swapping { opacity: 0; }
+
+  /* Carrousel des packs */
+  .car { margin-top: 28px; }
+  .car-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .car-tabs [role=tab] {
+    background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 18px;
+    cursor: pointer; color: var(--text-2); transition: border-color .25s, color .25s, background .25s;
+  }
+  .car-tabs [role=tab]:hover { color: var(--text); border-color: var(--border-accent); }
+  .car-tabs [role=tab][aria-selected="true"] { color: var(--black); background: var(--accent-bright); border-color: var(--accent-bright); font-weight: 600; }
+  .car-track {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    margin-top: 20px; gap: 0; scrollbar-width: none; overscroll-behavior-x: contain; align-items: flex-start;
+  }
+  .car-track::-webkit-scrollbar { display: none; }
+  .car-slide {
+    flex: 0 0 100%; scroll-snap-align: start; box-sizing: border-box;
+    border: 1px solid var(--line); border-radius: 14px; padding: clamp(22px, 4vw, 32px);
+  }
+  .pk-head { display: grid; gap: 10px; }
+  .pk-items { margin: 20px 0 0; padding: 18px 0 0; list-style: none; display: grid; gap: 10px; border-top: 1px solid var(--line); }
+  .pk-items li { position: relative; padding-left: 18px; color: var(--text-2); font-size: 0.95rem; line-height: 1.45; }
+  .pk-items li::before { content: ""; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-bright); }
+  .pk-items li.is-base { color: var(--text-3); }
+  .pk-items { gap: 16px; }
+  .pk-gain { display: block; color: var(--text); font-size: 1rem; line-height: 1.45; }
+  .pk-how { display: block; margin-top: 3px; color: var(--text-3); font-size: 0.88rem; }
+  .car-slide .tl-title { font-size: clamp(1.05rem, 2.3vw, 1.2rem); line-height: 1.35; }
+  .pk-items li.is-base::before { background: var(--text-3); }
+  .car-slide .tl { margin-top: 32px; }
+  .car-slide .tl li + li { margin-top: 30px; }
+  .car-slide .tl-when { display: block; margin-bottom: 4px; }
+  .car-nav { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .star, .beam { animation: none; }
+    .beam { opacity: calc(var(--max) * .8); }
+    .landing.in .tl::after { animation: none; }
+    .tl, .swap, .facts-box { transition: none; }
+    .car-track { scroll-behavior: auto; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="intro-page">
+    <p class="kicker">Portfolio de Kenny Pignolet, écran d'accueil, itération 9</p>
+    <h1>La roue autour du volcan, et la page CVC</h1>
+    <ul class="changes">
+      <li><b>Roue défilante :</b> 13 entrées, 7 visibles à la fois. Les autres attendent sous le volcan et arrivent en tournant. Glisser réglé à 35 px, déclenché au lâcher.</li>
+      <li><b>Page CVC :</b> 4 situations de départ, chacune avec ses constats factuels. En dessous, un carrousel des 3 packs. Chaque ligne dit d'abord ce que le dirigeant gagne, puis comment, en petit.</li>
+      <li>Les autres secteurs ouvrent une page en attente : je les rédige une fois le CVC validé.</li>
+    </ul>
+  </header>
+
+  <section class="block" aria-labelledby="t-roue">
+    <div class="bar">
+      <h2 class="sec" id="t-roue">La roue</h2>
+      <button class="replay" type="button" id="replay">Rejouer</button>
+    </div>
+    <div class="stage" id="stage" tabindex="0" aria-label="Maquette : roue orbitale. Flèches gauche et droite pour tourner, Entrée pour valider."></div>
+  </section>
+
+  <section class="block" aria-labelledby="t-page">
+    <h2 class="sec" id="t-page">La page CVC, en entier</h2>
+    <p class="note">Les chiffres viennent des sources en bas de page. BrightLocal est une étude américaine ; le chiffre sur les 3 secondes vient d'une étude Google de 2016.</p>
+    <div class="frame"><div class="frame-body" id="frame"></div></div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Sources ---------- */
+  const SRC = {
+    bl: { label: 'BrightLocal, Local Consumer Review Survey 2025 (étude américaine)', url: 'https://www.brightlocal.com/research/local-consumer-review-survey-2025/' },
+    gg: { label: 'Google Search Central, « Avez-vous besoin d’un SEO ? »', url: 'https://developers.google.com/search/docs/fundamentals/do-i-need-seo' },
+    ub: { label: 'Unbounce, Conversion Benchmark Report, médiane sur 41 000 pages', url: 'https://unbounce.com/average-conversion-rates-landing-pages/' },
+    tg: { label: 'Google, aide AdSense : « Make your mobile pages load faster » (étude Think with Google, 2016)', url: 'https://support.google.com/adsense/answer/7450973' },
+  };
+
+  /* ---------- Page CVC ----------
+     Règle d'écriture : chaque ligne dit d'abord ce que le dirigeant gagne
+     (clients, temps, tranquillité), puis seulement comment, en petit.
+     Les délais sont réalistes : une livraison n'est jamais présentée comme un résultat. */
+  const GOOGLE_LONG = { when: 'Mois 4 à 12', title: 'De plus en plus de gens qui cherchent « chauffagiste + votre ville » tombent sur votre entreprise, et non sur celle des autres', text: 'Google annonce 4 mois à 1 an pour ce type de résultat. Pour 300 visites par mois, cela représente environ 20 demandes de devis au taux médian de 6,6 %.', src: ['gg', 'ub'] };
+  const PUB_STEPS = [
+    { when: 'Semaine 3', title: 'Des habitants de votre zone découvrent votre entreprise sur Facebook et Instagram', text: 'Je lance et je pilote la pub pour vous. Les premiers jours servent à trouver le message qui fait réagir.' },
+    { when: 'Semaines 3 à 7', title: 'Des demandes de nouveaux clients peuvent arriver, sans attendre Google', text: 'Avec 150 € de budget, comptez quelques demandes, ou aucune : plus le budget est élevé, plus la pub touche de monde.' },
+  ];
+  const RELAY = { when: 'Mois 1 à 12', title: 'Quand la pub s’arrête, Google prend le relais', text: 'Même progression que le pack 1 : d’abord la carte autour de chez vous, puis les recherches par ville.' };
+  const VIDEO_STEPS = [
+    { when: 'Semaine 1', title: 'Vous ne donnez qu’une demi-journée, je m’occupe du reste', text: 'Je filme sur vos chantiers, puis je monte et je prépare les vidéos.' },
+    { when: 'Semaines 2 à 6', title: 'Les clients qui vous comparent voient vos vrais chantiers, sur votre fiche Google, Facebook et Instagram', text: 'Une vidéo publiée tous les 2 à 3 jours. Ça rassure avant d’appeler.' },
+    { when: 'Semaine 3', title: 'Votre pub montre vos propres chantiers, et inspire plus confiance qu’une image générique', text: 'Les vidéos servent aussi dans la pub Facebook et Instagram.' },
+    { when: 'Mois 1 et après', title: 'Des jeunes techniciens et apprentis découvrent votre entreprise', text: 'Les mêmes vidéos sont publiées sur TikTok. Elles amènent rarement des chantiers directement, mais une vidéo peut percer largement et faire connaître votre nom.' },
+    { when: 'En parallèle', title: 'La pub et Google travaillent pour vous', text: 'Même déroulé que le pack 2.' },
+  ];
+
+  /* Construit les 3 chronologies d'une situation à partir de ses débuts propres. */
+  const timelines = (p1Start, p1Mid, p2Start) => [
+    [...p1Start, p1Mid, GOOGLE_LONG],
+    [p2Start, ...PUB_STEPS, RELAY],
+    VIDEO_STEPS,
+  ];
+
+  const CVC = {
+    who: 'Chauffagistes, climaticiens, artisans du bâtiment',
+    hook: 'Vos clients vous cherchent pendant que vous êtes sur un chantier.',
+    situations: [
+      {
+        label: 'Ni site ni fiche Google',
+        facts: [
+          { text: '99 % des consommateurs se renseignent en ligne avant de contacter une entreprise locale. Sans présence en ligne, ces recherches mènent vers d’autres entreprises.', src: ['bl'] },
+          { text: 'Les nouveaux clients arrivent uniquement par recommandation : le volume de travail dépend du bouche-à-oreille.' },
+          { text: 'Les demandes arrivent par téléphone, souvent pendant les chantiers, et se traitent en rappelant le soir.' },
+        ],
+        timelines: timelines(
+          [
+            { when: 'Semaine 1', title: 'Quand quelqu’un tape le nom de votre entreprise sur Google, il vous trouve, avec votre numéro', text: 'Je crée votre fiche Google ; Google la vérifie sous quelques jours.' },
+            { when: 'Semaine 2', title: 'Les personnes à qui l’on vous a recommandé voient vos réalisations et vous demandent un devis sans avoir à vous appeler', text: 'Votre site est en ligne. Les clients qui ne vous connaissent pas ne vous trouvent pas encore : Google commence tout juste à découvrir le site.' },
+          ],
+          { when: 'Mois 1 à 3', title: 'Des gens de votre secteur qui cherchent un chauffagiste commencent à tomber sur vous', text: 'Votre fiche apparaît sur la carte Google, autour de chez vous. Les premiers appels de clients qui ne vous connaissaient pas deviennent possibles, d’abord là où il y a peu de concurrents. Pendant ces 3 mois, je continue d’améliorer votre place sur Google.' },
+          { when: 'Semaines 1 et 2', title: 'Vous savez avant de rappeler si un chantier vous intéresse', text: 'Tout le pack 1 est en place, et chaque demande arrive avec le type de travaux, la commune et des photos.' },
+        ),
+      },
+      {
+        label: 'Une fiche Google, pas de site',
+        facts: [
+          { text: 'La fiche donne un numéro, des horaires et des avis. Le détail des services, des zones et des réalisations n’y figure pas.' },
+          { text: 'Les questions de base (zones, types d’intervention, délais) se règlent au téléphone, demande par demande.' },
+          { text: 'Les clients qui comparent plusieurs entreprises s’appuient sur ce qu’ils voient en ligne : photos de chantiers, certifications, avis.' },
+        ],
+        timelines: timelines(
+          [
+            { when: 'Semaine 1', title: 'Moins d’appels pour des travaux ou des zones qui ne vous concernent pas', text: 'Je complète votre fiche : services, zones d’intervention, horaires, photos de chantiers.' },
+            { when: 'Semaine 2', title: 'Le client qui clique sur votre fiche voit vos réalisations et vous demande un devis sans appeler', text: 'Votre site est en ligne et relié à la fiche.' },
+          ],
+          { when: 'Mois 1 à 3', title: 'Plus de gens de votre secteur tombent sur vous plutôt que sur un concurrent', text: 'Une fiche complète et reliée à un site remonte sur la carte Google en quelques semaines. Pendant ces 3 mois, je continue d’améliorer votre place sur Google.' },
+          { when: 'Semaines 1 et 2', title: 'Vous savez avant de rappeler si un chantier vous intéresse', text: 'Tout le pack 1 est en place, et chaque demande arrive avec le type de travaux, la commune et des photos.' },
+        ),
+      },
+      {
+        label: 'Un site, pas de fiche Google',
+        facts: [
+          { text: 'Sur une recherche locale, Google affiche d’abord une carte avec 3 entreprises, avant les sites. Sans fiche, l’entreprise n’apparaît pas sur cette carte.' },
+          { text: 'Les avis clients s’affichent sur la fiche Google : sans fiche, ils ne sont pas visibles au moment où le client compare. 93 % des consommateurs disent que les avis pèsent dans leur choix.', src: ['bl'] },
+          { text: 'Le site reçoit surtout les visites de ceux qui connaissent déjà le nom de l’entreprise.' },
+        ],
+        timelines: timelines(
+          [
+            { when: 'Semaine 1', title: 'Votre entreprise entre sur la carte Google, là où les clients choisissent en premier', text: 'Je crée votre fiche et je la relie à votre site ; Google la vérifie sous quelques jours.' },
+            { when: 'Semaine 2', title: 'Un visiteur sur téléphone vous demande un devis en une minute, au lieu de repartir', text: 'Je reprends votre site : rapide, clair, avec un formulaire de contact.' },
+          ],
+          { when: 'Mois 1 à 3', title: 'Les avis de vos clients s’affichent au moment où l’on compare, et les premiers appels venus de la carte deviennent possibles', text: 'Pendant ces 3 mois, je continue d’améliorer votre place sur Google.' },
+          { when: 'Semaines 1 et 2', title: 'Vous savez avant de rappeler si un chantier vous intéresse', text: 'Tout le pack 1 est en place, et chaque demande arrive avec le type de travaux, la commune et des photos.' },
+        ),
+      },
+      {
+        label: 'Un site pas optimisé',
+        facts: [
+          { text: 'Plus de la moitié des visiteurs sur mobile quittent une page qui met plus de 3 secondes à charger.', src: ['tg'] },
+          { text: 'Sans formulaire structuré, les demandes arrivent sans le type de travaux, la commune ni le budget : il faut rappeler pour les obtenir.' },
+          { text: 'Sans suivi des visites et des demandes, il est difficile de savoir ce que le site rapporte.' },
+        ],
+        timelines: timelines(
+          [
+            { when: 'Semaine 1', title: 'Vous apparaissez sur la carte Google avec vos services et vos photos de chantiers', text: 'Je crée ou je complète votre fiche Google.' },
+            { when: 'Semaine 2', title: 'Le visiteur sur téléphone voit votre numéro tout de suite et vous demande un devis, au lieu de repartir', text: 'Votre nouveau site est en ligne : rapide, clair, avec un formulaire de contact.' },
+          ],
+          { when: 'Mois 1 à 3', title: 'Les gens qui cherchent vos services commencent à tomber sur vous', text: 'Google fait remonter un site rapide et clair petit à petit : le changement se voit en semaines, pas en jours. Pendant ces 3 mois, je continue d’améliorer votre place sur Google.' },
+          { when: 'Semaines 1 et 2', title: 'Vous savez avant de rappeler si un chantier vous intéresse', text: 'Tout le pack 1 est en place, et chaque demande arrive avec le type de travaux, la commune et des photos.' },
+        ),
+      },
+    ],
+    /* Chaque élément de pack : g = ce que vous gagnez, h = comment. */
+    packs: [
+      { num: 'Pack 1', name: 'Site + Google', price: '300 €', delay: 'Livré en 2 semaines',
+        items: [
+          { g: 'De plus en plus de gens qui cherchent un chauffagiste près de chez eux tombent sur vous, plutôt que sur un concurrent', h: 'Un site construit pour être bien placé sur Google' },
+          { g: 'Vous apparaissez sur la carte Google, avec votre numéro et vos avis, là où les clients choisissent en premier', h: 'Votre fiche Google, créée ou complétée' },
+          { g: 'Un client peut vous demander un devis à toute heure, même quand vous êtes sur un chantier', h: 'Un formulaire de contact sur le site' },
+          { g: 'Pendant 3 mois, votre place sur Google continue de progresser, et votre site reste rapide et en ligne', h: 'Je surveille et j’améliore le site après la livraison' },
+        ] },
+      { num: 'Pack 2', name: 'Site + devis en ligne + pub', price: '600 €', ads: true, delay: 'Livré en 3 semaines', base: 'Tout le pack 1',
+        items: [
+          { g: 'Chaque client trouve directement le service qu’il cherche, qu’il s’agisse d’une clim, d’une chaudière ou d’une pompe à chaleur', h: 'Un site complet, une page par service' },
+          { g: 'Vous savez avant de rappeler si le chantier vous intéresse : moins de temps perdu au téléphone', h: 'Les demandes arrivent avec le type de travaux, la commune et des photos' },
+          { g: 'Des habitants de votre zone vous découvrent dès le premier mois, sans attendre Google', h: 'Un mois de pub sur Facebook et Instagram, je m’occupe de tout' },
+        ] },
+      { num: 'Pack 3', name: 'Site + devis + pub + vidéos de chantiers', price: '1 200 €', ads: true, delay: 'Livré en 4 semaines', base: 'Tout le pack 2',
+        items: [
+          { g: 'Les clients qui vous comparent voient vos vrais chantiers, et ça les rassure avant d’appeler', h: '10 à 15 vidéos publiées sur votre fiche Google, Facebook et Instagram' },
+          { g: 'Votre pub montre vos propres chantiers au lieu d’images génériques, et inspire plus confiance', h: 'Les vidéos servent aussi dans la pub du pack 2' },
+          { g: 'Des jeunes techniciens et apprentis découvrent votre entreprise, et une vidéo peut percer largement', h: 'Les mêmes vidéos publiées sur TikTok' },
+          { g: 'Vous n’avez rien à gérer : une demi-journée de votre temps, c’est tout', h: 'Je filme sur place, je monte et je publie' },
+        ] },
+    ],
+  };
+
+  /* ---------- Roue : 13 entrées ---------- */
+  const SECTORS = [
+    { short: 'CVC', name: 'CVC & bâtiment', pitch: 'Vos chantiers tournent. Votre site doit ramener des demandes de devis.', page: CVC },
+    { short: 'Instituts', name: 'Instituts de beauté', pitch: 'Un agenda qui se remplit pendant que vous êtes en cabine.' },
+    { short: 'Immobilier', name: 'Agences immobilières', pitch: 'Des mandats qui arrivent par votre site, pas seulement par la vitrine.' },
+    { short: 'Coachs', name: 'Coachs sportifs', pitch: 'Des séances réservées en ligne, sans messages à rallonge.' },
+    { short: 'Salles de sport', name: 'Salles de sport', pitch: 'Des séances d’essai réservées en ligne, et des abonnés qui restent.' },
+    { short: 'Notaires', name: 'Notaires', pitch: 'Des clients qui trouvent l’information et prennent rendez-vous en ligne.' },
+    { short: 'Avocats', name: 'Avocats', pitch: 'Des clients qui comprennent vos domaines et prennent rendez-vous.' },
+    { short: 'Parcs', name: 'Parcs d’activités', pitch: 'Des billets vendus en ligne avant que les familles arrivent.' },
+    { short: 'Garages', name: 'Garages & carrosseries', pitch: 'Des demandes de devis et des rendez-vous d’atelier pris en ligne.' },
+    { short: 'Restaurants', name: 'Restaurants', pitch: 'Chaque commande prise chez vous, c’est la commission que vous gardez.' },
+    { short: 'Coiffeurs', name: 'Coiffeurs & barbiers', pitch: 'Un agenda qui se remplit pendant que vous coupez.' },
+    { short: 'ESN / agences', name: 'ESN & agences web', pitch: 'Un développeur fullstack en renfort, sans délai de recrutement.' },
+    { short: 'Autre projet', name: 'Autre projet', pitch: 'Vous ne vous reconnaissez pas ? Voici le portfolio complet.' },
+  ];
+
+  const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+
+  /* ---------- Rendu de la page secteur ---------- */
+  let pageId = 0;
+  function renderPage(root, sector, onBack) {
+    const nav = `
+      <div class="sp-nav">
+        <span class="sp-brand">Kenny Pignolet</span>
+        ${onBack ? '<button class="sp-back" type="button">Changer de secteur</button>' : ''}
+      </div>`;
+    const p = sector.page;
+    if (!p) {
+      root.innerHTML = nav + `
+        <div class="sp">
+          <header><p class="sp-who">${sector.name}</p><h3 class="sp-hook">${sector.pitch}</h3></header>
+          <p class="sp-draft">Cette page sera rédigée sur le modèle de la page CVC, une fois celle-ci validée.</p>
+        </div>`;
+      if (onBack) root.querySelector('.sp-back').addEventListener('click', onBack);
+      return;
+    }
+    const id = 'pg' + (++pageId);
+    root.innerHTML = nav + `
+      <div class="sp">
+        <header><p class="sp-who">${p.who}</p><h3 class="sp-hook">${p.hook}</h3></header>
+        <section>
+          <p class="sit-q" id="${id}-q">Aujourd’hui, j’ai…</p>
+          <fieldset class="sit" aria-labelledby="${id}-q">
+            ${p.situations.map((s, i) => `
+              <label><input type="radio" name="${id}" value="${i}" ${i === 0 ? 'checked' : ''}><span>${s.label}</span></label>`).join('')}
+          </fieldset>
+          <div class="facts-box swap">
+            <h4 class="facts-h">Ce qui se passe aujourd’hui</h4>
+            <ul class="facts"></ul>
+          </div>
+        </section>
+        <section class="swap-wrap">
+          <h4 class="sp-h2">Ce que chaque pack change, et quand</h4>
+          <p class="sp-sub">Trois packs, du plus simple au plus complet. Chacun contient le précédent.</p>
+          <div class="car" id="${id}-car">
+            <div class="car-tabs" role="tablist" aria-label="Packs">
+              ${p.packs.map((k, i) => `<button type="button" role="tab" id="${id}-tab${i}" aria-controls="${id}-slide${i}" aria-selected="${i === 0}">${k.num}</button>`).join('')}
+            </div>
+            <div class="car-track" tabindex="-1">
+              ${p.packs.map((k, i) => `
+                <article class="car-slide" role="tabpanel" id="${id}-slide${i}" aria-labelledby="${id}-tab${i}">
+                  <div class="pk-head">
+                    <h5 class="pack-name">${k.name}</h5>
+                    <div class="pack-price">
+                      <b>${k.price}</b>
+                      ${k.ads ? '<span class="ads">+ budget pub au choix : 150, 250 ou 400 €</span>' : ''}
+                      <span class="delay">${k.delay}</span>
+                    </div>
+                  </div>
+                  <ul class="pk-items">
+                    ${k.base ? `<li class="is-base">${k.base}</li>` : ''}
+                    ${k.items.map(x => `<li><span class="pk-gain">${x.g}</span><span class="pk-how">${x.h}</span></li>`).join('')}
+                  </ul>
+                  <ol class="tl swap" data-pack="${i}"></ol>
+                </article>`).join('')}
+            </div>
+            <div class="car-nav">
+              <button class="round" type="button" data-car="-1" aria-label="Pack précédent">‹</button>
+              <button class="round" type="button" data-car="1" aria-label="Pack suivant">›</button>
+            </div>
+          </div>
+          <div class="packs-foot">
+            <p><b>Budget pub :</b> reversé intégralement à Meta, sans marge. 150 € suffisent pour tester sur une petite zone ; plus la zone est large, plus le budget doit être élevé.</p>
+          </div>
+        </section>
+        <section class="sp-cta">
+          <p>Dites-moi où vous en êtes, je vous réponds sous 24 heures avec le pack qui vous correspond.</p>
+          <button class="btn" type="button">Demander un devis gratuit</button>
+        </section>
+        <ol class="sp-sources"></ol>
+      </div>`;
+    if (onBack) root.querySelector('.sp-back').addEventListener('click', onBack);
+
+    const factsEl = root.querySelector('.facts');
+    const tls = [...root.querySelectorAll('.tl')];
+    const sources = root.querySelector('.sp-sources');
+    const swaps = [...root.querySelectorAll('.swap')];
+
+    const fill = (i) => {
+      const s = p.situations[i];
+      const order = [];
+      const add = x => (x.src || []).forEach(k => { if (!order.includes(k)) order.push(k); });
+      s.facts.forEach(add);
+      s.timelines.forEach(t => t.forEach(add));
+      const fn = x => (x.src || []).map(k => `<a class="fn" href="${SRC[k].url}" target="_blank" rel="noopener" title="${SRC[k].label}">${order.indexOf(k) + 1}</a>`).join('');
+      factsEl.innerHTML = s.facts.map(f => `<li>${f.text}${fn(f)}</li>`).join('');
+      tls.forEach((tl, k) => {
+        tl.innerHTML = s.timelines[k].map(st => `
+          <li>
+            <span class="tl-when">${st.when}</span>
+            <span class="tl-title">${st.title}</span>
+            <p class="tl-text">${st.text}${fn(st)}</p>
+          </li>`).join('');
+      });
+      sources.innerHTML = order.map(k => `<li><a href="${SRC[k].url}" target="_blank" rel="noopener">${SRC[k].label}</a></li>`).join('');
+    };
+    root.querySelectorAll(`input[name="${id}"]`).forEach(r => r.addEventListener('change', () => {
+      if (REDUCE) { fill(Number(r.value)); return; }
+      swaps.forEach(x => x.classList.add('is-swapping'));
+      setTimeout(() => { fill(Number(r.value)); swaps.forEach(x => x.classList.remove('is-swapping')); }, 200);
+    }));
+    fill(0);
+
+    /* Carrousel : défilement natif avec aimantation, onglets et flèches synchronisés. */
+    const track = root.querySelector('.car-track');
+    const tabs = [...root.querySelectorAll('.car-tabs [role=tab]')];
+    const slides = [...root.querySelectorAll('.car-slide')];
+    let current = 0;
+    const setTab = (i) => {
+      current = i;
+      tabs.forEach((t, k) => { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+    };
+    const goSlide = (i) => {
+      const n = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: slides[n].offsetLeft - track.offsetLeft, behavior: REDUCE ? 'auto' : 'smooth' });
+      setTab(n);
+    };
+    tabs.forEach((t, i) => t.addEventListener('click', () => goSlide(i)));
+    root.querySelectorAll('[data-car]').forEach(b => b.addEventListener('click', () => goSlide(current + Number(b.dataset.car))));
+    root.querySelector('.car-tabs').addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); goSlide(current + 1); tabs[current].focus(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goSlide(current - 1); tabs[current].focus(); }
+    });
+    let st = 0;
+    track.addEventListener('scroll', () => {
+      clearTimeout(st);
+      st = setTimeout(() => setTab(Math.round(track.scrollLeft / track.clientWidth)), 80);
+    });
+    setTab(0);
+  }
+
+  /* ---------- La roue défilante ---------- */
+  const BEAMS = [
+    { a: -90, top: 14, delay: 0.0, dur: 5.6, max: .18 },
+    { a: -45, top: 20, delay: 0.4, dur: 6.0, max: .24 },
+    { a: 0, top: 24, delay: 0.1, dur: 6.4, max: .30 },
+    { a: 45, top: 20, delay: 0.7, dur: 5.8, max: .24 },
+    { a: 90, top: 14, delay: 0.25, dur: 5.4, max: .18 },
+  ];
+  const N = SECTORS.length;
+  const VISIBLE = 7;                 // places sur l'orbite
+  const STEP = 360 / VISIBLE;        // écart entre deux places
+  const HALF = VISIBLE / 2;          // au-delà, l'entrée attend sous le volcan
+  const clamp01 = v => Math.max(0, Math.min(1, v));
+  const easeOut = t => 1 - Math.pow(1 - t, 4);
+
+  function init(stage) {
+    stage.innerHTML = '';
+    stage.classList.remove('is-opening');
+    for (let i = 0; i < 55; i++) {
+      const s = el('span', 'star');
+      const size = 1 + Math.random() * 2;
+      s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 60}%;width:${size}px;height:${size}px;` +
+        `--o:${(0.2 + Math.random() * 0.5).toFixed(2)};--d:${(2 + Math.random() * 3).toFixed(1)}s;--delay:${(Math.random() * 4).toFixed(1)}s`;
+      stage.append(s);
+    }
+    const beamWraps = BEAMS.map(b => {
+      const w = el('div', 'beam-wrap');
+      const beam = el('div', 'beam');
+      beam.style.cssText = `--dur:${b.dur}s;--delay:${b.delay}s;--max:${b.max}`;
+      w.append(beam);
+      stage.append(w);
+      return w;
+    });
+    const mountain = el('div', 'mountain');
+    const crater = el('div', 'crater');
+    stage.append(mountain, crater);
+
+    const ui = el('div', 'ui');
+    ui.innerHTML = `
+      <div class="hello"><div class="who">Kenny Pignolet, développeur web freelance en Île-de-France</div><div class="q">Vous êtes… ?</div></div>
+      <div class="w-bottom">
+        <p class="w-pitch" aria-live="polite"></p>
+        <div class="w-controls">
+          <button class="round" type="button" data-dir="-1" aria-label="Secteur précédent">‹</button>
+          <button class="btn" type="button" data-enter>Entrer</button>
+          <button class="round" type="button" data-dir="1" aria-label="Secteur suivant">›</button>
+        </div>
+      </div>`;
+    stage.append(ui);
+    const landing = el('div', 'landing');
+    landing.hidden = true;
+    const ring = el('div', 'ring');
+    stage.append(landing, ring);
+    const pitch = ui.querySelector('.w-pitch');
+    const items = SECTORS.map((s, i) => {
+      const b = el('button', 'w-item');
+      b.type = 'button';
+      b.addEventListener('click', () => (i === target() ? open() : goTo(i)));
+      ui.append(b);
+      return b;
+    });
+
+    let rot = 0, from = 0, to = 0, t0 = 0, raf = 0, busy = false;
+    const DURATION = 720;
+    const mod = v => ((v % N) + N) % N;
+    const target = () => mod(Math.round(to));
+
+    function geom() {
+      const w = stage.clientWidth, h = stage.clientHeight;
+      const narrow = w < 560;
+      return narrow
+        ? { w, h, narrow, ax: 50, ay: 60, half: 58, cy: h * 0.385, rx: w * 0.34, ry: h * 0.15 }
+        : { w, h, narrow, ax: 50, ay: 76, half: 26, cy: h * 0.505, rx: Math.min(w * 0.36, h * 0.62), ry: h * 0.235 };
+    }
+    function drawDecor(g) {
+      mountain.style.clipPath = `polygon(${g.ax}% ${g.ay}%, ${g.ax - g.half}% 100%, ${g.ax + g.half}% 100%)`;
+      crater.style.left = g.ax + '%';
+      crater.style.top = g.ay + '%';
+      const apexY = g.h * g.ay / 100;
+      beamWraps.forEach((w, i) => {
+        const b = BEAMS[i];
+        const rad = b.a * Math.PI / 180;
+        const toTop = Math.cos(rad) > 0.01 ? (apexY + 20) / Math.cos(rad) : Infinity;
+        const toSide = Math.abs(Math.sin(rad)) > 0.01 ? (g.w / 2 + 20) / Math.abs(Math.sin(rad)) : Infinity;
+        const len = Math.min(toTop, toSide);
+        const width = g.h * b.top / 100;
+        Object.assign(w.style, {
+          left: g.ax + '%', bottom: (100 - g.ay) + '%',
+          width: width + 'px', height: len + 'px', marginLeft: (-width / 2) + 'px',
+          transform: `rotate(${b.a}deg)`,
+        });
+      });
+    }
+
+    /* Chaque entrée a une distance d (en places) au secteur actif.
+       |d| ≤ 3 : visible sur l'orbite. Au-delà, elle s'efface sous le volcan
+       et attend son tour : il peut donc y avoir plus d'entrées que de places. */
+    function draw() {
+      const g = geom();
+      drawDecor(g);
+      const cx = g.w / 2;
+      items.forEach((b, i) => {
+        const label = g.narrow ? SECTORS[i].short : SECTORS[i].name;
+        if (b.textContent !== label) b.textContent = label;
+        let d = ((i - rot) % N + N) % N;
+        if (d > N / 2) d -= N;
+        const dc = Math.max(-HALF, Math.min(HALF, d));
+        const rad = (-90 + dc * STEP) * Math.PI / 180;
+        const x = cx + g.rx * Math.cos(rad);
+        const y = g.cy + g.ry * Math.sin(rad);
+        const top = clamp01(1 - Math.abs(d));
+        const fade = clamp01((HALF - Math.abs(d)) / 0.55);
+        const scale = 0.9 + 0.2 * top;
+        b.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale.toFixed(3)})`;
+        b.style.opacity = (fade * (0.8 + 0.2 * top)).toFixed(3);
+        b.style.pointerEvents = fade < 0.5 ? 'none' : '';
+        b.style.visibility = fade <= 0 ? 'hidden' : '';
+        b.style.zIndex = String(Math.round(y));
+      });
+    }
+    function markActive() {
+      const a = target();
+      items.forEach((b, i) => { b.classList.toggle('is-active', i === a); b.tabIndex = i === a ? 0 : -1; });
+      pitch.textContent = SECTORS[a].pitch;
+    }
+    function tick(now) {
+      const t = clamp01((now - t0) / DURATION);
+      rot = from + (to - from) * easeOut(t);
+      draw();
+      raf = t < 1 ? requestAnimationFrame(tick) : 0;
+    }
+    function goTo(i) {
+      let d = mod(i) - target();
+      if (d > N / 2) d -= N;
+      if (d < -N / 2) d += N;
+      step(d);
+    }
+    function step(d) {
+      if (busy || !d) return;
+      from = rot;
+      to = Math.round(to) + d;
+      markActive();
+      if (REDUCE) { rot = to; draw(); return; }
+      t0 = performance.now();
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+
+    function open() {
+      if (busy) return;
+      busy = true;
+      const g = geom();
+      const x = g.w * g.ax / 100, y = g.h * g.ay / 100;
+      const R = Math.hypot(Math.max(x, g.w - x), Math.max(y, g.h - y)) + 30;
+      renderPage(landing, SECTORS[target()], close);
+      landing.dataset.x = x; landing.dataset.y = y; landing.dataset.r = R;
+      if (REDUCE) { landing.hidden = false; busy = false; return; }
+
+      stage.classList.add('is-opening');
+      landing.style.transition = 'none';
+      landing.style.clipPath = `circle(0px at ${x}px ${y}px)`;
+      landing.hidden = false;
+      landing.scrollTop = 0;
+      landing.classList.remove('in');
+      Object.assign(ring.style, { transition: 'none', left: x + 'px', top: y + 'px', width: R * 2 + 'px', height: R * 2 + 'px', transform: 'translate(-50%, -50%) scale(0)', opacity: '1' });
+      void landing.offsetWidth;
+      setTimeout(() => {
+        landing.classList.add('in');
+        landing.style.transition = 'clip-path 1.05s var(--reveal)';
+        landing.style.clipPath = `circle(${R}px at ${x}px ${y}px)`;
+        ring.style.transition = 'transform 1.05s var(--reveal), opacity .35s ease .72s';
+        ring.style.transform = 'translate(-50%, -50%) scale(1)';
+        ring.style.opacity = '0';
+      }, 480);
+      setTimeout(() => {
+        landing.style.transition = 'none';
+        landing.style.clipPath = '';
+        stage.classList.remove('is-opening');
+        busy = false;
+      }, 1600);
+    }
+    function close() {
+      if (busy) return;
+      if (REDUCE) { landing.hidden = true; return; }
+      busy = true;
+      const { x, y, r } = landing.dataset;
+      landing.classList.remove('in');
+      landing.style.transition = 'none';
+      landing.style.clipPath = `circle(${r}px at ${x}px ${y}px)`;
+      void landing.offsetWidth;
+      landing.style.transition = 'clip-path .75s var(--reveal)';
+      landing.style.clipPath = `circle(0px at ${x}px ${y}px)`;
+      setTimeout(() => {
+        landing.hidden = true;
+        landing.style.transition = 'none';
+        landing.style.clipPath = '';
+        busy = false;
+        stage.focus({ preventScroll: true });
+      }, 780);
+    }
+
+    ui.querySelectorAll('[data-dir]').forEach(b => b.addEventListener('click', () => step(Number(b.dataset.dir))));
+    ui.querySelector('[data-enter]').addEventListener('click', open);
+    stage.onkeydown = e => {
+      if (!landing.hidden || busy) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      if (e.key === 'Enter' && e.target === stage) { e.preventDefault(); open(); }
+    };
+    /* Glisser : un cran par geste, déclenché au lâcher à partir de 35 px. */
+    const SWIPE = 35;
+    let x0 = null;
+    stage.onpointerdown = e => { if (landing.hidden) x0 = e.clientX; };
+    stage.onpointerup = e => {
+      if (x0 == null) return;
+      const dx = e.clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) >= SWIPE) step(dx < 0 ? 1 : -1);
+    };
+    stage.onpointercancel = () => { x0 = null; };
+    const ro = new ResizeObserver(draw);
+    ro.observe(stage);
+    markActive();
+    draw();
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+  }
+
+  const stage = document.getElementById('stage');
+  let dispose = init(stage);
+  document.getElementById('replay').addEventListener('click', () => { dispose(); dispose = init(stage); });
+  renderPage(document.getElementById('frame'), SECTORS[0], null);
+})();
+</script>
