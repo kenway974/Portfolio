@@ -7,7 +7,7 @@ const resources = {
       nav: {
         services: 'Services',
         projects: 'Réalisations',
-        til: 'TIL',
+        linkedin: 'LinkedIn',
         blog: 'Blog',
         contact: 'Contact',
         cta: 'Parlons de votre projet',
@@ -71,7 +71,7 @@ const resources = {
       about: {
         label: 'À propos',
         heading: 'Un développeur, pas une agence.',
-        body1: 'Je m\'appelle Kenny, développeur web freelance originaire de La Réunion. J\'accompagne les entreprises qui veulent une vraie présence en ligne — sans se perdre dans la complexité d\'une agence.',
+        body1: 'Je m\'appelle Kenny, développeur web freelance en Île-de-France. J\'accompagne les entreprises qui veulent une vraie présence en ligne — sans se perdre dans la complexité d\'une agence.',
         body2: 'Je prends en main vos projets de A à Z : du premier brief à la mise en ligne. Pas de jargon, des solutions adaptées à votre réalité, et un suivi simple — où que vous soyez.',
         stat1_value: '2–4 sem.',
         stat1_label: 'Délai de livraison',
@@ -79,21 +79,6 @@ const resources = {
         stat2_label: 'Délai de réponse',
         stat3_value: 'A → Z',
         stat3_label: 'Brief à mise en ligne',
-      },
-      til: {
-        label: 'Today I Learned',
-        heading: 'Ce que j\'apprends au quotidien.',
-        desc: 'Chaque sujet que je découvre, expliqué simplement — avec une métaphore, des exemples concrets et une mise en pratique.',
-        read: 'Lire →',
-        all: 'Tous les sujets',
-        back: '← Retour au TIL',
-        fields: {
-          explication: 'Explication',
-          metaphore: 'Métaphore',
-          exemple: 'Exemple concret',
-          pratique: 'Mise en pratique',
-          synthese: 'En résumé',
-        },
       },
       blog: {
         label: 'Blog',
@@ -133,7 +118,7 @@ const resources = {
       nav: {
         services: 'Services',
         projects: 'Work',
-        til: 'TIL',
+        linkedin: 'LinkedIn',
         blog: 'Blog',
         contact: 'Contact',
         cta: 'Let\'s talk',
@@ -197,7 +182,7 @@ const resources = {
       about: {
         label: 'About',
         heading: 'A developer, not an agency.',
-        body1: 'I\'m Kenny, a freelance web developer from La Réunion island. I help businesses build a real online presence — without getting lost in agency complexity.',
+        body1: 'I\'m Kenny, a freelance web developer based in Île-de-France (Paris area). I help businesses build a real online presence — without getting lost in agency complexity.',
         body2: 'I handle your projects from A to Z: from the first brief to going live. No jargon, solutions adapted to your reality, and straightforward support — wherever you are.',
         stat1_value: '2–4 wks',
         stat1_label: 'Delivery time',
@@ -205,21 +190,6 @@ const resources = {
         stat2_label: 'Response time',
         stat3_value: 'A → Z',
         stat3_label: 'Brief to launch',
-      },
-      til: {
-        label: 'Today I Learned',
-        heading: 'What I learn every day.',
-        desc: 'Every concept I discover, explained simply — with a metaphor, real-world examples and hands-on practice.',
-        read: 'Read →',
-        all: 'All topics',
-        back: '← Back to TIL',
-        fields: {
-          explication: 'Explanation',
-          metaphore: 'Metaphor',
-          exemple: 'Real-world example',
-          pratique: 'Hands-on practice',
-          synthese: 'Summary',
-        },
       },
       blog: {
         label: 'Blog',

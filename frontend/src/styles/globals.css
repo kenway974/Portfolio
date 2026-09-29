@@ -23,7 +23,7 @@
   --text-muted: rgba(245, 239, 232, 0.3);
 
   /* Typography */
-  --font-display: 'Syne', sans-serif;
+  --font-display: 'Familjen Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: 'DM Sans', sans-serif;
 
   /* Spacing */

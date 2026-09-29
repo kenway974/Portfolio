@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './Navbar.css'
 
+const LINKEDIN = 'https://www.linkedin.com/in/kenny-pignolet'
+
 export default function Navbar() {
   const { t, i18n } = useTranslation()
   const [scrolled, setScrolled] = useState(false)
@@ -22,8 +24,8 @@ export default function Navbar() {
   }
 
   const scrollTo = (id: string) => {
-    if (location.pathname !== '/') {
-      window.location.href = `/#${id}`
+    if (location.pathname !== '/portfolio') {
+      window.location.href = `/portfolio#${id}`
       return
     }
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -33,7 +35,7 @@ export default function Navbar() {
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
       <div className="container navbar__inner">
         <Link
-          to="/"
+          to="/portfolio"
           className="navbar__logo"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
@@ -43,7 +45,7 @@ export default function Navbar() {
         <nav className="navbar__links" aria-label="Primary navigation">
           <button onClick={() => scrollTo('services')}>{t('nav.services')}</button>
           <button onClick={() => scrollTo('projects')}>{t('nav.projects')}</button>
-          <Link to="/til">{t('nav.til')}</Link>
+          <a href={LINKEDIN} target="_blank" rel="noopener noreferrer">{t('nav.linkedin')}</a>
           <Link to="/blog">{t('nav.blog')}</Link>
           <button onClick={() => scrollTo('contact')}>{t('nav.contact')}</button>
         </nav>
@@ -78,7 +80,7 @@ export default function Navbar() {
       <div className={`mobile-menu${menuOpen ? ' mobile-menu--open' : ''}`}>
         <button onClick={() => scrollTo('services')}>{t('nav.services')}</button>
         <button onClick={() => scrollTo('projects')}>{t('nav.projects')}</button>
-        <Link to="/til">{t('nav.til')}</Link>
+        <a href={LINKEDIN} target="_blank" rel="noopener noreferrer">{t('nav.linkedin')}</a>
         <Link to="/blog">{t('nav.blog')}</Link>
         <button onClick={() => scrollTo('contact')}>{t('nav.contact')}</button>
         <button className="lang-toggle" onClick={toggleLang}>
