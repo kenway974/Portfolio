@@ -88,8 +88,8 @@ export default function Welcome() {
     const geom = () => {
       const w = stage.clientWidth, h = stage.clientHeight
       const narrow = w < 560
-      const ay = narrow ? 64 : 76
-      const gap = narrow ? 64 : 72                        // écart titre / première entrée
+      const ay = narrow ? 62 : 76
+      const gap = narrow ? 39 : 58                        // écart titre / première entrée
       const top = hello.offsetTop + hello.offsetHeight + gap + 20
       const low = Math.min(bottom.offsetTop - 54, h * ay / 100 - (narrow ? 50 : 12))
       const ry = Math.max(40, (low - top) / 1.9)          // les entrées du bas sont à 0,9 × ry sous le centre
