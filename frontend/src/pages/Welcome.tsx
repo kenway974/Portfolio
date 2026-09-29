@@ -80,12 +80,22 @@ export default function Welcome() {
     const timers: number[] = []
     const target = () => mod(Math.round(to))
 
+    const hello = ui.querySelector<HTMLElement>('.hello')!
+    const bottom = ui.querySelector<HTMLElement>('.w-bottom')!
+
+    /* L'orbite se cale dans l'espace libre : sous le titre avec un vrai écart,
+       au-dessus du texte du bas et du cratère. */
     const geom = () => {
       const w = stage.clientWidth, h = stage.clientHeight
       const narrow = w < 560
+      const ay = narrow ? 64 : 76
+      const gap = narrow ? 64 : 72                        // écart titre / première entrée
+      const top = hello.offsetTop + hello.offsetHeight + gap + 20
+      const low = Math.min(bottom.offsetTop - 54, h * ay / 100 - (narrow ? 50 : 12))
+      const ry = Math.max(40, (low - top) / 1.9)          // les entrées du bas sont à 0,9 × ry sous le centre
       return narrow
-        ? { w, h, narrow, ax: 50, ay: 60, half: 58, cy: h * 0.385, rx: w * 0.34, ry: h * 0.15 }
-        : { w, h, narrow, ax: 50, ay: 76, half: 26, cy: h * 0.505, rx: Math.min(w * 0.36, h * 0.62), ry: h * 0.235 }
+        ? { w, h, narrow, ax: 50, ay, half: 58, cy: top + ry, rx: w * 0.34, ry }
+        : { w, h, narrow, ax: 50, ay, half: 26, cy: top + ry, rx: Math.min(w * 0.36, h * 0.62), ry }
     }
     type Geom = ReturnType<typeof geom>
     const drawDecor = (g: Geom) => {
@@ -206,6 +216,7 @@ export default function Welcome() {
     stage.onpointercancel = () => { x0 = null }
     const ro = new ResizeObserver(draw)
     ro.observe(stage)
+    ro.observe(hello)
     markActive()
     draw()
     stage.focus({ preventScroll: true })
