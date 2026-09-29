@@ -40,9 +40,9 @@
 .vx .is-opening .beam { animation: none; opacity: .8; transform: scaleY(1.08); transition: opacity .4s ease, transform .5s var(--ease); }
 .vx .is-opening .crater { transform: translate(-50%, -50%) scale(2.4); }
 .vx .ring { position: absolute; z-index: 9; border-radius: 50%; pointer-events: none; opacity: 0; border: 1.5px solid rgba(255,220,140,.95); box-shadow: 0 0 28px 6px rgba(245,200,66,.45), inset 0 0 28px 4px rgba(232,156,26,.35); }
-.vx .hello { position: absolute; left: 0; right: 0; top: 4%; text-align: center; padding-inline: 16px; pointer-events: none; }
+.vx .hello { position: absolute; left: 0; right: 0; top: 9%; text-align: center; padding-inline: 16px; pointer-events: none; }
 .vx .hello .who { font-size: 0.8rem; color: var(--text-2); }
-.vx .hello .q { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.25rem, 3.2vw, 1.9rem); line-height: 1.05; margin-top: 4px; text-shadow: 0 2px 16px rgba(0,0,0,.7); }
+.vx .hello .q { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.05; margin-top: 10px; text-shadow: 0 2px 16px rgba(0,0,0,.7); }
 .vx .w-item { position: absolute; left: 0; top: 0; background: rgba(6,5,7,.62); border: 1px solid transparent; cursor: pointer; font-family: var(--font-display); font-weight: 700; white-space: nowrap; font-size: clamp(.78rem, 1.7vw, .98rem); padding: 7px 13px; border-radius: 999px; will-change: transform, opacity; transition: color .35s, background .35s, border-color .35s, box-shadow .35s; }
 .vx .w-item:hover { border-color: var(--border-accent); }
 .vx .w-item.is-active { color: var(--black); background: var(--accent-bright); box-shadow: 0 0 0 6px rgba(245,200,66,.12), 0 0 30px rgba(245,200,66,.35); }
@@ -269,3 +269,4 @@
 .vx .w-alt { font-size: 0.85rem; color: var(--text-3); text-decoration: underline; text-underline-offset: 3px; transition: color .25s; }
 .vx .w-alt:hover { color: var(--accent-bright); }
 .vx .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (max-height: 700px) { .vx .hello { top: 5%; } }
