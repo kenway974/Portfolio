@@ -1277,8 +1277,71 @@ export const SECTORS: Sector[] = [
     "page": {
       "kind": "profile",
       "who": "Recruteurs, CTO, responsables techniques",
-      "hook": "Développeur fullstack junior, TypeScript de bout en bout.",
+      "hook": "Développeur fullstack junior : je m’adapte à la stack, pas l’inverse.",
       "intro": "Je conçois, je code et je mets en ligne des applications web complètes : interface, API, base de données, déploiement. Voici l’essentiel en deux minutes.",
+      "skills": [
+        {
+          "label": "Interface",
+          "items": [
+            {
+              "g": "Des interfaces animées, vivantes, presque comme un jeu vidéo",
+              "h": "Scènes, transitions, animations au défilement et au clic : l’accueil de ce site en est un exemple."
+            },
+            {
+              "g": "Des interfaces qui font agir, puis revenir",
+              "h": "Parcours pensés pour transformer un visiteur en contact, puis en utilisateur fidèle : acquisition et rétention."
+            },
+            {
+              "g": "Des écrans qui marchent partout",
+              "h": "Mobile d’abord, utilisables au clavier, rapides à charger."
+            }
+          ]
+        },
+        {
+          "label": "Serveur",
+          "items": [
+            {
+              "g": "Un code factorisé, facile à reprendre",
+              "h": "Découper, mutualiser, bien nommer : quelqu’un d’autre peut continuer derrière moi."
+            },
+            {
+              "g": "Des API claires et documentées",
+              "h": "Des contrats d’API écrits pour être intégrés par d’autres équipes."
+            },
+            {
+              "g": "De la logique métier qui tient la route",
+              "h": "Règles, calculs, algorithmes : de l’estimation immobilière à l’optimisation de tournées."
+            }
+          ]
+        },
+        {
+          "label": "Données",
+          "items": [
+            {
+              "g": "Modéliser les données d’un vrai métier",
+              "h": "Tables, relations et droits d’accès qui suivent le fonctionnement réel de l’activité."
+            }
+          ]
+        },
+        {
+          "label": "Mise en ligne",
+          "items": [
+            {
+              "g": "Livrer jusqu’en production",
+              "h": "Déploiement, nom de domaine, e-mails automatiques : le projet tourne pour de vrai, pas seulement sur mon poste."
+            }
+          ]
+        },
+        {
+          "label": "Adaptation",
+          "items": [
+            {
+              "g": "Prendre en main une nouvelle stack rapidement",
+              "h": "Formé sur Symfony, j’ai livré en Next.js, Node.js et Python : je m’adapte au projet, pas l’inverse."
+            }
+          ]
+        }
+      ],
       "stack": [
         {
           "label": "Interface",
@@ -1290,13 +1353,13 @@ export const SECTORS: Sector[] = [
           ]
         },
         {
-          "label": "Serveur et API",
+          "label": "Serveur",
           "items": [
+            "Symfony",
+            "PHP",
             "Node.js",
             "Express",
-            "Fastify",
-            "API REST",
-            "OpenAPI"
+            "Fastify"
           ]
         },
         {
@@ -1310,15 +1373,13 @@ export const SECTORS: Sector[] = [
           "label": "Mise en ligne",
           "items": [
             "Vercel",
-            "Railway",
-            "Resend"
+            "Railway"
           ]
         },
         {
           "label": "Algorithmes",
           "items": [
-            "Python",
-            "Optimisation de tournées (VRP)"
+            "Python"
           ]
         }
       ],

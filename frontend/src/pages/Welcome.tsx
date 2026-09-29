@@ -24,6 +24,8 @@ const DURATION = 720
 const SWIPE = 35                  // glisser : un cran par geste, au lâcher
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v))
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 4)
+const INTRO_DELAY = 750           // ouverture : les secteurs jaillissent du cratère…
+const INTRO_SPREAD = 1100         // …et s'écartent jusqu'à leur place sur l'orbite
 const mod = (v: number) => ((v % N) + N) % N
 
 const el = (tag: string, cls?: string) => {
@@ -77,6 +79,9 @@ export default function Welcome() {
 
     const start = Math.max(0, SECTORS.findIndex(s => s.slug === fromSlug))
     let rot = start, from = start, to = start, t0 = 0, raf = 0, busy = false
+    /* Ouverture : jouée à l'arrivée sur le site, pas au retour depuis une page secteur. */
+    const INTRO = !REDUCE && !fromSlug
+    let spread = INTRO ? 0 : 1, introRaf = 0
     const timers: number[] = []
     const target = () => mod(Math.round(to))
 
@@ -124,6 +129,8 @@ export default function Welcome() {
       const g = geom()
       drawDecor(g)
       const cx = g.w / 2
+      const apexY = g.h * g.ay / 100
+      const k = easeOut(spread)
       items.forEach((b, i) => {
         const label = g.narrow ? SECTORS[i].short : SECTORS[i].name
         if (b.textContent !== label) b.textContent = label
@@ -131,11 +138,11 @@ export default function Welcome() {
         if (d > N / 2) d -= N
         const dc = Math.max(-HALF, Math.min(HALF, d))
         const rad = (-90 + dc * STEP) * Math.PI / 180
-        const x = cx + g.rx * Math.cos(rad)
-        const y = g.cy + g.ry * Math.sin(rad)
+        const x = cx + g.rx * k * Math.cos(rad)
+        const y = apexY + (g.cy + g.ry * Math.sin(rad) - apexY) * k
         const top = clamp01(1 - Math.abs(d))
-        const fade = clamp01((HALF - Math.abs(d)) / 0.55)
-        const scale = 0.9 + 0.2 * top
+        const fade = clamp01((HALF - Math.abs(d)) / 0.55) * clamp01(spread * 1.6)
+        const scale = (0.9 + 0.2 * top) * (0.4 + 0.6 * k)
         b.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale.toFixed(3)})`
         b.style.opacity = (fade * (0.8 + 0.2 * top)).toFixed(3)
         b.style.pointerEvents = fade < 0.5 ? 'none' : ''
@@ -221,8 +228,22 @@ export default function Welcome() {
     draw()
     stage.focus({ preventScroll: true })
 
+    if (INTRO) {
+      stage.classList.add('intro')
+      let i0 = 0
+      const introTick = (now: number) => {
+        spread = clamp01((now - i0) / INTRO_SPREAD)
+        draw()
+        introRaf = spread < 1 ? requestAnimationFrame(introTick) : 0
+      }
+      timers.push(window.setTimeout(() => { i0 = performance.now(); introRaf = requestAnimationFrame(introTick) }, INTRO_DELAY))
+      timers.push(window.setTimeout(() => stage.classList.remove('intro'), 2800))
+    }
+
     return () => {
       cancelAnimationFrame(raf)
+      cancelAnimationFrame(introRaf)
+      stage.classList.remove('intro')
       timers.forEach(clearTimeout)
       ro.disconnect()
       deco.remove()

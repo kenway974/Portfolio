@@ -76,7 +76,7 @@ function OfferView({ page }: { page: OfferPage }) {
   const scrollTimer = useRef(0)
   const first = useRef(true)
 
-  useReveal(root, '.sp > header, .sit-q, .sit label, .facts-box, .sp-h2, .sp-sub, .car, .packs-foot, .sp-cta, .sp-sources', offerStagger)
+  useReveal(root, '.sit-q, .sit label, .facts-box, .sp-h2, .sp-sub, .car, .packs-foot, .sp-cta, .sp-sources', offerStagger)
 
   const s = page.situations[sit]
   const tlFor = (k: number): Step[] => [...(page.packs[k].pre || []), ...((s.starts && s.starts[k]) || page.packs[k].lead || []), ...page.packs[k].steps]
@@ -227,19 +227,26 @@ function OfferView({ page }: { page: OfferPage }) {
   )
 }
 
-const profileStagger = (n: Element, i: number) => (n.matches('.pf-proj') ? (i % 4) * 80 : 0)
+const profileStagger = (n: Element, i: number) => (n.matches('.pf-proj, .pf-skill') ? (i % 4) * 80 : 0)
 
 function ProfileView({ page }: { page: ProfilePage }) {
   const root = useRef<HTMLDivElement>(null)
-  useReveal(root, '.sp > header, .sp > section, .pf-proj', profileStagger)
+  useReveal(root, '.sp > section, .pf-skill, .pf-proj', profileStagger)
   return (
     <div className="sp" ref={root}>
       <header><p className="sp-who">{page.who}</p><h1 className="sp-hook">{page.hook}</h1><p className="pf-intro">{page.intro}</p></header>
       <section>
         <h2 className="sp-h2">Ce que je sais faire</h2>
-        <dl className="pf-stack">
-          {page.stack.map(g => <div key={g.label}><dt>{g.label}</dt><dd>{g.items.map(x => <span key={x}>{x}</span>)}</dd></div>)}
-        </dl>
+        <div className="pf-skills">
+          {page.skills.map(g => (
+            <div className="pf-skill" key={g.label}>
+              <h3 className="pf-skill-h">{g.label}</h3>
+              <ul className="pk-items">
+                {g.items.map(x => <li key={x.g}><span className="pk-gain">{x.g}</span><span className="pk-how">{x.h}</span></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
       <section className="pf-projects-wrap">
         <h2 className="sp-h2">Projets à regarder en premier</h2>
@@ -254,6 +261,13 @@ function ProfileView({ page }: { page: ProfilePage }) {
             </article>
           ))}
         </div>
+      </section>
+      <section>
+        <h2 className="sp-h2">Les outils que j’utilise</h2>
+        <p className="sp-sub">Une compétence n’est pas un outil : ceux-là sont ceux que je connais aujourd’hui, pas une limite.</p>
+        <dl className="pf-stack">
+          {page.stack.map(g => <div key={g.label}><dt>{g.label}</dt><dd>{g.items.map(x => <span key={x}>{x}</span>)}</dd></div>)}
+        </dl>
       </section>
       <section>
         <h2 className="sp-h2">Comment je travaille</h2>

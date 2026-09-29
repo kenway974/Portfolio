@@ -44,6 +44,9 @@ export interface ProfilePage {
   who: string
   hook: string
   intro: string
+  /** Compétences concrètes : ce que je sais faire, pas avec quel outil. */
+  skills: { label: string; items: { g: string; h: string }[] }[]
+  /** Outils connus, en complément des compétences. */
   stack: { label: string; items: string[] }[]
   projects: { name: string; proves: string; desc: string; stack: string; url: string; link: string }[]
   work: string[]
