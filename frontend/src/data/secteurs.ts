@@ -61,22 +61,22 @@ export const SECTORS: Sector[] = [
   {
     "short": "CVC & bâtiment",
     "name": "CVC & artisans du bâtiment",
-    "pitch": "Vos chantiers tournent. Votre site doit ramener des demandes de devis.",
+    "pitch": "Des demandes de devis en plus, sans changer votre façon de travailler.",
     "page": {
       "who": "Chauffagistes, climaticiens, artisans du bâtiment",
-      "hook": "Vos clients vous cherchent pendant que vous êtes sur un chantier.",
+      "hook": "Chaque jour, des gens de votre secteur cherchent un chauffagiste. Ceux qui ne vous trouvent pas, vous ne les voyez jamais passer.",
       "situations": [
         {
           "label": "je passe par le bouche-à-oreille",
           "facts": [
             {
-              "text": "99 % des consommateurs se renseignent en ligne avant de contacter une entreprise locale. Ceux qui ne vous connaissent pas encore tombent sur d’autres entreprises.",
+              "text": "99 % des consommateurs se renseignent en ligne avant de contacter une entreprise locale. Ceux qui ne vous connaissent pas encore tombent sur d’autres entreprises, sans que vous le sachiez.",
               "src": [
                 "bl"
               ]
             },
             {
-              "text": "Le volume de travail dépend des recommandations : quand elles ralentissent, les mois calmes se subissent."
+              "text": "Le volume de travail dépend des recommandations : quand elles ralentissent, un mois calme arrive sans prévenir, et rien ne vient le remplir."
             },
             {
               "text": "Les demandes arrivent par téléphone, souvent pendant les chantiers, et se traitent en rappelant le soir."
@@ -145,7 +145,7 @@ export const SECTORS: Sector[] = [
               "text": "Une partie des appels concerne des travaux ou des zones qui ne vous intéressent pas, et prend quand même du temps."
             },
             {
-              "text": "Pendant un chantier, un appel manqué est souvent un client qui appelle l’entreprise suivante sur la carte."
+              "text": "Pendant un chantier, un appel manqué est souvent un client qui appelle l’entreprise suivante sur la carte, souvent sans laisser de message."
             },
             {
               "text": "Les clients qui comparent s’appuient sur ce qu’ils voient : photos de chantiers, certifications, avis. 93 % des consommateurs disent que les avis pèsent dans leur choix.",
@@ -320,17 +320,18 @@ export const SECTORS: Sector[] = [
             }
           ]
         }
-      ]
+      ],
+      "sub": "Trois offres, de la plus simple à la plus complète, chacune contient la précédente. Ce qui marche aujourd’hui reste en place : les nouvelles demandes arrivent en plus. Les mois calmes se remplissent ; les mois chargés, vous choisissez vos chantiers."
     },
     "slug": "cvc"
   },
   {
     "short": "Instituts",
     "name": "Instituts de beauté",
-    "pitch": "Des clientes qui vous trouvent sur Google, et pas seulement dans une liste de concurrentes.",
+    "pitch": "Des créneaux creux qui se remplissent, sans passer plus de temps au téléphone.",
     "page": {
       "who": "Instituts de beauté, esthéticiennes, spas",
-      "hook": "Des clientes qui vous trouvent sur Google, et pas seulement dans une liste de concurrentes.",
+      "hook": "En ce moment, des clientes cherchent un institut dans votre ville. Celles qui ne vous trouvent pas réservent ailleurs, sans que vous le sachiez.",
       "situations": [
         {
           "label": "mes clientes réservent par téléphone ou par message",
@@ -345,7 +346,7 @@ export const SECTORS: Sector[] = [
               ]
             },
             {
-              "text": "Les clientes qui ne vous connaissent pas cherchent sur Google ou sur les plateformes de réservation, et y trouvent d’autres instituts.",
+              "text": "Les clientes qui ne vous connaissent pas cherchent sur Google ou sur les plateformes de réservation, et y trouvent d’autres instituts : vous ne voyez jamais ces clientes passer.",
               "src": [
                 "bl"
               ]
@@ -450,7 +451,7 @@ export const SECTORS: Sector[] = [
               "text": "Instagram montre votre travail, mais la réservation passe par des messages privés, à gérer à la main entre deux soins."
             },
             {
-              "text": "Une personne qui cherche « institut de beauté + votre ville » sur Google ne voit pas votre compte Instagram."
+              "text": "Une personne qui cherche « institut de beauté + votre ville » sur Google ne voit pas votre compte Instagram, et réserve dans un institut qui apparaît sur Google."
             },
             {
               "text": "Le volume de demandes suit le rythme de vos publications : quand vous publiez moins, les demandes baissent."
@@ -609,23 +610,24 @@ export const SECTORS: Sector[] = [
             }
           ]
         }
-      ]
+      ],
+      "sub": "Trois offres, de la plus simple à la plus complète, chacune contient la précédente. Vos clientes habituelles réservent comme avant : les nouvelles arrivent en plus, et remplissent d’abord les créneaux qui restent vides."
     },
     "slug": "instituts"
   },
   {
     "short": "Garages",
     "name": "Garages & carrosseries",
-    "pitch": "Des automobilistes qui trouvent votre atelier au moment où leur voiture en a besoin.",
+    "pitch": "Un atelier qui se remplit, sans passer plus de temps au téléphone.",
     "page": {
       "who": "Garages et carrosseries indépendants",
-      "hook": "Des automobilistes qui trouvent votre atelier au moment où leur voiture en a besoin.",
+      "hook": "Chaque semaine, des automobilistes du coin cherchent un garage. Ceux qui ne vous trouvent pas vont ailleurs, et vous ne le voyez pas.",
       "situations": [
         {
           "label": "je travaille surtout avec mes habitués et le bouche-à-oreille",
           "facts": [
             {
-              "text": "99 % des consommateurs se renseignent en ligne avant de contacter une entreprise locale. Les automobilistes qui ne vous connaissent pas tombent sur d’autres garages.",
+              "text": "99 % des consommateurs se renseignent en ligne avant de contacter une entreprise locale. Les automobilistes qui ne vous connaissent pas tombent sur d’autres garages, sans que vous le sachiez.",
               "src": [
                 "bl"
               ]
@@ -859,17 +861,18 @@ export const SECTORS: Sector[] = [
             }
           ]
         }
-      ]
+      ],
+      "sub": "Trois offres, de la plus simple à la plus complète, chacune contient la précédente. Vos habitués ne changent rien : les nouveaux clients arrivent en plus, et remplissent les jours creux de l’atelier."
     },
     "slug": "garages"
   },
   {
     "short": "Avocats",
     "name": "Avocats",
-    "pitch": "Des clients qui comprennent ce que vous faites avant de vous appeler.",
+    "pitch": "Des dossiers en plus, sans démarcher.",
     "page": {
       "who": "Avocats et petits cabinets",
-      "hook": "Des clients qui comprennent ce que vous faites avant de vous appeler.",
+      "hook": "Des personnes cherchent un avocat dans votre domaine et votre ville. Celles qui ne vous trouvent pas choisissent un confrère, sans que vous le sachiez.",
       "note": "La publicité des avocats est autorisée par l’article 10 du règlement intérieur national, à condition de donner une information sincère. La sollicitation personnalisée n’est permise que par écrit. Toutes les offres ci-dessous respectent ce cadre.",
       "noteSrc": "rin",
       "situations": [
@@ -877,7 +880,7 @@ export const SECTORS: Sector[] = [
           "label": "mes clients viennent par recommandation",
           "facts": [
             {
-              "text": "Le volume de dossiers dépend des recommandations de confrères et d’anciens clients."
+              "text": "Le volume de dossiers dépend des recommandations de confrères et d’anciens clients : quand elles ralentissent, rien ne vient compenser."
             },
             {
               "text": "Le client recommandé vérifie en ligne avant d’appeler : 99 % des consommateurs se renseignent en ligne avant de contacter un professionnel local.",
@@ -1084,7 +1087,8 @@ export const SECTORS: Sector[] = [
             }
           ]
         }
-      ]
+      ],
+      "sub": "Trois offres, de la plus simple à la plus complète, chacune contient la précédente. Les recommandations continuent de fonctionner : les nouveaux clients arrivent en plus, dans les domaines que vous choisissez."
     },
     "slug": "avocats"
   },
@@ -1094,7 +1098,7 @@ export const SECTORS: Sector[] = [
     "pitch": "Un développeur fullstack en renfort, sans délai de recrutement.",
     "page": {
       "who": "ESN, agences web, studios",
-      "hook": "Un développeur fullstack en renfort, sans délai de recrutement.",
+      "hook": "Les projets que vous refusez faute de temps partent chez vos concurrents, avec leurs clients. Vous pouvez les garder.",
       "cumulative": false,
       "situations": [
         {
@@ -1261,7 +1265,8 @@ export const SECTORS: Sector[] = [
             }
           ]
         }
-      ]
+      ],
+      "sub": "Trois façons de travailler ensemble, selon votre besoin. Votre équipe garde son organisation : la charge en plus passe par moi."
     },
     "slug": "esn"
   },
@@ -1373,22 +1378,22 @@ export const SECTORS: Sector[] = [
   {
     "short": "Autre projet",
     "name": "Autre projet",
-    "pitch": "Un site qui fait venir des clients, quel que soit votre métier.",
+    "pitch": "Des clients en plus, quel que soit votre métier, sans changer votre façon de travailler.",
     "page": {
       "who": "Commerces, indépendants, associations",
-      "hook": "Un site qui fait venir des clients, quel que soit votre métier.",
+      "hook": "Des gens cherchent votre métier près de chez eux. Ceux qui ne vous trouvent pas, vous ne les voyez jamais passer.",
       "situations": [
         {
           "label": "je passe par le bouche-à-oreille",
           "facts": [
             {
-              "text": "99 % des consommateurs se renseignent en ligne avant de contacter une entreprise locale. Ceux qui ne vous connaissent pas trouvent d’autres entreprises.",
+              "text": "99 % des consommateurs se renseignent en ligne avant de contacter une entreprise locale. Ceux qui ne vous connaissent pas trouvent d’autres entreprises, sans que vous le sachiez.",
               "src": [
                 "bl"
               ]
             },
             {
-              "text": "Le volume de clients dépend des recommandations : les périodes calmes se subissent."
+              "text": "Le volume de clients dépend des recommandations : les périodes calmes arrivent sans prévenir, et rien ne vient les remplir."
             }
           ],
           "starts": [
@@ -1545,7 +1550,8 @@ export const SECTORS: Sector[] = [
             }
           ]
         }
-      ]
+      ],
+      "sub": "Trois offres, de la plus simple à la plus complète, chacune contient la précédente. Ce qui marche aujourd’hui reste en place : les nouveaux clients arrivent en plus, d’abord dans les périodes calmes."
     },
     "slug": "autre-projet"
   }

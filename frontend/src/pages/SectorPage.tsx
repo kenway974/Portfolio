@@ -164,7 +164,7 @@ function OfferView({ page }: { page: OfferPage }) {
       </section>
       <section>
         <h2 className="sp-h2">Ce que chaque pack change, et quand</h2>
-        <p className="sp-sub">{page.cumulative === false ? 'Trois façons de travailler ensemble, selon votre besoin.' : 'Trois offres, de la plus simple à la plus complète. Chacune contient la précédente.'}</p>
+        <p className="sp-sub">{page.sub ?? (page.cumulative === false ? 'Trois façons de travailler ensemble, selon votre besoin.' : 'Trois offres, de la plus simple à la plus complète. Chacune contient la précédente.')}</p>
         <div className="car">
           <div className="car-tabs" role="tablist" aria-label="Packs" onKeyDown={tabsKey}>
             {page.packs.map((k, i) => (
@@ -217,7 +217,7 @@ function OfferView({ page }: { page: OfferPage }) {
         </div>
       </section>
       <section className="sp-cta">
-        <p>Chaque projet est différent : dites-moi où vous en êtes, je vous réponds sous 24 heures avec un devis gratuit et le pack qui vous correspond.</p>
+        <p>Dites-moi où vous en êtes : je vous réponds sous 24 heures avec un devis gratuit et le pack qui vous correspond. Je m’occupe de la mise en place, vous continuez votre activité.</p>
         <a className="btn" href={CONTACT}>Demander un devis gratuit</a>
       </section>
       <ol className="sp-sources">

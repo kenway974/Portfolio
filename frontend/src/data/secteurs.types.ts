@@ -33,6 +33,8 @@ export interface OfferPage {
   situations: Situation[]
   packs: Pack[]
   cumulative?: boolean
+  /** Phrase sous le titre des offres. */
+  sub?: string
   note?: string
   noteSrc?: string
 }
