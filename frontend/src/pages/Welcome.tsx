@@ -199,7 +199,7 @@ export default function Welcome() {
         ring.style.transform = 'translate(-50%, -50%) scale(1)'
         ring.style.opacity = '0'
       }, 480))
-      timers.push(window.setTimeout(() => navigate(path), 1560))
+      timers.push(window.setTimeout(() => navigate(path, { state: { via: 'crater' } }), 1560))
     }
 
     items.forEach((b, i) => { b.onclick = () => (i === target() ? open() : goTo(i)) })

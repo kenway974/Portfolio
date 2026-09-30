@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Head } from 'vite-react-ssg'
 import { SECTORS, SRC, ADS_NOTE } from '../data/secteurs'
 import { ICONS } from '../data/icons'
@@ -19,6 +19,128 @@ const reduced = () => typeof window !== 'undefined' && window.matchMedia('(prefe
 const replay = (node: Element | null | undefined, cls: string) => {
   if (!node || reduced()) return
   node.classList.remove(cls); void (node as HTMLElement).offsetWidth; node.classList.add(cls)
+}
+
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v))
+const easeOut = (t: number) => 1 - Math.pow(1 - t, 3)
+const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+
+/* Appelle cb à chaque image où la fenêtre défile ou change de taille (au plus une fois par image). */
+function useScrollTick(cb: () => void, active = true) {
+  const fn = useRef(cb)
+  fn.current = cb
+  useEffect(() => {
+    if (!active || reduced()) return
+    let raf = 0
+    const run = () => { raf = 0; fn.current() }
+    const on = () => { if (!raf) raf = requestAnimationFrame(run) }
+    run()
+    window.addEventListener('scroll', on, { passive: true })
+    window.addEventListener('resize', on)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('scroll', on); window.removeEventListener('resize', on) }
+  }, [active])
+}
+
+/* Fait défiler le nombre d'un texte (« 1 200 € », « 99 % ») de 0 jusqu'à sa valeur, puis remet le texte exact. */
+const counting = new WeakMap<HTMLElement, number>()
+function countUp(node: HTMLElement | null | undefined, dur = 900) {
+  if (!node || reduced()) return
+  const full = node.dataset.full ?? node.textContent ?? ''
+  node.dataset.full = full
+  const m = full.match(/\d[\d   ]*\d|\d/)
+  if (!m) return
+  const num = m[0]
+  const to = Number(num.replace(/\D/g, ''))
+  if (!to) return
+  const sep = (num.match(/[   ]/) || [' '])[0]
+  const fmt = (v: number) => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, sep)
+  cancelAnimationFrame(counting.get(node) || 0)
+  const t0 = performance.now()
+  const tick = (now: number) => {
+    const t = clamp01((now - t0) / dur)
+    node.textContent = t < 1 ? full.replace(num, fmt(Math.round(to * easeOut(t)))) : full
+    if (t < 1) counting.set(node, requestAnimationFrame(tick))
+  }
+  counting.set(node, requestAnimationFrame(tick))
+}
+const inView = (n: Element | null | undefined) => {
+  if (!n) return false
+  const r = n.getBoundingClientRect()
+  return r.top < window.innerHeight && r.bottom > 0
+}
+
+/* Accroche : les mots montent un à un, comme de la chaleur. */
+function Hook({ text }: { text: string }) {
+  const words = text.split(' ')
+  return (
+    <h1 className="sp-hook">
+      {words.map((w, i) => (
+        <span key={i}><span className="w" style={{ '--w': i } as React.CSSProperties}>{w}</span>{i < words.length - 1 ? ' ' : ''}</span>
+      ))}
+    </h1>
+  )
+}
+
+/* Chiffres des constats mis en valeur (ils défilent à l'apparition). */
+const withStats = (text: string): ReactNode =>
+  text.split(/(\d+[   ]?%)/).map((part, i) => (i % 2 ? <b key={i} className="stat">{part}</b> : part))
+
+/* Bascule entre les constats et les offres : la section reste à l'écran pendant qu'on défile ;
+   la fissure rouge se referme et devient un fil doré, les points s'alignent comme les étapes d'une frise. */
+function Shift({ n }: { n: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [live, setLive] = useState(false)
+  useEffect(() => { if (!reduced()) setLive(true) }, [])
+  const count = Math.max(3, n)
+  const pts = Array.from({ length: count }, (_, i) => ({
+    x: 12 + (76 * i) / (count - 1),
+    y: 50 + (i % 2 ? 1 : -1) * (22 + (i % 3) * 7),
+  }))
+  const tick = () => {
+    const el = ref.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    const run = r.height - window.innerHeight
+    const p = run > 0 ? clamp01(-r.top / run) : 1
+    const draw = clamp01((p + 0.12) / 0.3)
+    const flat = easeInOut(clamp01((p - 0.28) / 0.42))
+    const glow = clamp01((p - 0.72) / 0.22)
+    el.style.setProperty('--draw', draw.toFixed(3))
+    el.style.setProperty('--flat', flat.toFixed(3))
+    el.style.setProperty('--glow', glow.toFixed(3))
+    const ys = pts.map(q => q.y + (50 - q.y) * flat)
+    const path = el.querySelector('.shift-crack path')
+    if (path) {
+      const mid = (a: number, b: number, k: number) => 50 + ((a + b) / 2 - 50 + (k % 2 ? 9 : -9)) * (1 - flat)
+      let d = `M0 ${(50 + 12 * (1 - flat)).toFixed(2)}`
+      pts.forEach((q, i) => {
+        if (i > 0) d += ` L${((pts[i - 1].x + q.x) / 2).toFixed(2)} ${mid(ys[i - 1], ys[i], i).toFixed(2)}`
+        d += ` L${q.x.toFixed(2)} ${ys[i].toFixed(2)}`
+      })
+      d += ` L100 ${(50 - 10 * (1 - flat)).toFixed(2)}`
+      path.setAttribute('d', d)
+    }
+    el.querySelectorAll<HTMLElement>('.shift-dot').forEach((dot, i) => { dot.style.top = ys[i] + '%' })
+  }
+  useScrollTick(tick, live)
+  useEffect(() => { if (live) tick() })
+  const d0 = `M0 62 ${pts.map((q, i) => (i > 0 ? `L${(pts[i - 1].x + q.x) / 2} ${(pts[i - 1].y + q.y) / 2 + (i % 2 ? 9 : -9)} ` : '') + `L${q.x} ${q.y}`).join(' ')} L100 40`
+  return (
+    <div className={`shift${live ? ' is-live' : ''}`} ref={ref} aria-hidden="true">
+      <div className="shift-pin">
+        <p className="shift-t shift-a">Voilà ce qui se passe aujourd’hui.</p>
+        <div className="shift-stage">
+          <div className="shift-draw">
+            <svg className="shift-crack" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d={d0} vectorEffect="non-scaling-stroke" />
+            </svg>
+          </div>
+          {pts.map((q, i) => <span key={i} className="shift-dot" style={{ left: q.x + '%', top: q.y + '%', '--i': i } as React.CSSProperties} />)}
+        </div>
+        <p className="shift-t shift-b">Voilà ce qui peut changer, et quand.</p>
+      </div>
+    </div>
+  )
 }
 
 /* Apparition au défilement : visible par défaut, masqué seulement si l'observateur est actif. */
@@ -102,13 +224,65 @@ function OfferView({ page }: { page: OfferPage }) {
     return () => ro.disconnect()
   })
 
-  /* Nouvelle situation : les constats et la chronologie visible se rejouent. */
+  /* Nouvelle situation : les constats se rejouent et leurs chiffres défilent. */
+  const countStats = () => factsRef.current?.querySelectorAll<HTMLElement>('.stat').forEach(b => countUp(b, 1100))
   useEffect(() => {
     if (first.current) { first.current = false; return }
     replay(factsRef.current, 'play')
-    replay(tlRefs.current[current], 'play')
+    if (inView(factsRef.current)) countStats()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sit])
+
+  /* Première apparition des constats et des packs : les chiffres et le prix défilent une fois. */
+  const carRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (reduced() || !('IntersectionObserver' in window)) return
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return
+      io.unobserve(e.target)
+      if (e.target === factsRef.current) countStats()
+      else countUp(slideRefs.current[currentRef.current]?.querySelector<HTMLElement>('.pack-price b'))
+    }), { threshold: 0, rootMargin: '0px 0px -30% 0px' })  /* un pack peut être plus haut que l'écran */
+    if (factsRef.current) io.observe(factsRef.current)
+    if (carRef.current) io.observe(carRef.current)
+    return () => io.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  const currentRef = useRef(0)
+  currentRef.current = current
+  const firstTab = useRef(true)
+  useEffect(() => {
+    if (firstTab.current) { firstTab.current = false; return }
+    countUp(slideRefs.current[current]?.querySelector<HTMLElement>('.pack-price b'), 700)
+  }, [current])
+
+  /* Frise pilotée par le défilement : le fil doré descend avec la lecture,
+     chaque étape s'allume quand il l'atteint et s'éteint si l'on remonte. */
+  const [tlLive, setTlLive] = useState(false)
+  useEffect(() => {
+    if (reduced()) return
+    /* Classe posée à la main : useReveal ajoute aussi les siennes sur cette racine. */
+    root.current?.classList.add('tl-live')
+    setTlLive(true)
+  }, [])
+  const tlTick = () => {
+    const line = window.innerHeight * 0.66
+    const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4
+    /* Toutes les mesures d'abord, puis toutes les écritures : pas de recalcul de mise en page par étape. */
+    const reads = tlRefs.current.map(tl => {
+      if (!tl) return null
+      const r = tl.getBoundingClientRect()
+      const lis = [...tl.querySelectorAll('li')]
+      return { tl, q: atEnd ? 1 : clamp01((line - r.top - 8) / Math.max(1, r.height - 16)), lis, lit: lis.map(li => atEnd || li.getBoundingClientRect().top + 12 < line) }
+    })
+    reads.forEach(m => {
+      if (!m) return
+      m.tl.style.setProperty('--q', m.q.toFixed(3))
+      m.lis.forEach((li, i) => li.classList.toggle('lit', m.lit[i]))
+    })
+  }
+  useScrollTick(tlTick, tlLive)
+  useEffect(() => { if (tlLive) tlTick() })
 
   const chooseSit = (i: number) => {
     if (reduced()) { setSit(i); return }
@@ -142,9 +316,10 @@ function OfferView({ page }: { page: OfferPage }) {
   }
 
   const sw = `swap${swapping ? ' is-swapping' : ''}`
+  const layered = page.cumulative !== false
   return (
     <div className="sp" ref={root}>
-      <header><p className="sp-who">{page.who}</p><h1 className="sp-hook">{page.hook}</h1></header>
+      <header><p className="sp-who">{page.who}</p><Hook text={page.hook} /></header>
       <section>
         <p className="sit-q" id="sit-q">Aujourd’hui…</p>
         <fieldset className="sit" aria-labelledby="sit-q">
@@ -158,14 +333,15 @@ function OfferView({ page }: { page: OfferPage }) {
         <div className={`facts-box ${sw}`}>
           <h2 className="facts-h">Ce qui se passe aujourd’hui</h2>
           <ul className="facts" ref={factsRef}>
-            {s.facts.map((f, i) => <li key={sit + '-' + i} style={{ '--i': i } as React.CSSProperties}>{f.text}{fn(f)}</li>)}
+            {s.facts.map((f, i) => <li key={sit + '-' + i} style={{ '--i': i } as React.CSSProperties}>{withStats(f.text)}{fn(f)}</li>)}
           </ul>
         </div>
       </section>
+      <Shift n={s.facts.length} />
       <section>
         <h2 className="sp-h2">Ce que chaque pack change, et quand</h2>
         <p className="sp-sub">{page.sub ?? (page.cumulative === false ? 'Trois façons de travailler ensemble, selon votre besoin.' : 'Trois offres, de la plus simple à la plus complète. Chacune contient la précédente.')}</p>
-        <div className="car">
+        <div className="car" ref={carRef}>
           <div className="car-tabs" role="tablist" aria-label="Packs" onKeyDown={tabsKey}>
             {page.packs.map((k, i) => (
               <button key={i} type="button" role="tab" id={`tab${i}`} aria-controls={`slide${i}`}
@@ -178,6 +354,14 @@ function OfferView({ page }: { page: OfferPage }) {
                 aria-labelledby={`tab${i}`} ref={n => { slideRefs.current[i] = n }}>
                 <div className="pk-head">
                   <h3 className="pack-name">{k.name}</h3>
+                  {layered && i > 0 && (
+                    /* Couches : le pack se pose sur les précédents, comme les strates d'un volcan. */
+                    <div className="strata" aria-hidden="true">
+                      {page.packs.slice(0, i).reverse().map((p, j) => (
+                        <span key={p.num} style={{ '--j': j, '--n': i } as React.CSSProperties}>{p.num} · {p.name}</span>
+                      ))}
+                    </div>
+                  )}
                   <div className="pack-price">
                     <span className="from">À partir de</span>
                     <b>{k.price}</b>
@@ -234,7 +418,7 @@ function ProfileView({ page }: { page: ProfilePage }) {
   useReveal(root, '.sp > section, .pf-skill, .pf-proj', profileStagger)
   return (
     <div className="sp" ref={root}>
-      <header><p className="sp-who">{page.who}</p><h1 className="sp-hook">{page.hook}</h1><p className="pf-intro">{page.intro}</p></header>
+      <header><p className="sp-who">{page.who}</p><Hook text={page.hook} /><p className="pf-intro">{page.intro}</p></header>
       <section>
         <h2 className="sp-h2">Ce que je sais faire</h2>
         <div className="pf-skills">
@@ -291,8 +475,21 @@ export default function SectorPage({ slug }: { slug: string }) {
     ? 'Recruteurs : profil de Kenny Pignolet, développeur web'
     : `${sector.name} : offres et délais | Kenny Pignolet`
   useEffect(() => { window.scrollTo(0, 0) }, [slug])
+  /* Arrivée depuis la roue : la page s'ouvre depuis le cratère. Arrivée directe : pas d'attente. */
+  const viaCrater = (useLocation().state as { via?: string } | null)?.via === 'crater'
+  /* Lueur de braise en bas de l'écran : rouge en haut de page, dorée en arrivant aux offres et au devis. */
+  const glowRef = useRef<HTMLDivElement>(null)
+  useScrollTick(() => {
+    const el = glowRef.current
+    if (!el) return
+    const max = document.documentElement.scrollHeight - window.innerHeight
+    el.style.setProperty('--pg', (max > 0 ? clamp01(window.scrollY / max) : 0).toFixed(3))
+  })
   return (
-    <div className="vx vx-page">
+    <>
+    {/* Hors de .vx-page : son container-type pourrait servir de repère au position: fixed. */}
+    <div className="vx sp-glow" ref={glowRef} aria-hidden="true" />
+    <div className={`vx vx-page${viaCrater ? ' from-crater' : ''}`}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={sector.pitch} />
@@ -305,5 +502,6 @@ export default function SectorPage({ slug }: { slug: string }) {
       {page.kind === 'profile' ? <ProfileView page={page} /> : <OfferView page={page} />}
       <Foot />
     </div>
+    </>
   )
 }

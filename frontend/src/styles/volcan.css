@@ -318,3 +318,112 @@
   .vx .rv-ready .sp-h2.rv::after { transform: none; transition: none; }
   .vx .pf-skill:hover { transform: none; }
 }
+
+/* ---------- Pages secteur : l'expérience au défilement ----------
+   Fil conducteur : on part du rouge lave (ce qui se passe aujourd'hui) et on remonte vers l'or (ce qui change).
+   Un seul effet fort par section. Le texte est toujours dans la page ; sans JavaScript ou avec
+   « réduire les animations », tout s'affiche directement dans son état final. */
+.vx .sp, .vx .sp-foot { position: relative; z-index: 1; }
+
+/* Lueur de braise en bas de l'écran : rouge en haut de page, dorée en approchant du devis. */
+@keyframes glowBreath { from { opacity: .14; } to { opacity: .24; } }
+.vx.sp-glow { position: fixed; left: 0; right: 0; bottom: 0; height: 42vh; pointer-events: none; z-index: 0;
+  opacity: .2; animation: glowBreath 4s ease-in-out infinite alternate;
+  background: radial-gradient(70% 100% at 50% 100%, var(--lava), transparent 70%);
+  background: radial-gradient(70% 100% at 50% 100%, color-mix(in srgb, var(--lava) calc(100% - var(--pg, 0) * 100%), var(--accent-bright)), transparent 70%); }
+
+/* Arrivée depuis la roue : la page s'ouvre en cercle depuis le cratère. */
+@keyframes craterOpen { from { clip-path: circle(0 at 50% 70vh); } to { clip-path: circle(150vmax at 50% 70vh); } }
+.vx.vx-page.from-crater { animation: craterOpen .9s var(--reveal) backwards; }
+
+/* 1. Accroche : les mots montent un à un, comme de la chaleur. */
+@keyframes heat { from { opacity: 0; transform: translateY(.45em); filter: blur(6px); } }
+.vx .sp > header > .sp-hook { animation: none; }
+.vx .sp-hook .w { display: inline-block; animation: heat .9s var(--ease) backwards; animation-delay: calc(.2s + min(var(--w) * 40ms, 800ms)); }
+.vx.from-crater .sp-hook .w { animation-delay: calc(.6s + min(var(--w) * 40ms, 800ms)); }
+
+/* 2. Constats : une fissure rouge se dessine le long de la liste, les chiffres défilent. */
+.vx .facts { position: relative; }
+.vx .facts li::before { z-index: 1; box-shadow: 0 0 0 3px var(--black); }
+.vx .facts::after { content: ""; position: absolute; left: -1px; top: .6em; bottom: .6em; width: 10px; pointer-events: none; opacity: .75;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='28'%3E%3Cpolyline points='5,0 2,6 7,12 3,19 8,24 5,28' fill='none' stroke='%23e63946' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") repeat-y 0 0 / 10px 28px; }
+.vx .facts .stat { color: var(--lava-soft); font-weight: 700; font-variant-numeric: tabular-nums; }
+@keyframes crackDraw { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+@keyframes crackDraw2 { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+@keyframes emberDot { 0% { transform: scale(.3); box-shadow: 0 0 0 3px var(--black); } 50% { transform: scale(1.5); box-shadow: 0 0 0 3px var(--black), 0 0 14px 4px rgba(230,57,70,.7); } 100% { transform: scale(1); } }
+.vx .rv-ready .facts-box.rv .facts::after { clip-path: inset(0 0 100% 0); }
+.vx .rv-ready .facts-box.rv.in-view .facts::after { animation: crackDraw 1.1s var(--reveal) .15s both; }
+.vx .rv-ready .facts-box.rv.in-view .facts.play::after { animation: crackDraw2 .9s var(--reveal) both; }
+.vx .rv-ready .facts-box.rv.in-view .facts li { animation: stepIn .55s var(--ease) both; animation-delay: calc(.3s + var(--i, 0) * 160ms); }
+.vx .rv-ready .facts-box.rv.in-view .facts li::before { animation: emberDot .6s var(--ease) both; animation-delay: calc(.3s + var(--i, 0) * 160ms); }
+
+/* 3. Bascule : la section reste à l'écran pendant qu'on défile. La fissure se referme en fil doré. */
+.vx .shift { --draw: 1; --flat: 1; --glow: 1; position: relative; width: 100cqw; margin-left: calc(50% - 50cqw); height: 230vh; height: 230svh; }
+.vx .shift-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; grid-template-areas: "t" "s"; align-content: center; justify-items: center; gap: clamp(28px, 6vh, 56px); padding-inline: 24px; overflow: hidden; }
+.vx .shift-t { grid-area: t; margin: 0; max-width: 20ch; text-align: center; text-wrap: balance; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 5vw, 2.8rem); line-height: 1.15; letter-spacing: -0.015em; }
+.vx .shift-a { color: var(--lava-soft); opacity: clamp(0, calc(1 - var(--flat) * 2.2), 1); transform: translateY(calc(var(--flat) * -14px)); }
+.vx .shift-b { color: var(--accent-bright); opacity: clamp(0, calc(var(--flat) * 2.2 - 1.2), 1); transform: translateY(calc((1 - var(--flat)) * 14px)); text-shadow: 0 0 calc(var(--glow) * 28px) rgba(245,200,66,.35); }
+.vx .shift-stage { grid-area: s; position: relative; width: min(860px, 100%); height: clamp(140px, 30vh, 260px); }
+.vx .shift-draw { position: absolute; inset: 0; clip-path: inset(-20px calc((1 - var(--draw)) * 100%) -20px 0); }
+.vx .shift-crack { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 calc(4px + var(--glow) * 10px) rgba(245,200,66, calc(.15 + var(--glow) * .4))); }
+.vx .shift-crack path { fill: none; stroke-linejoin: round; stroke-linecap: round; stroke-width: calc(2px + var(--glow) * 1px);
+  stroke: var(--lava); stroke: color-mix(in srgb, var(--lava) calc(100% - var(--flat) * 100%), var(--accent-bright)); }
+.vx .shift-dot { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; box-sizing: border-box; border: 2px solid var(--lava);
+  border-color: color-mix(in srgb, var(--lava) calc(100% - var(--flat) * 100%), var(--accent-bright));
+  background: color-mix(in srgb, var(--lava) calc(100% - var(--flat) * 100%), var(--black));
+  opacity: clamp(0, calc(var(--draw) * 1.6 - var(--i, 0) * .15), 1);
+  transform: scale(calc(.85 + var(--glow) * .3));
+  box-shadow: 0 0 calc(var(--glow) * 18px) rgba(245,200,66, calc(var(--glow) * .6)); }
+/* Sans animation : directement l'état final, un fil doré avec ses étapes alignées. */
+.vx .shift:not(.is-live) .shift-a,
+.vx .shift:not(.is-live) .shift-draw { display: none; }
+.vx .shift:not(.is-live) .shift-stage::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: linear-gradient(90deg, transparent, var(--accent-bright) 12%, var(--accent-bright) 88%, transparent); }
+.vx .shift:not(.is-live) .shift-dot { top: 50% !important; }
+
+/* 4a. Frise pilotée par le défilement : le fil doré suit la lecture, les étapes s'allument quand il les atteint. */
+.vx .tl-live .tl::after,
+.vx .tl-live .tl.play::after { animation: none; transform: scaleY(var(--q, 0)); transition: transform .12s linear; }
+.vx .tl-live .tl { background: radial-gradient(circle, rgba(255,226,150,.95) 0 2px, rgba(245,200,66,.35) 3px, transparent 10px) no-repeat 4px calc(var(--q, 0) * 100%) / 20px 20px; }
+.vx .tl-live .tl li { transition: opacity .5s var(--ease), transform .5s var(--ease); }
+.vx .tl-live .tl li:not(.lit) { opacity: .28; transform: translateX(-6px); }
+.vx .tl-live .tl.play li,
+.vx .tl-live .tl.play .tl-ico { animation: none; }
+.vx .tl-live .tl li:not(.lit) .tl-ico { border-color: var(--line); color: var(--text-3); }
+@keyframes icoLight { 0% { transform: scale(.5); box-shadow: 0 0 0 0 rgba(245,200,66,0); } 55% { transform: scale(1.2); box-shadow: 0 0 22px 4px rgba(245,200,66,.55); } 100% { transform: scale(1); } }
+.vx .tl-live .tl li.lit .tl-ico { animation: icoLight .55s var(--ease) backwards; }
+
+/* 4b. Packs en couches : chaque pack se pose sur les précédents, comme les strates d'un volcan. */
+.vx .strata { display: grid; justify-items: start; gap: 3px; }
+.vx .strata span { width: min(100%, calc(64% + var(--j, 0) * 16%)); box-sizing: border-box; padding: 3px 12px; border-radius: 6px; font-size: .78rem; line-height: 1.4; color: var(--text-3);
+  border: 1px solid var(--line); border-top-color: rgba(230,57,70,.4); background: linear-gradient(90deg, rgba(230,57,70,.08), rgba(232,156,26,.04)); }
+@keyframes layerIn { from { opacity: 0; transform: translateY(12px) scaleX(.92); } }
+@keyframes layerDrop { 0% { opacity: 0; transform: translateY(-16px); } 70% { opacity: 1; transform: translateY(2px); } 100% { transform: none; } }
+.vx .car-slide.is-current .strata span { transform-origin: left; animation: layerIn .5s var(--ease) backwards; animation-delay: calc((var(--n, 1) - 1 - var(--j, 0)) * 90ms + 80ms); }
+.vx .car-slide.is-current .pack-name { animation: layerDrop .6s var(--ease) backwards; animation-delay: .3s; }
+.vx .pack-price b { display: inline-block; min-width: 4ch; }
+
+/* 5. Devis : retour au volcan. Le fond prend la lueur du cratère, le bouton respire. */
+.vx .sp-cta { position: relative; isolation: isolate; overflow: hidden; padding: clamp(28px, 5vw, 44px); border: 1px solid var(--border); border-radius: 18px; background: rgba(13,11,15,.8); }
+.vx .sp-cta::before { content: ""; position: absolute; z-index: -1; left: 50%; bottom: -70%; width: 150%; aspect-ratio: 2 / 1; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(245,200,66,.3), rgba(232,156,26,.14) 45%, rgba(230,57,70,.08) 70%, transparent);
+  transform: translateX(-50%); transition: opacity 1.2s ease, transform 1.4s var(--ease); }
+.vx .rv-ready .sp-cta.rv::before { opacity: 0; transform: translateX(-50%) scale(.55); }
+.vx .rv-ready .sp-cta.rv.in-view::before { opacity: 1; transform: translateX(-50%); }
+@keyframes emberBtn { from { box-shadow: 0 0 0 0 rgba(245,200,66,0); } to { box-shadow: 0 0 0 6px rgba(245,200,66,.12), 0 0 34px rgba(245,200,66,.45); } }
+.vx .rv-ready .sp-cta.rv.in-view .btn:not(.btn-ghost) { animation: emberBtn 2.4s ease-in-out 1.2s infinite alternate; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vx.sp-glow,
+  .vx.vx-page.from-crater,
+  .vx .sp-hook .w,
+  .vx .rv-ready .facts-box.rv.in-view .facts::after,
+  .vx .rv-ready .facts-box.rv.in-view .facts li,
+  .vx .rv-ready .facts-box.rv.in-view .facts li::before,
+  .vx .car-slide.is-current .strata span,
+  .vx .car-slide.is-current .pack-name,
+  .vx .rv-ready .sp-cta.rv.in-view .btn { animation: none; }
+  .vx .rv-ready .facts-box.rv .facts::after { clip-path: none; }
+  .vx .shift { height: auto; }
+  .vx .shift-pin { position: static; height: auto; padding-block: 24px; }
+  .vx .sp-cta::before { transition: none; }
+}
