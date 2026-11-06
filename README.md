@@ -112,6 +112,27 @@ Blog post content supports:
 
 The site is French only. All UI strings live in `frontend/src/i18n/fr.ts`, read with `t('key')` / `tList('key')` from `src/i18n`.
 
+## Quality checks
+
+| Command (in `frontend/`) | What it checks |
+|---|---|
+| `npm run lint` | ESLint (TypeScript, React hooks), zero warning |
+| `npm run typecheck` | TypeScript, strict |
+| `npm test` | Unit tests: content integrity (services, projects, sectors, sources), diagnostic scoring, SEO helpers, contact form types in sync with the backend |
+| `npm run build` then `npm run test:seo` | Every generated page: title and description length, single H1, heading hierarchy, canonical, Open Graph, JSON-LD, internal links and anchors, accessible names, sitemap, robots.txt, 404 |
+| `npm run test:e2e` | Playwright on the production build (desktop and mobile): navigation, diagnostic, sector page to pre-filled contact, contact form success and error, 404, no horizontal overflow, no console error |
+| `npm run check` | All of the above, in order |
+
+In `backend/`: `npm run lint` and `npm test` (Node test runner: validation, rate limit, e-mail escaping).
+
+### CI/CD
+
+- `.github/workflows/ci.yml` runs on every pull request and every push to `main`: dependency audit (no high vulnerability in production), lint, types, unit tests, build, SEO tests and end-to-end tests, for the frontend and the backend.
+- Deployment: Vercel builds a preview for every branch and deploys `main` to production; Railway deploys the backend from `main`.
+- `.github/dependabot.yml` opens weekly dependency update PRs.
+
+---
+
 ## Building for Production
 
 ```bash
