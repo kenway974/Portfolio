@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { t } from '../i18n'
 import './Navbar.css'
 
@@ -14,7 +14,6 @@ const LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const location = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -22,17 +21,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => { setMenuOpen(false) }, [location])
 
   return (
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
       <div className="container navbar__inner">
-        <Link to="/" className="navbar__logo">
+        <Link to="/" className="navbar__logo" aria-label="Kenny Pignolet, retour à l'accueil">
           <span className="navbar__logo-mark" aria-hidden="true">✦</span> Kenny Pignolet
         </Link>
 
         <nav className="navbar__links" aria-label="Navigation principale">
-          {LINKS.map(l => <Link key={l.to} to={l.to}>{l.label}</Link>)}
+          {LINKS.map(l => <NavLink key={l.to} to={l.to}>{l.label}</NavLink>)}
         </nav>
 
         <div className="navbar__actions">
@@ -56,8 +54,9 @@ export default function Navbar() {
         id="mobile-menu"
         className={`mobile-menu${menuOpen ? ' mobile-menu--open' : ''}`}
         aria-label="Navigation mobile"
+        {...(!menuOpen && { inert: '' })}
       >
-        {LINKS.map(l => <Link key={l.to} to={l.to}>{l.label}</Link>)}
+        {LINKS.map(l => <NavLink key={l.to} to={l.to} onClick={() => setMenuOpen(false)}>{l.label}</NavLink>)}
       </nav>
     </header>
   )

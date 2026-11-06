@@ -29,9 +29,18 @@ export default function RealisationsList() {
           </p>
         </header>
 
-        <div className="card-grid">
-          {realisations.map(r => <RealisationCard key={r.slug} item={r} />)}
-        </div>
+        <section className="category-block" aria-labelledby="projets-reels">
+          <h2 id="projets-reels" className="category-block__title">Projets réels : client, outil interne, projet certifiant</h2>
+          <div className="card-grid">
+            {realisations.filter(r => r.kind !== 'Démo').map(r => <RealisationCard key={r.slug} item={r} />)}
+          </div>
+        </section>
+        <section className="category-block" aria-labelledby="demos">
+          <h2 id="demos" className="category-block__title">Démonstrations prêtes à adapter</h2>
+          <div className="card-grid">
+            {realisations.filter(r => r.kind === 'Démo').map(r => <RealisationCard key={r.slug} item={r} />)}
+          </div>
+        </section>
 
         <CtaBand title="Votre projet pourrait être le prochain" />
       </div>

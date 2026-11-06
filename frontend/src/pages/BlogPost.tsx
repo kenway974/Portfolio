@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { t } from '../i18n'
 import Seo from '../components/Seo'
+import Breadcrumbs from '../components/Breadcrumbs'
 import { blogPostSchema } from '../seo'
 import { formatDate } from '../utils/date'
 import posts from '../data/blog.json'
@@ -39,7 +40,7 @@ export default function BlogPost() {
   return (
     <div className="blog-post-page">
       <Seo
-        title={`${post.title} | Kenny Pignolet`}
+        title={`${post.seoTitle} | Kenny Pignolet`}
         description={post.excerpt}
         path={`/blog/${post.slug}`}
         image={`blog/${post.slug}`}
@@ -49,10 +50,7 @@ export default function BlogPost() {
         jsonLd={blogPostSchema(post)}
       />
       <div className="container">
-        {/* Fil d'Ariane */}
-        <nav aria-label="Fil d'Ariane" className="post-back">
-          <Link to="/">Accueil</Link> / <Link to="/blog">Blog</Link>
-        </nav>
+        <Breadcrumbs items={[['Accueil', '/'], ['Blog', '/blog'], [post.title, `/blog/${post.slug}`]]} />
 
         <article>
           <header className="post-header">
@@ -60,6 +58,9 @@ export default function BlogPost() {
               <span className="post-category">{post.category}</span>
               <span className="post-date">
                 <time dateTime={post.date}>{formatDate(post.date, 'long')}</time>
+              </span>
+              <span className="post-author">
+                Par <Link to="/profil" rel="author">Kenny Pignolet</Link>
               </span>
             </div>
             <h1 className="post-title">{post.title}</h1>

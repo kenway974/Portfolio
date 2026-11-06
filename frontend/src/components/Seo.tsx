@@ -12,11 +12,13 @@ type Props = {
   publishedTime?: string
   modifiedTime?: string
   jsonLd?: object
+  /** Page à ne pas indexer (ex. 404). */
+  noindex?: boolean
 }
 
 /** Toutes les balises SEO d'une page : title, description, canonical, Open Graph, Twitter, JSON-LD. */
 export default function Seo({
-  title, description, path, image, imageAlt, type = 'website', publishedTime, modifiedTime, jsonLd,
+  title, description, path, image, imageAlt, type = 'website', publishedTime, modifiedTime, jsonLd, noindex = false,
 }: Props) {
   const url = absoluteUrl(path)
   const img = ogImage(image)
@@ -26,6 +28,7 @@ export default function Seo({
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
       <link rel="canonical" href={url} />
 
       <meta property="og:type" content={type} />
@@ -37,6 +40,7 @@ export default function Seo({
       <meta property="og:image" content={img} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/png" />
       <meta property="og:image:alt" content={alt} />
       {publishedTime && <meta property="article:published_time" content={publishedTime} />}
       {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}

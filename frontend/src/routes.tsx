@@ -10,6 +10,7 @@ import RealisationPage from './pages/RealisationPage'
 import SectorPage from './pages/SectorPage'
 import ContactPage from './pages/ContactPage'
 import Diagnostic from './pages/Diagnostic'
+import NotFound from './pages/NotFound'
 import blogData from './data/blog.json'
 import { SECTORS, sectorPath } from './data/secteurs'
 import services from './data/services'
@@ -43,6 +44,9 @@ const routes: RouteRecord[] = [
         element: <BlogPost />,
         getStaticPaths: () => blogData.map(p => `blog/${p.slug}`),
       },
+      // 404.html généré au build (servi par Vercel), et repli pour la navigation côté client.
+      { path: '404', element: <NotFound /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ]

@@ -158,3 +158,9 @@
   .mobile-menu     { display: flex; }
   .navbar__inner   { gap: 0.75rem; }
 }
+
+/* Page courante */
+.navbar__links a[aria-current="page"],
+.mobile-menu a[aria-current="page"] {
+  color: var(--text-primary);
+}

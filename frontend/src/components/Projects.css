@@ -165,3 +165,16 @@
 .projects__more {
   margin-top: 2.5rem;
 }
+
+/* Chaque carte est un élément de liste : c'est lui qui porte la taille dans le carrousel. */
+.projects__item {
+  flex: 0 0 300px;
+  display: flex;
+  scroll-snap-align: start;
+}
+.projects__item .project-card {
+  flex: 1 1 auto;
+}
+@media (max-width: 520px) {
+  .projects__item { flex: 0 0 260px; }
+}

@@ -59,6 +59,10 @@ await writeFile(join(dist, 'sitemap.xml'), sitemap)
 // ---------- robots.txt ----------
 await writeFile(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${url('/sitemap.xml')}\n`)
 
+// ---------- Icône d'écran d'accueil (iOS) ----------
+const favicon = await readFile(join(root, 'public/favicon.svg'), 'utf8')
+await writeFile(join(dist, 'apple-touch-icon.png'), new Resvg(favicon, { fitTo: { mode: 'width', value: 180 } }).render().asPng())
+
 // ---------- Images de partage ----------
 const font = async (pkg, file) => readFile(require.resolve(`${pkg}/files/${file}`))
 const fonts = [

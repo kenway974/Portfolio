@@ -7,7 +7,7 @@ import './Projects.css'
 
 export default function Projects() {
   const sectionRef = useScrollReveal<HTMLElement>()
-  const trackRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLUListElement>(null)
 
   const scroll = (dir: 'left' | 'right') => {
     if (!trackRef.current) return
@@ -40,13 +40,12 @@ export default function Projects() {
 
       {/* Full-bleed scroll track */}
       <div className="projects__track-wrap">
-        <div className="projects__track" ref={trackRef} role="list">
+        <ul className="projects__track" ref={trackRef} aria-label="Réalisations">
           {realisations.map((project, i) => (
+            <li key={project.slug} className="projects__item">
             <Link
-              key={project.slug}
               to={`/realisations/${project.slug}`}
               className={`project-card reveal reveal-delay-${Math.min(i + 1, 4)}`}
-              role="listitem"
             >
               <div className="project-card__logo" aria-hidden="true">
                 {project.logo}
@@ -66,8 +65,9 @@ export default function Projects() {
               <span className="project-card__visit">{t('projects.visit')}</span>
               <div className="project-card__glow" aria-hidden="true" />
             </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
       <div className="container projects__more">

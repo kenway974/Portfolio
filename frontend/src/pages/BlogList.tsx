@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { t } from '../i18n'
 import Seo from '../components/Seo'
+import Breadcrumbs from '../components/Breadcrumbs'
 import { blogListSchema } from '../seo'
 import { formatDate } from '../utils/date'
 import posts from '../data/blog.json'
@@ -28,19 +29,20 @@ export default function BlogList() {
         jsonLd={blogListSchema(posts, DESCRIPTION)}
       />
       <div className="container">
+        <Breadcrumbs items={[['Accueil', '/'], ['Blog', '/blog']]} />
         {/* Header */}
         <div className="blog-list-page__header">
           <p className="label">{t('blog.label')}</p>
-          <h1 className="section-heading">{t('blog.heading')}</h1>
+          <h1 className="section-heading">Blog : conseils web pour TPE et PME</h1>
         </div>
 
         {/* Category filter */}
-        <div className="category-filter" role="tablist" aria-label="Filtrer par catégorie">
+        <div className="category-filter" role="group" aria-label="Filtrer les articles par catégorie">
           {categories.map(cat => (
             <button
               key={cat}
-              role="tab"
-              aria-selected={activeCategory === cat}
+              type="button"
+              aria-pressed={activeCategory === cat}
               className={`category-btn${activeCategory === cat ? ' category-btn--active' : ''}`}
               onClick={() => setActiveCategory(cat)}
             >

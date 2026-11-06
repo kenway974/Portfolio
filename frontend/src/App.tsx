@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import SkipLink from './components/SkipLink'
 
 /** Gère le défilement lors des navigations : vers l'ancre (#services…) ou en haut de page. */
 function ScrollManager() {
@@ -22,8 +23,9 @@ export default function App() {
   return (
     <>
       <ScrollManager />
+      <SkipLink />
       <Navbar />
-      <main>
+      <main id="contenu">
         <Outlet />
       </main>
       <Footer />
