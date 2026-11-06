@@ -27,8 +27,8 @@ contactRouter.post('/', async (req, res) => {
   const { name, email, serviceType, message } = req.body
 
   const errors = validate({
-    name: { value: name, required: true, maxLength: 120 },
-    email: { value: email, required: true, isEmail: true },
+    name: { value: name, required: true, maxLength: 120, singleLine: true },
+    email: { value: email, required: true, isEmail: true, maxLength: 200, singleLine: true },
     serviceType: { value: serviceType, required: true, oneOf: SERVICE_TYPES },
     message: { value: message, required: true, maxLength: 5000 },
   })

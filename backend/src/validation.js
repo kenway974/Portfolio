@@ -6,7 +6,7 @@
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /**
- * @param {Record<string, { value: unknown, required?: boolean, maxLength?: number, isEmail?: boolean, oneOf?: string[] }>} schema
+ * @param {Record<string, { value: unknown, required?: boolean, maxLength?: number, isEmail?: boolean, oneOf?: string[], singleLine?: boolean }>} schema
  * @returns {{ field: string, code: string }[]}
  */
 export function validate(schema) {
@@ -26,6 +26,10 @@ export function validate(schema) {
 
     if (val && rules.maxLength && String(val).length > rules.maxLength) {
       errors.push({ field, code: 'too_long', max: rules.maxLength })
+    }
+
+    if (val && rules.singleLine && /[\r\n]/.test(String(val))) {
+      errors.push({ field, code: 'invalid_value' })
     }
 
     if (val && rules.oneOf && !rules.oneOf.includes(val)) {
