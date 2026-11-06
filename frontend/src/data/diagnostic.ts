@@ -56,7 +56,7 @@ export const QUESTIONS: Question[] = [
     options: [
       { id: 'google', label: 'Être trouvé sur Google', scores: { 'seo-performance': 3, 'creation-site-vitrine': 1, 'creation-blog': 1 } },
       { id: 'demandes', label: 'Recevoir plus de demandes de contact ou de devis', scores: { 'landing-page': 2, 'creation-site-vitrine': 2, 'seo-performance': 1 } },
-      { id: 'vendre', label: 'Vendre en ligne', scores: { 'site-e-commerce': 5 } },
+      { id: 'vendre', label: 'Vendre en ligne', scores: { 'site-e-commerce': 6 } },
       { id: 'reservation', label: 'Prise de rendez-vous ou réservation en ligne', scores: { 'application-web-sur-mesure': 3 } },
       { id: 'paiement', label: 'Paiement, acomptes ou abonnements en ligne', scores: { 'application-web-sur-mesure': 2, 'site-e-commerce': 1 } },
       { id: 'espace', label: 'Un espace client ou un back-office', scores: { 'application-web-sur-mesure': 3 } },

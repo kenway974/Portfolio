@@ -135,7 +135,6 @@ function Result({ answers, headingRef, onRestart }: {
   const recommended = rankServices(answers).slice(0, 3).map(getService).filter(s => s !== undefined)
   const sectorSlug = sectorFor(answers)
   const sector = SECTORS.find(s => s.slug === sectorSlug)
-  const firstPack = sector && sector.page.kind !== 'profile' ? sector.page.packs[0] : undefined
   const recap = answerLabels(answers)
   const wantsRenfort = answers.objectifs?.includes('renfort')
 
@@ -163,13 +162,12 @@ function Result({ answers, headingRef, onRestart }: {
 
       {sector && (
         <Link to={sectorPath(sector.slug)} className="wizard__sector">
-          <span className="content-card__kicker">Offres pour votre métier</span>
+          <span className="content-card__kicker">Votre métier</span>
           <span className="wizard__sector-title">{sector.name}</span>
           <span className="wizard__sector-text">
-            {sector.pitch}
-            {firstPack && ` Offres dès ${firstPack.price}, ${firstPack.delay.toLowerCase()}.`}
+            {sector.pitch} Découvrez les problèmes les plus fréquents dans votre secteur, et ce qu’ils vous coûtent.
           </span>
-          <span className="content-card__more">Voir les offres →</span>
+          <span className="content-card__more">Voir votre secteur →</span>
         </Link>
       )}
 

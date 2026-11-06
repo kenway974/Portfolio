@@ -10,6 +10,12 @@ export const absoluteUrl = (path: string) =>
 /** Image de partage générée au build (voir scripts/postbuild.mjs). */
 export const ogImage = (slug = 'default') => absoluteUrl(`/og/${slug}.png`)
 
+/** « 1 200 € » → 1200 ; renvoie undefined pour un prix non numérique. */
+export const parsePrice = (price: string) => {
+  const n = Number(price.replace(/[^\d,]/g, '').replace(',', '.'))
+  return Number.isFinite(n) && n > 0 ? n : undefined
+}
+
 const PERSON_ID = `${site.url}/#person`
 const BUSINESS_ID = `${site.url}/#business`
 const WEBSITE_ID = `${site.url}/#website`
@@ -260,28 +266,20 @@ export function realisationSchema(r: RealisationLike) {
 type SectorLike = {
   slug: string
   name: string
-  pitch: string
   page:
-    | { kind?: undefined; who: string; packs: { num: string; name: string; price: string; delay: string; items: { g: string; h: string }[] }[] }
-    | { kind: 'profile'; who: string; intro: string }
-}
-
-const sectorUrl = (slug: string) => absoluteUrl(slug === 'recruteur' ? '/profil' : `/secteurs/${slug}`)
-
-/** « 1 200 € » → 1200 ; renvoie undefined pour un prix non numérique. */
-const parsePrice = (price: string) => {
-  const n = Number(price.replace(/[^\d,]/g, '').replace(',', '.'))
-  return Number.isFinite(n) && n > 0 ? n : undefined
+    | { kind?: undefined; who: string; description: string; problems: { title: string }[] }
+    | { kind: 'profile'; description: string }
 }
 
 export function sectorSchema(sector: SectorLike) {
-  const url = sectorUrl(sector.slug)
+  const path = sector.slug === 'recruteur' ? '/profil' : `/secteurs/${sector.slug}`
+  const url = absoluteUrl(path)
   if (sector.page.kind === 'profile') {
     return {
       '@context': 'https://schema.org',
       '@graph': [
-        { '@type': 'ProfilePage', url, name: `Profil — ${site.name}`, description: sector.page.intro, mainEntity: personSchema },
-        breadcrumbSchema([['Accueil', '/'], ['Profil', '/profil']]),
+        { '@type': 'ProfilePage', url, name: `Profil — ${site.name}`, description: sector.page.description, mainEntity: personSchema },
+        breadcrumbSchema([['Accueil', '/'], ['Profil', path]]),
       ],
     }
   }
@@ -290,31 +288,21 @@ export function sectorSchema(sector: SectorLike) {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'Service',
-        '@id': `${url}#service`,
-        name: `Site web et visibilité en ligne : ${sector.name}`,
-        description: sector.pitch,
-        audience: { '@type': 'BusinessAudience', name: page.who },
+        '@type': 'WebPage',
+        '@id': `${url}#page`,
         url,
-        provider: { '@id': PERSON_ID },
-        areaServed: { '@type': 'Country', name: 'France' },
-        hasOfferCatalog: {
-          '@type': 'OfferCatalog',
-          name: `Offres ${sector.name}`,
-          itemListElement: page.packs.map(p => {
-            const price = parsePrice(p.price)
-            return {
-              '@type': 'Offer',
-              name: `${p.num} : ${p.name}`,
-              description: p.items.map(i => i.h).join(' · '),
-              ...(price ? { price, priceCurrency: 'EUR' } : {}),
-              priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'EUR', ...(price ? { price } : {}), description: p.price },
-              seller: { '@id': PERSON_ID },
-            }
-          }),
+        name: `${sector.name} — ${site.name}`,
+        description: page.description,
+        inLanguage: site.language,
+        audience: { '@type': 'BusinessAudience', name: page.who },
+        about: { '@id': BUSINESS_ID },
+        mainEntity: {
+          '@type': 'ItemList',
+          name: `Problèmes fréquents : ${sector.name}`,
+          itemListElement: page.problems.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title })),
         },
       },
-      breadcrumbSchema([['Accueil', '/'], [sector.name, `/secteurs/${sector.slug}`]]),
+      breadcrumbSchema([['Accueil', '/'], [sector.name, path]]),
     ],
   }
 }

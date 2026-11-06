@@ -1,48 +1,43 @@
 export interface Source { label: string; url: string }
 
-/** Étape d'une chronologie : quand, ce que le dirigeant voit, comment. */
-export interface Step { when: string; icon: string; title: string; text: string; src?: string[] }
-
+/** Constat factuel, avec ses sources éventuelles (clés de SRC). */
 export interface Fact { text: string; src?: string[] }
 
-export interface Situation {
-  label: string
+/** Un problème que le professionnel peut reconnaître, et ce qu'il lui coûte. */
+export interface Problem {
+  /** Le problème, formulé comme le dirait le professionnel. */
+  title: string
+  /** Ce qui se passe concrètement (constats). */
   facts: Fact[]
-  /** Débuts de chronologie propres à cette situation, un tableau par pack. */
-  starts?: Step[][]
+  /** Conséquence sur l'activité : chiffre d'affaires, temps, clients. */
+  impact: string
+  /** Service qui règle ce problème (slug de services.ts). */
+  service: string
 }
 
-export interface Pack {
-  num: string
-  name: string
-  price: string
-  delay: string
-  ads?: string
-  /** Le pack contient le précédent. */
-  base?: boolean
-  items: { g: string; h: string }[]
-  pre?: Step[]
-  lead?: Step[]
-  steps: Step[]
-}
-
-export interface OfferPage {
+export interface ProblemsPage {
   kind?: undefined
+  /** Balise <title> et meta description. */
+  title: string
+  description: string
+  /** Pour qui est la page (au-dessus du titre). */
   who: string
-  hook: string
-  situations: Situation[]
-  packs: Pack[]
-  cumulative?: boolean
-  /** Phrase sous le titre des offres. */
-  sub?: string
-  note?: string
-  noteSrc?: string
+  /** Titre H1, avec le métier. */
+  h1: string
+  /** Accroche sous le titre. */
+  intro: string
+  problems: Problem[]
+  /** Encadré « Bon à savoir » (ex. règles d'une profession). */
+  note?: { text: string; src?: string }
 }
 
 export interface ProfilePage {
   kind: 'profile'
+  title: string
+  description: string
   who: string
-  hook: string
+  /** Titre H1. */
+  h1: string
   intro: string
   /** Compétences concrètes : ce que je sais faire, pas avec quel outil. */
   skills: { label: string; items: { g: string; h: string }[] }[]
@@ -56,8 +51,10 @@ export interface ProfilePage {
 
 export interface Sector {
   slug: string
+  /** Libellé court (roue sur mobile). */
   short: string
   name: string
+  /** Phrase affichée sous la roue. */
   pitch: string
-  page: OfferPage | ProfilePage
+  page: ProblemsPage | ProfilePage
 }

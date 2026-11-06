@@ -1,8 +1,13 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ContactForm from '../components/ContactForm'
 import { contactPageSchema, site } from '../seo'
+import services from '../data/services'
+
+type PrefillState = { service?: string; message?: string } | null
+
+const KNOWN_SERVICES = new Set([...services.map(s => s.slug), 'renfort-equipe', 'other'])
 
 const DESCRIPTION = 'Contactez Kenny Pignolet, développeur web freelance : décrivez votre projet de site, d\'application ou d\'automatisation, réponse sous 48 h et devis gratuit.'
 
@@ -13,6 +18,11 @@ const NEXT_STEPS = [
 ]
 
 export default function ContactPage() {
+  // Arrivée depuis une page secteur : le message et le type de projet sont pré-remplis.
+  const prefill = useLocation().state as PrefillState
+  const service = prefill?.service && KNOWN_SERVICES.has(prefill.service) ? prefill.service : ''
+  const message = typeof prefill?.message === 'string' ? prefill.message.slice(0, 2000) : ''
+
   return (
     <div className="content-page">
       <Seo
@@ -68,7 +78,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <ContactForm idPrefix="page" />
+          <ContactForm idPrefix="page" initialService={service} initialMessage={message} />
         </div>
       </div>
     </div>
