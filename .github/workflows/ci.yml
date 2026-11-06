@@ -1,0 +1,77 @@
+# Intégration continue : chaque push sur main et chaque pull request.
+# Le déploiement (CD) est fait par Vercel (frontend) et Railway (backend) à partir de main.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (API de contact)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - name: Installation (dépendances verrouillées)
+        run: npm ci
+      - name: Audit des dépendances de production
+        run: npm audit --omit=dev --audit-level=high
+      - name: Lint
+        run: npm run lint
+      - name: Tests
+        run: npm test
+
+  frontend:
+    name: Frontend (site)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Installation (dépendances verrouillées)
+        run: npm ci
+      - name: Audit des dépendances de production
+        run: npm audit --omit=dev --audit-level=high
+      - name: Lint
+        run: npm run lint
+      - name: Vérification des types
+        run: npm run typecheck
+      - name: Tests unitaires (données, diagnostic, SEO)
+        run: npm test
+      - name: Build de production
+        run: npm run build
+      - name: Tests SEO sur les pages générées
+        run: npm run test:seo
+      - name: Installation du navigateur de test
+        run: npx playwright install --with-deps chromium
+      - name: Tests de bout en bout
+        run: npm run test:e2e
+      - name: Rapport des tests de bout en bout
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: frontend/playwright-report
+          retention-days: 7

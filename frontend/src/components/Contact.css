@@ -137,3 +137,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+.contact__link {
+  color: var(--accent-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

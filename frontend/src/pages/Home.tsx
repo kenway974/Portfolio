@@ -1,30 +1,33 @@
-import { Head } from 'vite-react-ssg'
+import Seo from '../components/Seo'
+import { homeSchema } from '../seo'
 import Hero from '../components/Hero'
+import SectorWheel from '../components/SectorWheel'
 import Services from '../components/Services'
 import Projects from '../components/Projects'
 import Process from '../components/Process'
 import About from '../components/About'
 import BlogPreview from '../components/BlogPreview'
-import TILPreview from '../components/TILPreview'
 import Contact from '../components/Contact'
+
+const TITLE = 'Développeur web freelance : sites & applications | Kenny Pignolet'
+const DESCRIPTION = 'Développeur web freelance : sites vitrines, e-commerce, landing pages, API et automatisations sur mesure pour TPE et PME, partout en France. Réponse sous 48h.'
 
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>Kenny Pignolet — Développeur web freelance</title>
-        <meta name="description" content="Développeur web freelance originaire de La Réunion. J'aide les TPE et PME à construire une présence en ligne qui attire, convainc et convertit — sans la complexité d'une agence." />
-        <meta property="og:title" content="Kenny Pignolet — Développeur web freelance" />
-        <meta property="og:description" content="Sites vitrines, e-commerce, landing pages et APIs sur mesure. Simple, sans agence." />
-        <meta property="og:url" content="https://portfolio-jet-tau-73.vercel.app/" />
-        <link rel="canonical" href="https://portfolio-jet-tau-73.vercel.app/" />
-      </Head>
+      <Seo
+        title={TITLE}
+        description={DESCRIPTION}
+        path="/"
+        imageAlt="Kenny Pignolet — Développeur web freelance"
+        jsonLd={homeSchema(DESCRIPTION)}
+      />
       <Hero />
+      <SectorWheel />
       <Services />
       <Projects />
       <Process />
       <About />
-      <TILPreview />
       <BlogPreview />
       <Contact />
     </>

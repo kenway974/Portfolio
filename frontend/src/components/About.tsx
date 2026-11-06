@@ -1,9 +1,8 @@
-import { useTranslation } from 'react-i18next'
+import { t } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import './About.css'
 
 export default function About() {
-  const { t } = useTranslation()
   const ref = useScrollReveal<HTMLElement>()
 
   const props = [

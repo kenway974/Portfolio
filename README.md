@@ -76,41 +76,22 @@ The Vite dev server proxies `/api/*` requests to `http://localhost:4000` automat
 
 ## Content Management
 
-All content lives in JSON files — no database required.
+All content lives in the repo — no database required.
 
 | File | Description |
 |------|-------------|
-| `frontend/src/data/projects.json` | Project cards in the carousel |
-| `frontend/src/data/blog.json` | Blog posts |
+| `frontend/src/data/services.ts` | Service pages (`/services/:slug`): SEO title, description, H1, content sections, FAQ, related projects and services |
+| `frontend/src/data/realisations.ts` | Project pages (`/realisations/:slug`): type (client, internal tool, certification project, demo), context, challenges, features, outcome |
+| `frontend/src/data/blog.json` | Blog posts (`/blog/:slug`) |
+| `frontend/src/data/secteurs.ts` | Sector pages (`/secteurs/:slug`, recruiter profile at `/profil`) and the « Vous êtes… ? » wheel on the home page: situations, packs and prices |
+| `frontend/src/data/diagnostic.ts` | Questions of the needs wizard (`/diagnostic`) and the scoring that maps answers to services |
 
-### Adding a project
+Other pages: `/contact` (contact page) and `/diagnostic` (needs wizard, ends with a pre-filled contact form).
 
-Edit `projects.json`:
-```json
-{
-  "id": "7",
-  "title": "My New Project",
-  "logo": "🚀",
-  "url": "https://example.com",
-  "description": "Short project description",
-  "tech": ["React", "Node.js"]
-}
-```
+Adding an entry to one of these files creates the page, its share image and its sitemap entry at the next build.
 
-### Adding a blog post
-
-Edit `blog.json`:
-```json
-{
-  "id": "5",
-  "title": "Post Title",
-  "slug": "post-slug-here",
-  "category": "Engineering",
-  "date": "2024-04-01",
-  "excerpt": "Short summary shown in listing.",
-  "content": "Full content here.\n\n## Section Heading\n\nParagraph text.\n\n**Bold** text supported."
-}
-```
+In `services.ts` and `realisations.ts`, a paragraph starting with `- ` is rendered as a bullet.
+The contact form's project types come from `services.ts`; keep `SERVICE_TYPES` in `backend/src/routes/contact.js` in sync.
 
 Blog post content supports:
 - `## Heading` → section headings
@@ -119,9 +100,36 @@ Blog post content supports:
 
 ---
 
-## Language Support
+## SEO
 
-Toggle between **English** and **French** via the button in the navbar. All UI strings live in `frontend/src/i18n/index.ts`. To add more languages, extend the `resources` object there.
+- Site URL, name and social profiles live in `frontend/site.config.json` (single source of truth).
+- Every page renders its tags through `src/components/Seo.tsx` (title, description, canonical, Open Graph, Twitter, JSON-LD).
+- Structured data builders are in `src/seo.ts` (WebSite, Person, ProfessionalService, Service, FAQPage, CreativeWork, CollectionPage, Blog, BlogPosting, BreadcrumbList).
+- `npm run build` pre-renders every page (vite-react-ssg), then `scripts/postbuild.mjs` reads the generated HTML to build `sitemap.xml`, `robots.txt` and the 1200×630 share images (`/og/*.png`, from each page's H1). Nothing to maintain by hand.
+- Optional `updated` field (`YYYY-MM-DD`) on a blog post sets its `lastmod` / `dateModified`.
+
+## Texts
+
+The site is French only. All UI strings live in `frontend/src/i18n/fr.ts`, read with `t('key')` / `tList('key')` from `src/i18n`.
+
+## Quality checks
+
+| Command (in `frontend/`) | What it checks |
+|---|---|
+| `npm run lint` | ESLint (TypeScript, React hooks), zero warning |
+| `npm run typecheck` | TypeScript, strict |
+| `npm test` | Unit tests: content integrity (services, projects, sectors, sources), diagnostic scoring, SEO helpers, contact form types in sync with the backend |
+| `npm run build` then `npm run test:seo` | Every generated page: title and description length, single H1, heading hierarchy, canonical, Open Graph, JSON-LD, internal links and anchors, accessible names, sitemap, robots.txt, 404 |
+| `npm run test:e2e` | Playwright on the production build (desktop and mobile): navigation, diagnostic, sector page to pre-filled contact, contact form success and error, 404, no horizontal overflow, no console error |
+| `npm run check` | All of the above, in order |
+
+In `backend/`: `npm run lint` and `npm test` (Node test runner: validation, rate limit, e-mail escaping).
+
+### CI/CD
+
+- `.github/workflows/ci.yml` runs on every pull request and every push to `main`: dependency audit (no high vulnerability in production), lint, types, unit tests, build, SEO tests and end-to-end tests, for the frontend and the backend.
+- Deployment: Vercel builds a preview for every branch and deploys `main` to production; Railway deploys the backend from `main`.
+- `.github/dependabot.yml` opens weekly dependency update PRs.
 
 ---
 
@@ -146,7 +154,7 @@ npm run build
 5. Set **Output Directory** to `dist`
 6. Add environment variable: `VITE_API_URL=https://your-backend.up.railway.app`
 
-The `vercel.json` handles SPA routing and asset caching automatically.
+`vercel.json` handles clean URLs, security headers and asset caching.
 
 ### Backend → Railway
 
@@ -187,7 +195,7 @@ The `vercel.json` handles SPA routing and asset caching automatically.
 |-------|-----------|
 | Frontend | React 18, TypeScript, Vite |
 | Routing | React Router v6 |
-| i18n | i18next + react-i18next |
+| SSG / SEO | vite-react-ssg, satori + resvg (share images) |
 | Animations | CSS (IntersectionObserver) |
 | Backend | Node.js 18, Express 4 |
 | Email | Nodemailer (optional) |

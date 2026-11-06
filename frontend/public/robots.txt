@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://portfolio-jet-tau-73.vercel.app/sitemap.xml

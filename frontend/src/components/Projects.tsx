@@ -1,13 +1,13 @@
 import { useRef } from 'react'
-import { useTranslation } from 'react-i18next'
+import { t } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import projectsData from '../data/projects.json'
+import { Link } from 'react-router-dom'
+import realisations from '../data/realisations'
 import './Projects.css'
 
 export default function Projects() {
-  const { t } = useTranslation()
   const sectionRef = useScrollReveal<HTMLElement>()
-  const trackRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLUListElement>(null)
 
   const scroll = (dir: 'left' | 'right') => {
     if (!trackRef.current) return
@@ -15,12 +15,6 @@ export default function Projects() {
     trackRef.current.scrollBy({ left: dir === 'right' ? amount : -amount, behavior: 'smooth' })
   }
 
-  type Project = {
-    id: string; title: string; logo: string; url: string
-    description: string; tech: string[]; status?: string
-  }
-  const projects = (Array.isArray(projectsData) ? projectsData : []) as Project[]
-  
   return (
     <section id="projects" className="projects" ref={sectionRef}>
       <div className="container">
@@ -33,12 +27,12 @@ export default function Projects() {
             <button
               className="arrow-btn"
               onClick={() => scroll('left')}
-              aria-label="Scroll left"
+              aria-label="Projets précédents"
             >←</button>
             <button
               className="arrow-btn"
               onClick={() => scroll('right')}
-              aria-label="Scroll right"
+              aria-label="Projets suivants"
             >→</button>
           </div>
         </div>
@@ -46,39 +40,38 @@ export default function Projects() {
 
       {/* Full-bleed scroll track */}
       <div className="projects__track-wrap">
-        <div className="projects__track" ref={trackRef} role="list">
-          {projects.map((project, i) => (
-            <a
-              key={project.id}
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
+        <ul className="projects__track" ref={trackRef} aria-label="Réalisations">
+          {realisations.map((project, i) => (
+            <li key={project.slug} className="projects__item">
+            <Link
+              to={`/realisations/${project.slug}`}
               className={`project-card reveal reveal-delay-${Math.min(i + 1, 4)}`}
-              role="listitem"
-              aria-label={project.title}
             >
               <div className="project-card__logo" aria-hidden="true">
                 {project.logo}
               </div>
               <div className="project-card__body">
                 <div className="project-card__title-row">
-                  <h3 className="project-card__title">{project.title}</h3>
-                  {project.status === 'wip' && (
-                    <span className="project-card__wip">En cours</span>
-                  )}
+                  <h3 className="project-card__title">{project.name}</h3>
+                  <span className="project-card__wip">{project.kind}</span>
                 </div>
-                <p className="project-card__desc">{project.description}</p>
+                <p className="project-card__desc">{project.summary}</p>
                 <div className="project-card__tech">
-                  {project.tech.map(t => (
-                    <span key={t} className="tech-tag">{t}</span>
+                  {project.tech.slice(0, 4).map(tag => (
+                    <span key={tag} className="tech-tag">{tag}</span>
                   ))}
                 </div>
               </div>
               <span className="project-card__visit">{t('projects.visit')}</span>
               <div className="project-card__glow" aria-hidden="true" />
-            </a>
+            </Link>
+            </li>
           ))}
-        </div>
+        </ul>
+      </div>
+
+      <div className="container projects__more">
+        <Link to="/realisations" className="btn-ghost">{t('projects.all')}</Link>
       </div>
     </section>
   )

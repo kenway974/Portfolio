@@ -78,23 +78,6 @@
   flex-shrink: 0;
 }
 
-.lang-toggle {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  padding: 0.35rem 0.6rem;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  transition: color 0.2s, border-color 0.2s;
-}
-
-.lang-toggle:hover {
-  color: var(--accent-bright);
-  border-color: var(--border-accent);
-}
-
 .navbar__cta {
   padding: 0.6rem 1.25rem;
   font-size: 0.82rem;
@@ -174,4 +157,10 @@
   .hamburger       { display: flex; }
   .mobile-menu     { display: flex; }
   .navbar__inner   { gap: 0.75rem; }
+}
+
+/* Page courante */
+.navbar__links a[aria-current="page"],
+.mobile-menu a[aria-current="page"] {
+  color: var(--text-primary);
 }

@@ -1,4 +1,7 @@
-import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { t } from '../i18n'
+import services from '../data/services'
+import { SECTORS, sectorPath } from '../data/secteurs'
 import './Footer.css'
 
 const SOCIAL = [
@@ -23,11 +26,38 @@ const SOCIAL = [
 ]
 
 export default function Footer() {
-  const { t } = useTranslation()
   const year = new Date().getFullYear()
 
   return (
     <footer className="footer">
+      <nav className="container footer__nav" aria-label="Plan du site">
+        <div className="footer__col">
+          <p className="footer__col-title">Services</p>
+          <ul className="footer__links footer__links--services">
+            {services.map(s => (
+              <li key={s.slug}><Link to={`/services/${s.slug}`}>{s.name}</Link></li>
+            ))}
+          </ul>
+        </div>
+        <div className="footer__col">
+          <p className="footer__col-title">Le site</p>
+          <ul className="footer__links">
+            <li><Link to="/services">Tous les services</Link></li>
+            <li><Link to="/realisations">Réalisations</Link></li>
+            <li><Link to="/blog">Blog</Link></li>
+            <li><Link to="/diagnostic">Diagnostic gratuit</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+          </ul>
+        </div>
+        <div className="footer__col">
+          <p className="footer__col-title">Vous êtes</p>
+          <ul className="footer__links">
+            {SECTORS.map(s => (
+              <li key={s.slug}><Link to={sectorPath(s.slug)}>{s.name}</Link></li>
+            ))}
+          </ul>
+        </div>
+      </nav>
       <div className="container footer__inner">
         <div className="footer__left">
           <span className="footer__logo">✦ Kenny Pignolet</span>
