@@ -1,21 +1,62 @@
-# Mises à jour de sécurité et de dépendances, regroupées chaque semaine.
+# Dependabot propose les mises à jour de dépendances sous forme de pull requests.
+# Rien n'est fusionné automatiquement : chaque PR passe par la CI (installation,
+# lint, types, tests, build, tests SEO et de bout en bout) avant toute fusion.
+#
+# Règles de compatibilité :
+# - les mises à jour mineures et correctives sont groupées : elles ne doivent rien casser ;
+# - chaque version majeure arrive dans sa propre PR, ou avec les paquets qui doivent
+#   changer en même temps (ex. react et react-dom), pour être testée isolément ;
+# - certaines versions majeures sont ignorées tant qu'une autre dépendance du projet
+#   ne les supporte pas (voir chaque « ignore »). À revoir quand la contrainte disparaît.
 version: 2
 updates:
   - package-ecosystem: npm
     directory: /frontend
     schedule:
       interval: weekly
+    open-pull-requests-limit: 10
     groups:
-      frontend:
+      # Versions majeures qui doivent changer ensemble pour rester compatibles.
+      react-majeure:
+        patterns: ['react', 'react-dom', '@types/react', '@types/react-dom']
+        update-types: ['major']
+      vite-majeure:
+        patterns: ['vite', '@vitejs/plugin-react']
+        update-types: ['major']
+      eslint-majeure:
+        patterns: ['eslint', '@eslint/js']
+        update-types: ['major']
+      # Tout le reste, sans changement majeur, dans une seule PR.
+      frontend-mineures:
         patterns: ['*']
+        update-types: ['minor', 'patch']
+    ignore:
+      # typescript-eslint n'accepte que TypeScript < 6.1.
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+      # vite-react-ssg (génération des pages statiques) n'accepte que react-router 6.
+      - dependency-name: 'react-router-dom'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'react-router'
+        update-types: ['version-update:semver-major']
+      # Les types de Node suivent la version de Node utilisée par la CI (22).
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+
   - package-ecosystem: npm
     directory: /backend
     schedule:
       interval: weekly
+    open-pull-requests-limit: 10
     groups:
-      backend:
+      backend-mineures:
         patterns: ['*']
+        update-types: ['minor', 'patch']
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      actions:
+        patterns: ['*']

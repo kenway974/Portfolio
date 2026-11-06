@@ -129,7 +129,10 @@ In `backend/`: `npm run lint` and `npm test` (Node test runner: validation, rate
 
 - `.github/workflows/ci.yml` runs on every pull request and every push to `main`: dependency audit (no high vulnerability in production), lint, types, unit tests, build, SEO tests and end-to-end tests, for the frontend and the backend.
 - Deployment: Vercel builds a preview for every branch and deploys `main` to production; Railway deploys the backend from `main`.
-- `.github/dependabot.yml` opens weekly dependency update PRs.
+- `.github/dependabot.yml` opens weekly dependency update PRs (never merged automatically, each one goes through CI):
+  - minor and patch updates are grouped in one PR per folder;
+  - each major update gets its own PR, or one PR for packages that must move together (React, Vite, ESLint);
+  - majors known to be incompatible are ignored until the blocking dependency supports them: TypeScript (typescript-eslint requires < 6.1), react-router (vite-react-ssg requires 6), `@types/node` (follows the Node version used by CI).
 
 ---
 
