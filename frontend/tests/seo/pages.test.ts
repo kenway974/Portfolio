@@ -24,6 +24,12 @@ describe.each(indexable.map(p => [p.path, p] as const))('%s', (_path, page) => {
     expect(description.length, description).toBeLessThanOrEqual(165)
   })
 
+  it('n\'a pas de caractère parasite dans le titre ni la description', () => {
+    for (const value of [title, description, meta(page, 'og:title') ?? '', meta(page, 'og:description') ?? '']) {
+      expect(value, value).not.toMatch(/\\|\{|\}|undefined|null|NaN/)
+    }
+  })
+
   it('a une URL canonique égale à son adresse', () => {
     expect(canonical).toBe(url)
     expect(meta(page, 'og:url')).toBe(url)
@@ -127,6 +133,13 @@ describe('site', () => {
     const robots = readFileSync(join(DIST, 'robots.txt'), 'utf8')
     expect(robots).toContain('Allow: /')
     expect(robots).toContain(`Sitemap: ${site.url}/sitemap.xml`)
+  })
+
+  it('n\'a de caractère parasite dans aucun titre ni aucune description, 404 comprise', () => {
+    for (const p of pages) {
+      const values = [text(p.root.querySelector('title')), meta(p, 'description') ?? '']
+      values.forEach(v => expect(v, `${p.path} : ${v}`).not.toMatch(/\\|\{|\}|undefined|null|NaN/))
+    }
   })
 
   it('a une page 404 non indexable, absente du sitemap', () => {

@@ -12,7 +12,7 @@ export default function NotFound() {
     <div className="content-page">
       <Seo
         title="Page introuvable | Kenny Pignolet, développeur web freelance"
-        description="Cette page n\'existe pas ou a été déplacée. Retrouvez les services, les réalisations et le blog de Kenny Pignolet, développeur web freelance."
+        description="Cette page n’existe pas ou a été déplacée. Retrouvez les services, les réalisations et le blog de Kenny Pignolet, développeur web freelance."
         path="/404"
         noindex
       />
