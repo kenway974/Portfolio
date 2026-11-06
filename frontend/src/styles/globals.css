@@ -221,3 +221,15 @@ section {
   color: #fff;
   transform: translateY(-1px);
 }
+
+/* Étiquette de technologie (cartes et pages réalisations) */
+.tech-tag {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.55rem;
+  background: rgba(108, 92, 231, 0.1);
+  border: 1px solid rgba(108, 92, 231, 0.2);
+  border-radius: 100px;
+  color: var(--accent-bright);
+}

@@ -5,8 +5,8 @@ import './Navbar.css'
 
 // Vrais liens <a href> : Google peut les suivre, contrairement aux boutons JS.
 const LINKS = [
-  { to: '/#services', label: t('nav.services') },
-  { to: '/#projects', label: t('nav.projects') },
+  { to: '/services', label: t('nav.services') },
+  { to: '/realisations', label: t('nav.projects') },
   { to: '/blog', label: t('nav.blog') },
   { to: '/#contact', label: t('nav.contact') },
 ]

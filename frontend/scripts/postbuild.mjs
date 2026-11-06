@@ -1,8 +1,9 @@
-// Exécuté après `vite-react-ssg build` : génère sitemap.xml, robots.txt
-// et les images de partage (Open Graph, 1200×630) dans dist/.
-import { readFile, writeFile, mkdir } from 'node:fs/promises'
+// Exécuté après `vite-react-ssg build` : parcourt les pages HTML générées dans dist/
+// pour produire sitemap.xml, robots.txt et les images de partage (Open Graph, 1200×630).
+// Aucune liste à maintenir : toute nouvelle page pré-rendue est prise en compte.
+import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises'
 import { createRequire } from 'node:module'
-import { dirname, join } from 'node:path'
+import { dirname, join, relative, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
@@ -10,22 +11,47 @@ import { Resvg } from '@resvg/resvg-js'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = join(root, 'dist')
 const require = createRequire(import.meta.url)
-const readJson = async p => JSON.parse(await readFile(join(root, p), 'utf8'))
 
-const site = await readJson('site.config.json')
-const posts = await readJson('src/data/blog.json')
+const site = JSON.parse(await readFile(join(root, 'site.config.json'), 'utf8'))
 const url = path => `${site.url}${path}`
 
+// ---------- Lecture des pages générées ----------
+async function htmlFiles(dir) {
+  const out = []
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name)
+    if (entry.isDirectory()) out.push(...await htmlFiles(full))
+    else if (entry.name.endsWith('.html') && entry.name !== '404.html') out.push(full)
+  }
+  return out
+}
+
+const decode = s => s
+  .replace(/<[^>]+>/g, '')
+  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").trim()
+
+const meta = (html, prop) =>
+  html.match(new RegExp(`<meta[^>]*(?:property|name)="${prop}"[^>]*content="([^"]*)"`))?.[1]
+
+const pages = []
+for (const file of await htmlFiles(dist)) {
+  const html = await readFile(file, 'utf8')
+  const rel = relative(dist, file).split(sep).join('/').replace(/\.html$/, '')
+  const path = rel === 'index' ? '/' : `/${rel}`
+  pages.push({
+    path,
+    h1: decode(html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? ''),
+    image: meta(html, 'og:image'),
+    lastmod: meta(html, 'article:modified_time'),
+  })
+}
+pages.sort((a, b) => (a.path === '/' ? -1 : b.path === '/' ? 1 : a.path.localeCompare(b.path)))
+
 // ---------- sitemap.xml ----------
-const latestPost = posts.map(p => p.updated ?? p.date).sort().at(-1)
-const pages = [
-  { loc: url('/') },
-  { loc: url('/blog'), lastmod: latestPost },
-  ...posts.map(p => ({ loc: url(`/blog/${p.slug}`), lastmod: p.updated ?? p.date })),
-]
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(p => `  <url>\n    <loc>${p.loc}</loc>${p.lastmod ? `\n    <lastmod>${p.lastmod}</lastmod>` : ''}\n  </url>`).join('\n')}
+${pages.map(p => `  <url>\n    <loc>${url(p.path)}</loc>${p.lastmod ? `\n    <lastmod>${p.lastmod}</lastmod>` : ''}\n  </url>`).join('\n')}
 </urlset>
 `
 await writeFile(join(dist, 'sitemap.xml'), sitemap)
@@ -79,10 +105,16 @@ async function renderOg(file, content) {
 await renderOg('default', {
   kicker: site.name,
   title: 'Développeur web freelance. Sites & applications sur mesure.',
-  subtitle: 'Sites vitrines · E-commerce · API & automatisation',
+  subtitle: 'Sites web · Applications · Automatisation & IA',
 })
-for (const p of posts) {
-  await renderOg(`blog/${p.slug}`, { kicker: `Blog · ${p.category}`, title: p.title, subtitle: site.name })
+
+const KICKERS = { blog: 'Blog', services: 'Service', realisations: 'Réalisation' }
+let count = 1
+for (const p of pages) {
+  const slug = p.image?.match(/\/og\/(.+)\.png$/)?.[1]
+  if (!slug || slug === 'default' || !p.h1) continue
+  await renderOg(slug, { kicker: KICKERS[slug.split('/')[0]] ?? site.name, title: p.h1, subtitle: site.name })
+  count++
 }
 
-console.log(`[postbuild] sitemap (${pages.length} URLs), robots.txt, ${posts.length + 1} images de partage`)
+console.log(`[postbuild] sitemap (${pages.length} URLs), robots.txt, ${count} images de partage`)

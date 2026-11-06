@@ -18,29 +18,13 @@ const fr = {
   services: {
     label: 'Ce que je fais',
     heading: 'Des solutions adaptées à votre activité.',
-    items: [
-      {
-        title: 'Site vitrine',
-        desc: 'Une présence professionnelle qui inspire confiance et reflète votre image de marque. Design soigné, performant, optimisé pour le référencement.',
-      },
-      {
-        title: 'E-commerce',
-        desc: 'Vendez en ligne 24h/24. Une boutique rapide, sécurisée et conçue pour convertir vos visiteurs en acheteurs.',
-      },
-      {
-        title: 'Landing page',
-        desc: 'Une page dédiée pour transformer vos visiteurs en prospects ou en clients. Conçue pour l\'acquisition et la conversion.',
-      },
-      {
-        title: 'API & Automatisation',
-        desc: 'Des fonctionnalités sur mesure ou des process automatisés pour ajouter une vraie valeur à votre site et faire gagner du temps à votre équipe.',
-      },
-    ],
+    all: 'Tous les services',
   },
   projects: {
     label: 'Réalisations',
     heading: 'Des projets construits avec exigence.',
     visit: 'Voir le projet →',
+    all: 'Toutes les réalisations',
   },
   process: {
     label: 'Comment ça marche',
@@ -90,13 +74,6 @@ const fr = {
     email: 'Votre email',
     service: 'Type de projet',
     message: 'Décrivez votre projet',
-    services: {
-      vitrine: 'Site vitrine',
-      ecommerce: 'E-commerce',
-      landing: 'Landing page',
-      api: 'API & Automatisation',
-      other: 'Autre projet',
-    },
     submit: 'Envoyer',
     submitting: 'Envoi en cours...',
     success: 'Message envoyé ! Je vous réponds sous 48h.',

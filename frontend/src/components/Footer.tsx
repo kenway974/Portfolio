@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import { t } from '../i18n'
+import services from '../data/services'
 import './Footer.css'
 
 const SOCIAL = [
@@ -27,6 +29,25 @@ export default function Footer() {
 
   return (
     <footer className="footer">
+      <nav className="container footer__nav" aria-label="Plan du site">
+        <div className="footer__col">
+          <p className="footer__col-title">Services</p>
+          <ul className="footer__links footer__links--services">
+            {services.map(s => (
+              <li key={s.slug}><Link to={`/services/${s.slug}`}>{s.name}</Link></li>
+            ))}
+          </ul>
+        </div>
+        <div className="footer__col">
+          <p className="footer__col-title">Le site</p>
+          <ul className="footer__links">
+            <li><Link to="/services">Tous les services</Link></li>
+            <li><Link to="/realisations">Réalisations</Link></li>
+            <li><Link to="/blog">Blog</Link></li>
+            <li><Link to="/#contact">Contact</Link></li>
+          </ul>
+        </div>
+      </nav>
       <div className="container footer__inner">
         <div className="footer__left">
           <span className="footer__logo">✦ Kenny Pignolet</span>

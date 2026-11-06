@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react'
 import { t } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import services, { SERVICE_CATEGORIES } from '../data/services'
 import './Contact.css'
 
 type FormState = {
@@ -46,13 +47,6 @@ export default function Contact() {
     }
   }
 
-  const services = [
-    { value: 'vitrine', label: t('contact.services.vitrine') },
-    { value: 'ecommerce', label: t('contact.services.ecommerce') },
-    { value: 'landing', label: t('contact.services.landing') },
-    { value: 'api', label: t('contact.services.api') },
-    { value: 'other', label: t('contact.services.other') },
-  ]
 
   return (
     <section id="contact" className="contact" ref={ref}>
@@ -106,9 +100,17 @@ export default function Contact() {
                 required
               >
                 <option value="" disabled>— Choisir —</option>
-                {services.map(s => (
-                  <option key={s.value} value={s.value}>{s.label}</option>
+                {SERVICE_CATEGORIES.map(category => (
+                  <optgroup key={category} label={category}>
+                    {services.filter(s => s.category === category).map(s => (
+                      <option key={s.slug} value={s.slug}>{s.name}</option>
+                    ))}
+                  </optgroup>
                 ))}
+                <optgroup label="Autre">
+                  <option value="renfort-equipe">Renfort d'équipe</option>
+                  <option value="other">Autre projet</option>
+                </optgroup>
               </select>
             </div>
 

@@ -1,5 +1,5 @@
 import site from '../site.config.json'
-import { tList } from './i18n'
+import services from './data/services'
 
 export { site }
 
@@ -27,7 +27,6 @@ export const personSchema = {
 
 /** Données structurées de la page d'accueil : site, personne, activité et services. */
 export function homeSchema(description: string) {
-  const services = tList<{ title: string; desc: string }>('services.items')
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -56,7 +55,13 @@ export function homeSchema(description: string) {
           name: 'Services',
           itemListElement: services.map(s => ({
             '@type': 'Offer',
-            itemOffered: { '@type': 'Service', name: s.title, description: s.desc, provider: { '@id': PERSON_ID } },
+            itemOffered: {
+              '@type': 'Service',
+              name: s.h1,
+              description: s.summary,
+              url: absoluteUrl(`/services/${s.slug}`),
+              provider: { '@id': PERSON_ID },
+            },
           })),
         },
       },
@@ -124,6 +129,116 @@ export function blogPostSchema(post: Post) {
         publisher: { '@id': PERSON_ID },
       },
       breadcrumbSchema([['Accueil', '/'], ['Blog', '/blog'], [post.title, `/blog/${post.slug}`]]),
+    ],
+  }
+}
+
+// ─────────────────────────── Services & réalisations ───────────────────────────
+
+type ServiceLike = { slug: string; name: string; description: string; h1: string; faq: { q: string; a: string }[] }
+type RealisationLike = { slug: string; name: string; description: string; h1: string; tech: string[]; url?: string; kind: string; sector: string }
+
+export function servicesListSchema(services: Array<{ slug: string; name: string }>, description: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        url: absoluteUrl('/services'),
+        name: `Services — ${site.name}`,
+        description,
+        inLanguage: site.language,
+        about: { '@id': BUSINESS_ID },
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: services.map((s, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: s.name,
+            url: absoluteUrl(`/services/${s.slug}`),
+          })),
+        },
+      },
+      breadcrumbSchema([['Accueil', '/'], ['Services', '/services']]),
+    ],
+  }
+}
+
+export function serviceSchema(service: ServiceLike) {
+  const path = `/services/${service.slug}`
+  const graph: object[] = [
+    {
+      '@type': 'Service',
+      '@id': `${absoluteUrl(path)}#service`,
+      name: service.h1,
+      serviceType: service.name,
+      description: service.description,
+      url: absoluteUrl(path),
+      provider: { '@id': PERSON_ID },
+      areaServed: { '@type': 'Country', name: 'France' },
+      availableChannel: { '@type': 'ServiceChannel', serviceUrl: absoluteUrl('/#contact') },
+    },
+    breadcrumbSchema([['Accueil', '/'], ['Services', '/services'], [service.name, path]]),
+  ]
+  if (service.faq.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      mainEntity: service.faq.map(f => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    })
+  }
+  return { '@context': 'https://schema.org', '@graph': graph }
+}
+
+export function realisationsListSchema(items: Array<{ slug: string; name: string }>, description: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        url: absoluteUrl('/realisations'),
+        name: `Réalisations — ${site.name}`,
+        description,
+        inLanguage: site.language,
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: items.map((r, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: r.name,
+            url: absoluteUrl(`/realisations/${r.slug}`),
+          })),
+        },
+      },
+      breadcrumbSchema([['Accueil', '/'], ['Réalisations', '/realisations']]),
+    ],
+  }
+}
+
+export function realisationSchema(r: RealisationLike) {
+  const path = `/realisations/${r.slug}`
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CreativeWork',
+        '@id': `${absoluteUrl(path)}#work`,
+        name: r.name,
+        headline: r.h1,
+        description: r.description,
+        url: absoluteUrl(path),
+        image: ogImage(`realisations/${r.slug}`),
+        genre: r.kind,
+        about: r.sector,
+        keywords: r.tech.join(', '),
+        inLanguage: site.language,
+        creator: { '@id': PERSON_ID },
+        ...(r.url ? { sameAs: r.url } : {}),
+      },
+      breadcrumbSchema([['Accueil', '/'], ['Réalisations', '/realisations'], [r.name, path]]),
     ],
   }
 }

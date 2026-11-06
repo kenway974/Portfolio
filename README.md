@@ -76,41 +76,18 @@ The Vite dev server proxies `/api/*` requests to `http://localhost:4000` automat
 
 ## Content Management
 
-All content lives in JSON files — no database required.
+All content lives in the repo — no database required.
 
 | File | Description |
 |------|-------------|
-| `frontend/src/data/projects.json` | Project cards in the carousel |
-| `frontend/src/data/blog.json` | Blog posts |
+| `frontend/src/data/services.ts` | Service pages (`/services/:slug`): SEO title, description, H1, content sections, FAQ, related projects and services |
+| `frontend/src/data/realisations.ts` | Project pages (`/realisations/:slug`): type (client, internal tool, certification project, demo), context, challenges, features, outcome |
+| `frontend/src/data/blog.json` | Blog posts (`/blog/:slug`) |
 
-### Adding a project
+Adding an entry to one of these files creates the page, its share image and its sitemap entry at the next build.
 
-Edit `projects.json`:
-```json
-{
-  "id": "7",
-  "title": "My New Project",
-  "logo": "🚀",
-  "url": "https://example.com",
-  "description": "Short project description",
-  "tech": ["React", "Node.js"]
-}
-```
-
-### Adding a blog post
-
-Edit `blog.json`:
-```json
-{
-  "id": "5",
-  "title": "Post Title",
-  "slug": "post-slug-here",
-  "category": "Engineering",
-  "date": "2024-04-01",
-  "excerpt": "Short summary shown in listing.",
-  "content": "Full content here.\n\n## Section Heading\n\nParagraph text.\n\n**Bold** text supported."
-}
-```
+In `services.ts` and `realisations.ts`, a paragraph starting with `- ` is rendered as a bullet.
+The contact form's project types come from `services.ts`; keep `SERVICE_TYPES` in `backend/src/routes/contact.js` in sync.
 
 Blog post content supports:
 - `## Heading` → section headings
@@ -123,8 +100,8 @@ Blog post content supports:
 
 - Site URL, name and social profiles live in `frontend/site.config.json` (single source of truth).
 - Every page renders its tags through `src/components/Seo.tsx` (title, description, canonical, Open Graph, Twitter, JSON-LD).
-- Structured data builders are in `src/seo.ts` (WebSite, Person, ProfessionalService, Blog, BlogPosting, BreadcrumbList).
-- `npm run build` pre-renders every page (vite-react-ssg), then `scripts/postbuild.mjs` generates `sitemap.xml`, `robots.txt` and the 1200×630 share images (`/og/*.png`) from `blog.json`. Nothing to maintain by hand.
+- Structured data builders are in `src/seo.ts` (WebSite, Person, ProfessionalService, Service, FAQPage, CreativeWork, CollectionPage, Blog, BlogPosting, BreadcrumbList).
+- `npm run build` pre-renders every page (vite-react-ssg), then `scripts/postbuild.mjs` reads the generated HTML to build `sitemap.xml`, `robots.txt` and the 1200×630 share images (`/og/*.png`, from each page's H1). Nothing to maintain by hand.
 - Optional `updated` field (`YYYY-MM-DD`) on a blog post sets its `lastmod` / `dateModified`.
 
 ## Texts

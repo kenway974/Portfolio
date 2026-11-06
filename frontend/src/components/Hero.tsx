@@ -41,7 +41,7 @@ export default function Hero() {
           <Link to="/#contact" className="btn-primary">
             {t('hero.cta')} <span aria-hidden="true">→</span>
           </Link>
-          <Link to="/#projects" className="btn-ghost">
+          <Link to="/realisations" className="btn-ghost">
             {t('hero.ctaSecondary')}
           </Link>
         </div>
