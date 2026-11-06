@@ -58,3 +58,15 @@ test('aucune page principale ne déborde horizontalement', async ({ page }) => {
     expect(overflow, path).toBeLessThanOrEqual(0)
   }
 })
+
+test('le menu mobile fermé n\'est pas atteignable au clavier', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'menu mobile')
+  await page.goto('/')
+  const menu = page.getByRole('navigation', { name: 'Navigation mobile' })
+  await expect(menu).toHaveAttribute('inert', '')
+  await page.getByRole('button', { name: 'Ouvrir le menu' }).click()
+  await expect(menu).not.toHaveAttribute('inert', '')
+  await menu.getByRole('link', { name: 'Blog' }).click()
+  await expect(page).toHaveURL(/\/blog$/)
+  await expect(page.getByRole('navigation', { name: 'Navigation mobile' })).toHaveAttribute('inert', '')
+})
