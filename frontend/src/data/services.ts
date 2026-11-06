@@ -26,6 +26,8 @@ export type Service = {
   includes: { title: string; desc: string }[]
   sections: { heading: string; body: string[] }[]
   faq: { q: string; a: string }[]
+  /** Prix d'appel, repris des offres par secteur. */
+  price?: { from: string; detail: string }
   /** Slugs des réalisations liées. */
   projects: string[]
   /** Slugs des services liés. */
@@ -52,6 +54,7 @@ const services: Service[] = [
     h1: 'Création de site vitrine professionnel',
     lead: 'Un site qui présente clairement votre activité, inspire confiance au premier coup d\'œil et transforme vos visiteurs en demandes de contact. Conçu sur mesure, rapide, et trouvable sur Google.',
     summary: 'Une présence en ligne professionnelle qui inspire confiance et génère des demandes de contact.',
+    price: { from: '300 €', detail: 'Un site construit pour Google, votre fiche Google et un formulaire de contact, livrés en 2 semaines, avec 3 mois de suivi.' },
     includes: [
       { title: 'Design sur mesure', desc: 'Une identité visuelle adaptée à votre activité, pas un thème générique que vos concurrents utilisent aussi.' },
       { title: 'Rédaction et structure', desc: 'Des pages organisées autour de ce que cherchent vos clients, avec des textes clairs et des appels à l\'action.' },
@@ -88,7 +91,8 @@ const services: Service[] = [
       {
         heading: 'Combien coûte un site vitrine ?',
         body: [
-          'Le prix dépend surtout du nombre de pages, de la part de design sur mesure, de la rédaction des textes (fournis par vous ou rédigés pour vous) et des fonctionnalités ajoutées : prise de rendez-vous, multilingue, blog, galerie.',
+          'Mon offre de base démarre à 300 € : un site construit pour Google, votre fiche Google, un formulaire de contact et trois mois de suivi, livrés en deux semaines. Les offres par métier (artisans, instituts, garages, avocats…) détaillent ce qui peut s\'ajouter : devis ou réservation en ligne, publicité, vidéos.',
+          'Au-delà, le prix dépend du nombre de pages, de la part de design sur mesure, de la rédaction des textes et des fonctionnalités ajoutées : prise de rendez-vous, multilingue, blog, galerie.',
           'Après un premier échange, je vous envoie un devis détaillé et gratuit, ligne par ligne, sous 48 h. Pas de frais cachés, pas d\'abonnement imposé : le site vous appartient.',
         ],
       },
@@ -103,7 +107,7 @@ const services: Service[] = [
       },
     ],
     faq: [
-      { q: 'Combien de temps faut-il pour créer un site vitrine ?', a: 'Comptez en général deux à quatre semaines entre la validation du devis et la mise en ligne. Le délai dépend surtout de la disponibilité des contenus (textes, photos) et du nombre d\'allers-retours sur la maquette.' },
+      { q: 'Combien de temps faut-il pour créer un site vitrine ?', a: 'L\'offre de base est livrée en deux semaines. Un site plus complet demande en général trois à quatre semaines. Le délai dépend surtout de la disponibilité des contenus (textes, photos) et du nombre d\'allers-retours sur la maquette.' },
       { q: 'Est-ce que je pourrai modifier mon site moi-même ?', a: 'Oui si vous le souhaitez : je peux ajouter un espace d\'administration simple ou utiliser WordPress. Sinon, je m\'occupe des modifications ponctuelles dans le cadre d\'un forfait de maintenance.' },
       { q: 'Le site sera-t-il bien référencé sur Google ?', a: 'Le site est livré avec des bases techniques SEO solides : structure, balises, vitesse, données structurées, sitemap. Le positionnement dépend ensuite de la concurrence et du contenu publié dans le temps, mais vous partez sur des fondations saines.' },
       { q: 'Je n\'ai ni logo ni textes, est-ce un problème ?', a: 'Non. On peut partir de zéro : je vous aide à structurer votre message et à rédiger des textes orientés vers vos clients. Pour le logo, je peux vous orienter vers une solution adaptée à votre budget.' },
@@ -395,6 +399,7 @@ const services: Service[] = [
     h1: 'Développement d\'application web sur mesure',
     lead: 'Quand les logiciels du marché ne collent pas à votre façon de travailler, je développe l\'outil qu\'il vous faut : réservation, commande, espace client, back-office, tableaux de bord. Accessible depuis un navigateur, sur ordinateur comme sur mobile.',
     summary: 'L\'outil métier qu\'il vous faut : réservation, paiement, espace client, back-office, tableaux de bord.',
+    price: { from: '700 €', detail: 'Un site avec devis, réservation ou prise de rendez-vous en ligne, livré en 3 semaines. Les applications plus complètes sont chiffrées sur devis.' },
     includes: [
       { title: 'Réservation en ligne', desc: 'Créneaux, disponibilités, acomptes, rappels automatiques et synchronisation avec votre agenda.' },
       { title: 'Paiement en ligne', desc: 'Paiements uniques, acomptes, abonnements et factures avec Stripe.' },
@@ -436,7 +441,7 @@ const services: Service[] = [
       },
     ],
     faq: [
-      { q: 'Combien coûte une application web sur mesure ?', a: 'Le coût dépend du nombre de fonctionnalités et de leur complexité. Commencer par une première version limitée à l\'essentiel permet de maîtriser le budget et de valider l\'usage avant d\'aller plus loin. Je vous envoie un devis détaillé après cadrage.' },
+      { q: 'Combien coûte une application web sur mesure ?', a: 'Un site avec devis, réservation ou prise de rendez-vous en ligne démarre à 700 €. Au-delà, le coût dépend du nombre de fonctionnalités et de leur complexité. Commencer par une première version limitée à l\'essentiel permet de maîtriser le budget et de valider l\'usage avant d\'aller plus loin. Je vous envoie un devis détaillé après cadrage.' },
       { q: 'Combien de temps faut-il pour développer une application ?', a: 'Une première version utilisable prend généralement de quelques semaines à quelques mois selon le périmètre. Les livraisons intermédiaires vous permettent de tester bien avant la fin.' },
       { q: 'Application web ou application mobile ?', a: 'Une application web fonctionne dans le navigateur, sur tous les appareils, sans passer par les stores. Elle peut même s\'installer sur le téléphone comme une app. Une application native se justifie surtout pour des usages très mobiles ou des fonctions spécifiques du téléphone.' },
       { q: 'Qui est propriétaire du code ?', a: 'Vous. Le code source vous est remis, documenté, et vous restez libre de le faire évoluer avec qui vous voulez.' },
@@ -762,6 +767,7 @@ const services: Service[] = [
     h1: 'Conseil technique, cahier des charges et MVP',
     lead: 'Vous avez un projet numérique mais pas d\'équipe technique pour vous guider ? Je vous aide à faire les bons choix, à rédiger un cahier des charges clair et à définir une première version utile, avant d\'investir.',
     summary: 'Choisir les bons outils, cadrer votre projet et définir une première version utile.',
+    price: { from: '200 € / jour', detail: 'Renfort en équipe à la journée, démarrage sous une semaine. Le cadrage et le cahier des charges sont chiffrés sur devis.' },
     includes: [
       { title: 'Conseil technique', desc: 'Quels outils choisir, quoi développer, quoi acheter, quoi éviter : des recommandations claires.' },
       { title: 'Cahier des charges', desc: 'Un document précis qui décrit le besoin, pour obtenir des devis comparables et éviter les malentendus.' },
@@ -796,7 +802,7 @@ const services: Service[] = [
     faq: [
       { q: 'Pouvez-vous rédiger un cahier des charges sans réaliser le projet ?', a: 'Oui. Le cahier des charges vous appartient : vous pouvez le confier au prestataire de votre choix, ou me demander un devis pour la réalisation.' },
       { q: 'Combien de temps prend un cadrage ?', a: 'Selon la taille du projet, de quelques échanges à quelques semaines. On commence par un premier rendez-vous pour comprendre le besoin et estimer le travail.' },
-      { q: 'Proposez-vous des missions de renfort en équipe ?', a: 'Oui, ponctuellement, pour renforcer une équipe de développement sur un projet ou une période de charge.' },
+      { q: 'Proposez-vous des missions de renfort en équipe ?', a: 'Oui : un développeur fullstack intégré à votre équipe, sur vos outils, à partir de 200 € par jour avec un démarrage sous une semaine. Je peux aussi produire des sites et des projets en marque blanche pour les agences.' },
     ],
     projects: ['prospection-v2', 'respusse'],
     related: ['application-web-sur-mesure', 'automatisation-ia', 'application-mobile'],

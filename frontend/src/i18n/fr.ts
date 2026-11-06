@@ -11,8 +11,8 @@ const fr = {
     badge: 'Développeur web freelance · Sites & applications sur mesure',
     headline: 'Votre site vous coûte. Il devrait vous rapporter.',
     sub: 'J\'aide les TPE et PME à construire une présence en ligne qui attire, convainc et convertit — sans la complexité ni les coûts d\'une agence.',
-    cta: 'Parlons de votre projet',
-    ctaSecondary: 'Voir mes réalisations',
+    cta: 'Identifier mes besoins',
+    ctaSecondary: 'Parlons de votre projet',
     scroll: 'Défiler',
   },
   services: {
@@ -50,7 +50,7 @@ const fr = {
   about: {
     label: 'À propos',
     heading: 'Un développeur, pas une agence.',
-    body1: 'Je m\'appelle Kenny, développeur web freelance originaire de La Réunion. J\'accompagne les entreprises qui veulent une vraie présence en ligne — sans se perdre dans la complexité d\'une agence.',
+    body1: 'Je m\'appelle Kenny, développeur web freelance basé à Paris. J\'accompagne partout en France les entreprises qui veulent une vraie présence en ligne — sans se perdre dans la complexité d\'une agence.',
     body2: 'Je prends en main vos projets de A à Z : du premier brief à la mise en ligne. Pas de jargon, des solutions adaptées à votre réalité, et un suivi simple — où que vous soyez.',
     stat1_value: '2–4 sem.',
     stat1_label: 'Délai de livraison',

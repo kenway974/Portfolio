@@ -83,6 +83,10 @@ All content lives in the repo — no database required.
 | `frontend/src/data/services.ts` | Service pages (`/services/:slug`): SEO title, description, H1, content sections, FAQ, related projects and services |
 | `frontend/src/data/realisations.ts` | Project pages (`/realisations/:slug`): type (client, internal tool, certification project, demo), context, challenges, features, outcome |
 | `frontend/src/data/blog.json` | Blog posts (`/blog/:slug`) |
+| `frontend/src/data/secteurs.ts` | Sector pages (`/secteurs/:slug`, recruiter profile at `/profil`) and the « Vous êtes… ? » wheel on the home page: situations, packs and prices |
+| `frontend/src/data/diagnostic.ts` | Questions of the needs wizard (`/diagnostic`) and the scoring that maps answers to services |
+
+Other pages: `/contact` (contact page) and `/diagnostic` (needs wizard, ends with a pre-filled contact form).
 
 Adding an entry to one of these files creates the page, its share image and its sitemap entry at the next build.
 

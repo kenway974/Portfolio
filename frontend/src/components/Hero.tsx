@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { t } from '../i18n'
-import Volcano from './Volcano'
 import './Hero.css'
 
 // Positions pseudo-aléatoires mais déterministes : identiques au build (SSG)
@@ -23,8 +22,6 @@ const STARS = Array.from({ length: 60 }, (_, i) => ({
 export default function Hero() {
   return (
     <section className="hero" aria-label="Introduction">
-      <Volcano />
-
       <div className="hero__stars" aria-hidden="true">
         {STARS.map((style, i) => <span key={i} className="star" style={style} />)}
       </div>
@@ -38,10 +35,10 @@ export default function Hero() {
           {t('hero.sub')}
         </p>
         <div className="hero__actions reveal reveal-delay-3">
-          <Link to="/#contact" className="btn-primary">
+          <Link to="/diagnostic" className="btn-primary">
             {t('hero.cta')} <span aria-hidden="true">→</span>
           </Link>
-          <Link to="/realisations" className="btn-ghost">
+          <Link to="/contact" className="btn-ghost">
             {t('hero.ctaSecondary')}
           </Link>
         </div>

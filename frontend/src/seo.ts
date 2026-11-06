@@ -135,7 +135,7 @@ export function blogPostSchema(post: Post) {
 
 // ─────────────────────────── Services & réalisations ───────────────────────────
 
-type ServiceLike = { slug: string; name: string; description: string; h1: string; faq: { q: string; a: string }[] }
+type ServiceLike = { slug: string; name: string; description: string; h1: string; faq: { q: string; a: string }[]; price?: { from: string; detail: string } }
 type RealisationLike = { slug: string; name: string; description: string; h1: string; tech: string[]; url?: string; kind: string; sector: string }
 
 export function servicesListSchema(services: Array<{ slug: string; name: string }>, description: string) {
@@ -176,7 +176,19 @@ export function serviceSchema(service: ServiceLike) {
       url: absoluteUrl(path),
       provider: { '@id': PERSON_ID },
       areaServed: { '@type': 'Country', name: 'France' },
-      availableChannel: { '@type': 'ServiceChannel', serviceUrl: absoluteUrl('/#contact') },
+      availableChannel: { '@type': 'ServiceChannel', serviceUrl: absoluteUrl('/contact') },
+      ...(service.price ? {
+        offers: {
+          '@type': 'Offer',
+          description: service.price.detail,
+          priceSpecification: {
+            '@type': 'PriceSpecification',
+            priceCurrency: 'EUR',
+            minPrice: parsePrice(service.price.from),
+            description: `À partir de ${service.price.from}`,
+          },
+        },
+      } : {}),
     },
     breadcrumbSchema([['Accueil', '/'], ['Services', '/services'], [service.name, path]]),
   ]
@@ -239,6 +251,90 @@ export function realisationSchema(r: RealisationLike) {
         ...(r.url ? { sameAs: r.url } : {}),
       },
       breadcrumbSchema([['Accueil', '/'], ['Réalisations', '/realisations'], [r.name, path]]),
+    ],
+  }
+}
+
+// ──────────────────────────────── Pages secteur ────────────────────────────────
+
+type SectorLike = {
+  slug: string
+  name: string
+  pitch: string
+  page:
+    | { kind?: undefined; who: string; packs: { num: string; name: string; price: string; delay: string; items: { g: string; h: string }[] }[] }
+    | { kind: 'profile'; who: string; intro: string }
+}
+
+const sectorUrl = (slug: string) => absoluteUrl(slug === 'recruteur' ? '/profil' : `/secteurs/${slug}`)
+
+/** « 1 200 € » → 1200 ; renvoie undefined pour un prix non numérique. */
+const parsePrice = (price: string) => {
+  const n = Number(price.replace(/[^\d,]/g, '').replace(',', '.'))
+  return Number.isFinite(n) && n > 0 ? n : undefined
+}
+
+export function sectorSchema(sector: SectorLike) {
+  const url = sectorUrl(sector.slug)
+  if (sector.page.kind === 'profile') {
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        { '@type': 'ProfilePage', url, name: `Profil — ${site.name}`, description: sector.page.intro, mainEntity: personSchema },
+        breadcrumbSchema([['Accueil', '/'], ['Profil', '/profil']]),
+      ],
+    }
+  }
+  const page = sector.page
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Service',
+        '@id': `${url}#service`,
+        name: `Site web et visibilité en ligne : ${sector.name}`,
+        description: sector.pitch,
+        audience: { '@type': 'BusinessAudience', name: page.who },
+        url,
+        provider: { '@id': PERSON_ID },
+        areaServed: { '@type': 'Country', name: 'France' },
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: `Offres ${sector.name}`,
+          itemListElement: page.packs.map(p => {
+            const price = parsePrice(p.price)
+            return {
+              '@type': 'Offer',
+              name: `${p.num} : ${p.name}`,
+              description: p.items.map(i => i.h).join(' · '),
+              ...(price ? { price, priceCurrency: 'EUR' } : {}),
+              priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'EUR', ...(price ? { price } : {}), description: p.price },
+              seller: { '@id': PERSON_ID },
+            }
+          }),
+        },
+      },
+      breadcrumbSchema([['Accueil', '/'], [sector.name, `/secteurs/${sector.slug}`]]),
+    ],
+  }
+}
+
+export function contactPageSchema(description: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'ContactPage', url: absoluteUrl('/contact'), name: `Contact — ${site.name}`, description, inLanguage: site.language, about: { '@id': BUSINESS_ID } },
+      breadcrumbSchema([['Accueil', '/'], ['Contact', '/contact']]),
+    ],
+  }
+}
+
+export function diagnosticSchema(description: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'WebPage', url: absoluteUrl('/diagnostic'), name: `Diagnostic de vos besoins — ${site.name}`, description, inLanguage: site.language, about: { '@id': BUSINESS_ID } },
+      breadcrumbSchema([['Accueil', '/'], ['Diagnostic', '/diagnostic']]),
     ],
   }
 }

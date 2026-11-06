@@ -32,8 +32,14 @@ export default function ServicePage() {
           <p className="label">{service.category}</p>
           <h1 className="content-header__title">{service.h1}</h1>
           <p className="content-header__lead">{service.lead}</p>
+          {service.price && (
+            <p className="price-tag">
+              <span className="price-tag__from">À partir de <strong>{service.price.from}</strong></span>
+              <span className="price-tag__detail">{service.price.detail}</span>
+            </p>
+          )}
           <div className="content-header__actions">
-            <Link to="/#contact" className="btn-primary">Demander un devis gratuit <span aria-hidden="true">→</span></Link>
+            <Link to="/contact" className="btn-primary">Demander un devis gratuit <span aria-hidden="true">→</span></Link>
             {projects.length > 0 && <a href="#realisations" className="btn-ghost">Voir des exemples</a>}
           </div>
         </header>

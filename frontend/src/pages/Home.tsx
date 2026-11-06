@@ -1,6 +1,7 @@
 import Seo from '../components/Seo'
 import { homeSchema } from '../seo'
 import Hero from '../components/Hero'
+import SectorWheel from '../components/SectorWheel'
 import Services from '../components/Services'
 import Projects from '../components/Projects'
 import Process from '../components/Process'
@@ -22,6 +23,7 @@ export default function Home() {
         jsonLd={homeSchema(DESCRIPTION)}
       />
       <Hero />
+      <SectorWheel />
       <Services />
       <Projects />
       <Process />

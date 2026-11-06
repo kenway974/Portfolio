@@ -8,7 +8,7 @@ const LINKS = [
   { to: '/services', label: t('nav.services') },
   { to: '/realisations', label: t('nav.projects') },
   { to: '/blog', label: t('nav.blog') },
-  { to: '/#contact', label: t('nav.contact') },
+  { to: '/contact', label: t('nav.contact') },
 ]
 
 export default function Navbar() {
@@ -36,7 +36,7 @@ export default function Navbar() {
         </nav>
 
         <div className="navbar__actions">
-          <Link to="/#contact" className="btn-primary navbar__cta">
+          <Link to="/contact" className="btn-primary navbar__cta">
             {t('nav.cta')}
           </Link>
 

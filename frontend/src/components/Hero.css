@@ -73,9 +73,7 @@
 }
 
 .hero__scroll-hint {
-  position: absolute;
-  bottom: 2.5rem;
-  left: clamp(1.25rem, 4vw, 2.5rem);
+  margin-top: 3.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;

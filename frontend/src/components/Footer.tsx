@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { t } from '../i18n'
 import services from '../data/services'
+import { SECTORS, sectorPath } from '../data/secteurs'
 import './Footer.css'
 
 const SOCIAL = [
@@ -44,7 +45,16 @@ export default function Footer() {
             <li><Link to="/services">Tous les services</Link></li>
             <li><Link to="/realisations">Réalisations</Link></li>
             <li><Link to="/blog">Blog</Link></li>
-            <li><Link to="/#contact">Contact</Link></li>
+            <li><Link to="/diagnostic">Diagnostic gratuit</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+          </ul>
+        </div>
+        <div className="footer__col">
+          <p className="footer__col-title">Vous êtes</p>
+          <ul className="footer__links">
+            {SECTORS.map(s => (
+              <li key={s.slug}><Link to={sectorPath(s.slug)}>{s.name}</Link></li>
+            ))}
           </ul>
         </div>
       </nav>

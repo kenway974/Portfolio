@@ -62,14 +62,14 @@ await writeFile(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: $
 // ---------- Images de partage ----------
 const font = async (pkg, file) => readFile(require.resolve(`${pkg}/files/${file}`))
 const fonts = [
-  { name: 'Syne', data: await font('@fontsource/syne', 'syne-latin-800-normal.woff'), weight: 800 },
+  { name: 'Familjen Grotesk', data: await font('@fontsource/familjen-grotesk', 'familjen-grotesk-latin-700-normal.woff'), weight: 700 },
   { name: 'DM Sans', data: await font('@fontsource/dm-sans', 'dm-sans-latin-400-normal.woff'), weight: 400 },
 ]
 
 const h = (type, style, children) => ({ type, props: { style, children } })
 
 function card({ kicker, title, subtitle }) {
-  // Syne 800 est très large : on réduit la taille selon la longueur du titre.
+  // On réduit la taille selon la longueur du titre.
   const size = title.length > 60 ? 50 : title.length > 40 ? 58 : 66
   return h('div', {
     width: 1200, height: 630, display: 'flex', flexDirection: 'column',
@@ -84,7 +84,7 @@ function card({ kicker, title, subtitle }) {
         h('div', { width: 14, height: 14, background: '#e89c1a', transform: 'rotate(45deg)', marginRight: 20 }),
         h('span', {}, kicker.toUpperCase()),
       ]),
-      h('div', { display: 'flex', width: 1040, fontFamily: 'Syne', fontWeight: 800, fontSize: size, lineHeight: 1.12 }, title),
+      h('div', { display: 'flex', width: 1040, fontFamily: 'Familjen Grotesk', fontWeight: 700, fontSize: size, lineHeight: 1.12 }, title),
       h('div', { display: 'flex', justifyContent: 'space-between', fontSize: 24, color: 'rgba(245,239,232,0.6)' }, [
         h('span', {}, subtitle),
         h('span', {}, site.url.replace('https://', '')),
@@ -108,7 +108,7 @@ await renderOg('default', {
   subtitle: 'Sites web · Applications · Automatisation & IA',
 })
 
-const KICKERS = { blog: 'Blog', services: 'Service', realisations: 'Réalisation' }
+const KICKERS = { blog: 'Blog', services: 'Service', realisations: 'Réalisation', secteurs: 'Votre secteur', profil: 'Profil' }
 let count = 1
 for (const p of pages) {
   const slug = p.image?.match(/\/og\/(.+)\.png$/)?.[1]

@@ -11,9 +11,12 @@ export default function CtaBand({
     <aside className="cta-band" aria-label="Contact">
       <h2 className="cta-band__title">{title}</h2>
       <p className="cta-band__text">{text}</p>
-      <Link to="/#contact" className="btn-primary">
-        Parlons de votre projet <span aria-hidden="true">→</span>
-      </Link>
+      <div className="cta-band__actions">
+        <Link to="/contact" className="btn-primary">
+          Parlons de votre projet <span aria-hidden="true">→</span>
+        </Link>
+        <Link to="/diagnostic" className="btn-ghost">Identifier mes besoins</Link>
+      </div>
     </aside>
   )
 }

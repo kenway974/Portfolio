@@ -1,52 +1,12 @@
-import { useState, FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { t } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import services, { SERVICE_CATEGORIES } from '../data/services'
+import ContactForm from './ContactForm'
 import './Contact.css'
 
-type FormState = {
-  name: string
-  email: string
-  serviceType: string
-  message: string
-}
-
-type Status = 'idle' | 'submitting' | 'success' | 'error'
-
-const BACKEND_URL = import.meta.env.VITE_API_URL ?? ''
-
+/** Section contact de l'accueil. */
 export default function Contact() {
   const ref = useScrollReveal<HTMLElement>()
-
-  const [form, setForm] = useState<FormState>({
-    name: '',
-    email: '',
-    serviceType: '',
-    message: '',
-  })
-  const [status, setStatus] = useState<Status>('idle')
-
-  const set = (field: keyof FormState) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => setForm(prev => ({ ...prev, [field]: e.target.value }))
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setStatus('submitting')
-    try {
-      const res = await fetch(`${BACKEND_URL}/api/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      if (!res.ok) throw new Error('Server error')
-      setStatus('success')
-      setForm({ name: '', email: '', serviceType: '', message: '' })
-    } catch {
-      setStatus('error')
-    }
-  }
-
 
   return (
     <section id="contact" className="contact" ref={ref}>
@@ -56,97 +16,12 @@ export default function Contact() {
             <p className="label reveal">{t('contact.label')}</p>
             <h2 className="section-heading reveal reveal-delay-1">{t('contact.heading')}</h2>
             <p className="contact__subheading reveal reveal-delay-2">{t('contact.subheading')}</p>
+            <p className="contact__subheading reveal reveal-delay-2">
+              Pas encore sûr de ce dont vous avez besoin ?{' '}
+              <Link to="/diagnostic" className="contact__link">Faites le diagnostic en 2 minutes</Link>.
+            </p>
           </div>
-
-          <form
-            className="contact__form reveal reveal-delay-2"
-            onSubmit={handleSubmit}
-            noValidate
-            aria-label="Formulaire de contact"
-          >
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="name">{t('contact.name')}</label>
-                <input
-                  id="name"
-                  type="text"
-                  value={form.name}
-                  onChange={set('name')}
-                  placeholder="Marie Dupont"
-                  required
-                  autoComplete="name"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">{t('contact.email')}</label>
-                <input
-                  id="email"
-                  type="email"
-                  value={form.email}
-                  onChange={set('email')}
-                  placeholder="marie@entreprise.fr"
-                  required
-                  autoComplete="email"
-                />
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="serviceType">{t('contact.service')}</label>
-              <select
-                id="serviceType"
-                value={form.serviceType}
-                onChange={set('serviceType')}
-                required
-              >
-                <option value="" disabled>— Choisir —</option>
-                {SERVICE_CATEGORIES.map(category => (
-                  <optgroup key={category} label={category}>
-                    {services.filter(s => s.category === category).map(s => (
-                      <option key={s.slug} value={s.slug}>{s.name}</option>
-                    ))}
-                  </optgroup>
-                ))}
-                <optgroup label="Autre">
-                  <option value="renfort-equipe">Renfort d'équipe</option>
-                  <option value="other">Autre projet</option>
-                </optgroup>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message">{t('contact.message')}</label>
-              <textarea
-                id="message"
-                value={form.message}
-                onChange={set('message')}
-                placeholder="Votre activité, votre besoin, vos délais…"
-                rows={5}
-                required
-              />
-            </div>
-
-            <div className="form-footer">
-              <button
-                type="submit"
-                className="btn-primary"
-                disabled={status === 'submitting'}
-              >
-                {status === 'submitting' ? t('contact.submitting') : t('contact.submit')}
-              </button>
-
-              {status === 'success' && (
-                <p className="form-message form-message--success" role="alert">
-                  ✓ {t('contact.success')}
-                </p>
-              )}
-              {status === 'error' && (
-                <p className="form-message form-message--error" role="alert">
-                  ✗ {t('contact.error')}
-                </p>
-              )}
-            </div>
-          </form>
+          <ContactForm idPrefix="home" className="reveal reveal-delay-2" />
         </div>
       </div>
     </section>
