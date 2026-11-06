@@ -52,7 +52,7 @@ export function countUp(node: HTMLElement | null | undefined, dur = 900) {
 }
 
 /* Apparition au défilement : visible par défaut, masqué seulement si l'observateur est actif. */
-export function useReveal(root: React.RefObject<HTMLElement>, selector: string, stagger: (n: Element, i: number) => number) {
+export function useReveal(root: React.RefObject<HTMLElement | null>, selector: string, stagger: (n: Element, i: number) => number) {
   useEffect(() => {
     const el = root.current
     if (!el) return

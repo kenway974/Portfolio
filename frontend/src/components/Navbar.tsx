@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { t } from '../i18n'
 import './Navbar.css'
@@ -14,6 +14,13 @@ const LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const mobileMenuRef = useRef<HTMLElement>(null)
+
+  // Menu mobile fermé : ses liens ne doivent pas être atteignables au clavier.
+  // Posé par le DOM, car React 18 et React 19 ne typent pas l'attribut inert de la même façon.
+  useEffect(() => {
+    mobileMenuRef.current?.toggleAttribute('inert', !menuOpen)
+  }, [menuOpen])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -51,10 +58,10 @@ export default function Navbar() {
       </div>
 
       <nav
+        ref={mobileMenuRef}
         id="mobile-menu"
         className={`mobile-menu${menuOpen ? ' mobile-menu--open' : ''}`}
         aria-label="Navigation mobile"
-        {...(!menuOpen && { inert: '' })}
       >
         {LINKS.map(l => <NavLink key={l.to} to={l.to} onClick={() => setMenuOpen(false)}>{l.label}</NavLink>)}
       </nav>

@@ -10,6 +10,8 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:4173',
     trace: 'off',
+    // Navigateur déjà installé sur la machine (facultatif, jamais utilisé en CI).
+    launchOptions: { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH || undefined },
   },
   projects: [
     { name: 'ordinateur', use: { ...devices['Desktop Chrome'] } },

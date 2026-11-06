@@ -129,7 +129,7 @@ export default function Diagnostic() {
 
 function Result({ answers, headingRef, onRestart }: {
   answers: Answers
-  headingRef: React.RefObject<HTMLHeadingElement>
+  headingRef: React.Ref<HTMLHeadingElement>
   onRestart: () => void
 }) {
   const recommended = rankServices(answers).slice(0, 3).map(getService).filter(s => s !== undefined)
