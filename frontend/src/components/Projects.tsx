@@ -1,11 +1,10 @@
 import { useRef } from 'react'
-import { useTranslation } from 'react-i18next'
+import { t } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import projectsData from '../data/projects.json'
 import './Projects.css'
 
 export default function Projects() {
-  const { t } = useTranslation()
   const sectionRef = useScrollReveal<HTMLElement>()
   const trackRef = useRef<HTMLDivElement>(null)
 
@@ -33,12 +32,12 @@ export default function Projects() {
             <button
               className="arrow-btn"
               onClick={() => scroll('left')}
-              aria-label="Scroll left"
+              aria-label="Projets précédents"
             >←</button>
             <button
               className="arrow-btn"
               onClick={() => scroll('right')}
-              aria-label="Scroll right"
+              aria-label="Projets suivants"
             >→</button>
           </div>
         </div>

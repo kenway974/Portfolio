@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react'
-import { useTranslation } from 'react-i18next'
+import { t } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import './Contact.css'
 
@@ -15,7 +15,6 @@ type Status = 'idle' | 'submitting' | 'success' | 'error'
 const BACKEND_URL = import.meta.env.VITE_API_URL ?? ''
 
 export default function Contact() {
-  const { t } = useTranslation()
   const ref = useScrollReveal<HTMLElement>()
 
   const [form, setForm] = useState<FormState>({
@@ -69,7 +68,7 @@ export default function Contact() {
             className="contact__form reveal reveal-delay-2"
             onSubmit={handleSubmit}
             noValidate
-            aria-label="Contact form"
+            aria-label="Formulaire de contact"
           >
             <div className="form-row">
               <div className="form-group">
@@ -79,7 +78,7 @@ export default function Contact() {
                   type="text"
                   value={form.name}
                   onChange={set('name')}
-                  placeholder="John Smith"
+                  placeholder="Marie Dupont"
                   required
                   autoComplete="name"
                 />
@@ -91,7 +90,7 @@ export default function Contact() {
                   type="email"
                   value={form.email}
                   onChange={set('email')}
-                  placeholder="john@company.com"
+                  placeholder="marie@entreprise.fr"
                   required
                   autoComplete="email"
                 />
@@ -106,7 +105,7 @@ export default function Contact() {
                 onChange={set('serviceType')}
                 required
               >
-                <option value="" disabled>— Select —</option>
+                <option value="" disabled>— Choisir —</option>
                 {services.map(s => (
                   <option key={s.value} value={s.value}>{s.label}</option>
                 ))}
@@ -119,7 +118,7 @@ export default function Contact() {
                 id="message"
                 value={form.message}
                 onChange={set('message')}
-                placeholder="Tell me what you're building..."
+                placeholder="Votre activité, votre besoin, vos délais…"
                 rows={5}
                 required
               />

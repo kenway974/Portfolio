@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { t, tList } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import './Services.css'
 
@@ -25,9 +25,8 @@ const icons = [
 ]
 
 export default function Services() {
-  const { t } = useTranslation()
   const ref = useScrollReveal<HTMLElement>()
-  const items = t('services.items', { returnObjects: true }) as Array<{ title: string; desc: string }>
+  const items = tList<{ title: string; desc: string }>('services.items')
 
   return (
     <section id="services" className="services" ref={ref}>

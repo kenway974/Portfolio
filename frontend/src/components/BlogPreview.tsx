@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { t } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import posts from '../data/blog.json'
+import { formatDate } from '../utils/date'
 import './BlogPreview.css'
 
 export default function BlogPreview() {
-  const { t } = useTranslation()
   const ref = useScrollReveal<HTMLElement>()
 
   // Show 3 most recent posts
@@ -30,9 +30,7 @@ export default function BlogPreview() {
               <div className="blog-card__meta">
                 <span className="blog-card__category">{post.category}</span>
                 <span className="blog-card__date">
-                  {new Date(post.date).toLocaleDateString('en-GB', {
-                    day: 'numeric', month: 'short', year: 'numeric',
-                  })}
+                  <time dateTime={post.date}>{formatDate(post.date, 'short')}</time>
                 </span>
               </div>
               <h3 className="blog-card__title">{post.title}</h3>

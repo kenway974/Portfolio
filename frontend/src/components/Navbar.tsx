@@ -1,10 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { t } from '../i18n'
 import './Navbar.css'
 
+// Vrais liens <a href> : Google peut les suivre, contrairement aux boutons JS.
+const LINKS = [
+  { to: '/#services', label: t('nav.services') },
+  { to: '/#projects', label: t('nav.projects') },
+  { to: '/blog', label: t('nav.blog') },
+  { to: '/#contact', label: t('nav.contact') },
+]
+
 export default function Navbar() {
-  const { t, i18n } = useTranslation()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
@@ -17,74 +24,41 @@ export default function Navbar() {
 
   useEffect(() => { setMenuOpen(false) }, [location])
 
-  const toggleLang = () => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'fr' : 'en')
-  }
-
-  const scrollTo = (id: string) => {
-    if (location.pathname !== '/') {
-      window.location.href = `/#${id}`
-      return
-    }
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
       <div className="container navbar__inner">
-        <Link
-          to="/"
-          className="navbar__logo"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        >
-          <span className="navbar__logo-mark">✦</span> Kenny Pignolet
+        <Link to="/" className="navbar__logo">
+          <span className="navbar__logo-mark" aria-hidden="true">✦</span> Kenny Pignolet
         </Link>
 
-        <nav className="navbar__links" aria-label="Primary navigation">
-          <button onClick={() => scrollTo('services')}>{t('nav.services')}</button>
-          <button onClick={() => scrollTo('projects')}>{t('nav.projects')}</button>
-          <Link to="/til">{t('nav.til')}</Link>
-          <Link to="/blog">{t('nav.blog')}</Link>
-          <button onClick={() => scrollTo('contact')}>{t('nav.contact')}</button>
+        <nav className="navbar__links" aria-label="Navigation principale">
+          {LINKS.map(l => <Link key={l.to} to={l.to}>{l.label}</Link>)}
         </nav>
 
         <div className="navbar__actions">
-          <button
-            className="lang-toggle"
-            onClick={toggleLang}
-            aria-label="Switch language"
-          >
-            {i18n.language === 'en' ? 'FR' : 'EN'}
-          </button>
-
-          <button
-            className="btn-primary navbar__cta"
-            onClick={() => scrollTo('contact')}
-          >
+          <Link to="/#contact" className="btn-primary navbar__cta">
             {t('nav.cta')}
-          </button>
+          </Link>
 
           <button
             className={`hamburger${menuOpen ? ' hamburger--open' : ''}`}
             onClick={() => setMenuOpen(v => !v)}
-            aria-label="Toggle menu"
+            aria-label="Ouvrir le menu"
             aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
             <span /><span /><span />
           </button>
         </div>
       </div>
 
-      <div className={`mobile-menu${menuOpen ? ' mobile-menu--open' : ''}`}>
-        <button onClick={() => scrollTo('services')}>{t('nav.services')}</button>
-        <button onClick={() => scrollTo('projects')}>{t('nav.projects')}</button>
-        <Link to="/til">{t('nav.til')}</Link>
-        <Link to="/blog">{t('nav.blog')}</Link>
-        <button onClick={() => scrollTo('contact')}>{t('nav.contact')}</button>
-        <button className="lang-toggle" onClick={toggleLang}>
-          {i18n.language === 'en' ? '🇫🇷 Français' : '🇬🇧 English'}
-        </button>
-      </div>
+      <nav
+        id="mobile-menu"
+        className={`mobile-menu${menuOpen ? ' mobile-menu--open' : ''}`}
+        aria-label="Navigation mobile"
+      >
+        {LINKS.map(l => <Link key={l.to} to={l.to}>{l.label}</Link>)}
+      </nav>
     </header>
   )
 }

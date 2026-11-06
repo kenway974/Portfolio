@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { t } from '../i18n'
 import './Footer.css'
 
 const SOCIAL = [
@@ -23,7 +23,6 @@ const SOCIAL = [
 ]
 
 export default function Footer() {
-  const { t } = useTranslation()
   const year = new Date().getFullYear()
 
   return (

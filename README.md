@@ -119,11 +119,17 @@ Blog post content supports:
 
 ---
 
-## Language Support
+## SEO
 
-Toggle between **English** and **French** via the button in the navbar. All UI strings live in `frontend/src/i18n/index.ts`. To add more languages, extend the `resources` object there.
+- Site URL, name and social profiles live in `frontend/site.config.json` (single source of truth).
+- Every page renders its tags through `src/components/Seo.tsx` (title, description, canonical, Open Graph, Twitter, JSON-LD).
+- Structured data builders are in `src/seo.ts` (WebSite, Person, ProfessionalService, Blog, BlogPosting, BreadcrumbList).
+- `npm run build` pre-renders every page (vite-react-ssg), then `scripts/postbuild.mjs` generates `sitemap.xml`, `robots.txt` and the 1200×630 share images (`/og/*.png`) from `blog.json`. Nothing to maintain by hand.
+- Optional `updated` field (`YYYY-MM-DD`) on a blog post sets its `lastmod` / `dateModified`.
 
----
+## Texts
+
+The site is French only. All UI strings live in `frontend/src/i18n/fr.ts`, read with `t('key')` / `tList('key')` from `src/i18n`.
 
 ## Building for Production
 
@@ -146,7 +152,7 @@ npm run build
 5. Set **Output Directory** to `dist`
 6. Add environment variable: `VITE_API_URL=https://your-backend.up.railway.app`
 
-The `vercel.json` handles SPA routing and asset caching automatically.
+`vercel.json` handles clean URLs, security headers and asset caching.
 
 ### Backend → Railway
 
@@ -187,7 +193,7 @@ The `vercel.json` handles SPA routing and asset caching automatically.
 |-------|-----------|
 | Frontend | React 18, TypeScript, Vite |
 | Routing | React Router v6 |
-| i18n | i18next + react-i18next |
+| SSG / SEO | vite-react-ssg, satori + resvg (share images) |
 | Animations | CSS (IntersectionObserver) |
 | Backend | Node.js 18, Express 4 |
 | Email | Nodemailer (optional) |

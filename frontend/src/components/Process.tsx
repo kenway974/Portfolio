@@ -1,15 +1,14 @@
-import { useTranslation } from 'react-i18next'
+import { t, tList } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import './Process.css'
 
 export default function Process() {
-  const { t } = useTranslation()
   const ref = useScrollReveal<HTMLElement>()
-  const steps = t('process.steps', { returnObjects: true }) as Array<{
+  const steps = tList<{
     num: string
     title: string
     desc: string
-  }>
+  }>('process.steps')
 
   return (
     <section id="process" className="process" ref={ref}>

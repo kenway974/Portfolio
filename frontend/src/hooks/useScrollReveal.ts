@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 
 /**
  * Hook qui ajoute la classe 'revealed' quand l'élément entre dans le viewport.
- * Ajout de logs pour le debug et d'un fallback si l'élément est déjà visible.
  */
 export function useScrollReveal<T extends HTMLElement>(threshold = 0.1) { // Seuil réduit à 0.1 pour plus de souplesse
   const ref = useRef<T>(null)
@@ -13,9 +12,6 @@ export function useScrollReveal<T extends HTMLElement>(threshold = 0.1) { // Seu
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Log pour vérifier si l'élément est détecté (à retirer après correction)
-        console.log(`Élément ${el.id || el.className} visible :`, entry.isIntersecting);
-
         if (entry.isIntersecting) {
           el.classList.add('revealed')
           // Une fois révélé, on arrête d'observer pour la performance
