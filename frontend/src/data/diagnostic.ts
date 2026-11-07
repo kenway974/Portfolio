@@ -125,3 +125,15 @@ export function answerLabels(answers: Answers) {
     labels: (answers[q.id] ?? []).map(id => q.options.find(o => o.id === id)?.label ?? id),
   })).filter(a => a.labels.length)
 }
+
+/** Message envoyé avec la demande : le récapitulatif du diagnostic, et le mot ajouté par le visiteur. */
+export function diagnosticMessage(answers: Answers, suggestedServices: string[], note = ''): string {
+  return [
+    'Bonjour,',
+    '',
+    'Voici le résultat de mon diagnostic :',
+    ...answerLabels(answers).map(r => `- ${r.question.replace('…', '').trim()} : ${r.labels.join(', ')}`),
+    `- Services suggérés : ${suggestedServices.join(', ')}`,
+    ...(note.trim() ? ['', `Mon projet en quelques mots : ${note.trim()}`] : []),
+  ].join('\n')
+}

@@ -1,12 +1,11 @@
 import { useState, type FormEvent } from 'react'
 import { t } from '../i18n'
 import services, { SERVICE_CATEGORIES } from '../data/services'
+import { sendContact } from '../utils/contact'
 import './Contact.css'
 
 type FormState = { name: string; email: string; serviceType: string; message: string }
 type Status = 'idle' | 'submitting' | 'success' | 'error'
-
-const BACKEND_URL = import.meta.env.VITE_API_URL ?? ''
 
 type Props = {
   /** Préfixe des id, pour pouvoir afficher deux formulaires sur le même site. */
@@ -38,12 +37,7 @@ export default function ContactForm({
     e.preventDefault()
     setStatus('submitting')
     try {
-      const res = await fetch(`${BACKEND_URL}/api/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      if (!res.ok) throw new Error('Server error')
+      await sendContact(form)
       setStatus('success')
       setForm({ name: '', email: '', serviceType: '', message: '' })
     } catch {

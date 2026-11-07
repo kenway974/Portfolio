@@ -27,7 +27,7 @@
 
 .contact__subheading {
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text-secondary);
   line-height: 1.7;
   margin-top: 0.5rem;
@@ -57,7 +57,7 @@
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .form-group input,

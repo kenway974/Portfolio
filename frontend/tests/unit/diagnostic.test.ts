@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { QUESTIONS, answerLabels, rankServices, sectorFor } from '../../src/data/diagnostic'
+import { QUESTIONS, answerLabels, diagnosticMessage, rankServices, sectorFor } from '../../src/data/diagnostic'
 import services from '../../src/data/services'
 import { SECTORS } from '../../src/data/secteurs'
 
@@ -63,5 +63,22 @@ describe('recommandations', () => {
       { question: 'Vous êtes…', labels: ['Avocat ou cabinet'] },
       { question: 'Qu\'est-ce que vous voulez obtenir ?', labels: ['Être trouvé sur Google', 'Vendre en ligne'] },
     ])
+  })
+})
+
+describe('message envoyé avec le diagnostic', () => {
+  const answers = { profil: ['garage'], objectifs: ['vendre', 'google'] }
+
+  it('reprend les réponses et les services suggérés', () => {
+    const message = diagnosticMessage(answers, ['Site e-commerce'])
+    expect(message).toContain('- Vous êtes : Garage ou carrosserie')
+    expect(message).toContain('Vendre en ligne, Être trouvé sur Google')
+    expect(message).toContain('- Services suggérés : Site e-commerce')
+    expect(message).not.toContain('Mon projet en quelques mots')
+  })
+
+  it('ajoute le mot du visiteur seulement s\'il en a écrit un', () => {
+    expect(diagnosticMessage(answers, [], '  Deux ateliers à Lyon  ')).toContain('Mon projet en quelques mots : Deux ateliers à Lyon')
+    expect(diagnosticMessage(answers, [], '   ')).not.toContain('Mon projet')
   })
 })

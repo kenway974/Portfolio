@@ -19,8 +19,11 @@
 
   /* Text */
   --text-primary: #f5efe8;
-  --text-secondary: rgba(245, 239, 232, 0.55);
-  --text-muted: rgba(245, 239, 232, 0.3);
+  /* Contraste WCAG AA (4,5:1 minimum) sur tous les fonds du site : secondaire ≈ 11:1, discret ≈ 7,5:1. */
+  --text-secondary: rgba(245, 239, 232, 0.8);
+  --text-muted: rgba(245, 239, 232, 0.66);
+  /* Texte posé sur le doré : noir (8,9:1), le blanc ne fait que 2,3:1. */
+  --on-accent: #060507;
 
   /* Typography */
   --font-display: 'Familjen Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -166,7 +169,7 @@ section {
   gap: 0.5rem;
   padding: 0.85rem 2rem;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.9rem;
@@ -262,3 +265,19 @@ section {
   transition: transform 0.2s;
 }
 .skip-link:focus { transform: translateY(0); }
+
+/* Réglage « réduire les animations » du système : tout s'affiche directement dans son état final. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

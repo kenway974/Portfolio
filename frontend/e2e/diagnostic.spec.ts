@@ -23,12 +23,14 @@ test('le diagnostic recommande des services puis envoie la demande avec le résu
   await page.getByLabel('Votre nom').fill('Jean Martin')
   await page.getByLabel('Votre email').fill('jean@example.com')
   await page.getByRole('button', { name: 'Envoyer ma demande' }).click()
-  await expect(page.getByRole('alert')).toContainText('Message envoyé')
+  await expect(page.getByRole('status')).toContainText('Demande envoyée')
 
   expect(requests).toHaveLength(1)
   expect(requests[0].serviceType).toBe('site-e-commerce')
   expect(requests[0].message).toContain('Garage ou carrosserie')
   expect(requests[0].message).toContain('Vendre en ligne')
+  expect(requests[0].message).toContain('Services suggérés : Site e-commerce')
+  expect(requests[0].name).toBe('Jean Martin')
 })
 
 test('on peut revenir en arrière et modifier ses réponses', async ({ page }) => {
