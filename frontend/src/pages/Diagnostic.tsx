@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Breadcrumbs from '../components/Breadcrumbs'
 import ServiceCard from '../components/ServiceCard'
-import ContactForm from '../components/ContactForm'
-import { QUESTIONS, rankServices, sectorFor, answerLabels, type Answers } from '../data/diagnostic'
+import QuickSend from '../components/QuickSend'
+import { QUESTIONS, rankServices, sectorFor, answerLabels, diagnosticMessage, type Answers } from '../data/diagnostic'
 import { getService } from '../data/services'
 import { SECTORS, sectorPath } from '../data/secteurs'
 import { diagnosticSchema } from '../seo'
@@ -12,7 +12,13 @@ import { diagnosticSchema } from '../seo'
 const DESCRIPTION = 'Site, application, automatisation, SEO : répondez à 5 questions et découvrez les services adaptés à votre activité, puis demandez un devis gratuit.'
 
 export default function Diagnostic() {
-  const [step, setStep] = useState(0)
+  const [step, setStepState] = useState(0)
+  // Sens du dernier changement d'étape, pour l'animation (avancer : depuis la droite, revenir : depuis la gauche).
+  const [direction, setDirection] = useState<'next' | 'back'>('next')
+  const goTo = (next: number) => {
+    setDirection(next < step ? 'back' : 'next')
+    setStepState(next)
+  }
   const [answers, setAnswers] = useState<Answers>({})
   const headingRef = useRef<HTMLHeadingElement>(null)
   const firstRender = useRef(true)
@@ -42,7 +48,7 @@ export default function Diagnostic() {
   // Une question à choix unique passe à la suivante dès qu'on a répondu.
   const choose = (optionId: string) => {
     toggle(optionId)
-    if (!question?.multiple) window.setTimeout(() => setStep(s => s + 1), 180)
+    if (!question?.multiple) window.setTimeout(() => goTo(step + 1), 220)
   }
 
   return (
@@ -75,7 +81,7 @@ export default function Diagnostic() {
           </p>
 
           {!done && question && (
-            <fieldset className="wizard__step" key={question.id}>
+            <fieldset className={`wizard__step wizard__panel wizard__panel--${direction}`} key={question.id}>
               <legend className="sr-only">{question.title}</legend>
               <h2 className="wizard__title" ref={headingRef} tabIndex={-1}>{question.title}</h2>
               {question.help && <p className="wizard__help">{question.help}</p>}
@@ -104,14 +110,14 @@ export default function Diagnostic() {
 
               <div className="wizard__nav">
                 {step > 0 && (
-                  <button type="button" className="btn-ghost" onClick={() => setStep(s => s - 1)}>← Retour</button>
+                  <button type="button" className="btn-ghost" onClick={() => goTo(step - 1)}>← Retour</button>
                 )}
                 {(question.multiple || selected.length > 0) && (
                   <button
                     type="button"
                     className="btn-primary"
                     disabled={selected.length === 0}
-                    onClick={() => setStep(s => s + 1)}
+                    onClick={() => goTo(step + 1)}
                   >
                     {step === QUESTIONS.length - 1 ? 'Voir mon résultat' : 'Continuer'} <span aria-hidden="true">→</span>
                   </button>
@@ -120,7 +126,7 @@ export default function Diagnostic() {
             </fieldset>
           )}
 
-          {done && <Result answers={answers} headingRef={headingRef} onRestart={() => setStep(0)} />}
+          {done && <Result answers={answers} headingRef={headingRef} onRestart={() => goTo(0)} />}
         </div>
       </div>
     </div>
@@ -138,19 +144,15 @@ function Result({ answers, headingRef, onRestart }: {
   const recap = answerLabels(answers)
   const wantsRenfort = answers.objectifs?.includes('renfort')
 
-  const message = [
-    'Bonjour,',
-    '',
-    'Voici le résultat de mon diagnostic :',
-    ...recap.map(r => `- ${r.question.replace('…', '')} : ${r.labels.join(', ')}`),
-    `- Services suggérés : ${recommended.map(s => s.name).join(', ')}`,
-    '',
-    'Mon projet en quelques mots : ',
-  ].join('\n')
+  const serviceType = wantsRenfort ? 'renfort-equipe' : recommended[0]?.slug ?? 'other'
+  const buildMessage = (note: string) => diagnosticMessage(answers, recommended.map(s => s.name), note)
 
   return (
-    <div className="wizard__result">
+    <div className="wizard__result wizard__panel wizard__panel--next">
       <h2 className="wizard__title" ref={headingRef} tabIndex={-1}>Les services adaptés à votre situation</h2>
+
+      <QuickSend serviceType={serviceType} buildMessage={buildMessage} />
+
       <p className="wizard__help">
         D'après vos réponses, voici par où je vous conseille de commencer. Chaque page détaille ce qui est inclus,
         les questions fréquentes et des exemples.
@@ -184,19 +186,6 @@ function Result({ answers, headingRef, onRestart }: {
         <button type="button" className="wizard__restart" onClick={onRestart}>Modifier mes réponses</button>
       </div>
 
-      <div className="wizard__contact">
-        <h3 className="wizard__subtitle">Envoyez-moi votre demande</h3>
-        <p className="wizard__help">
-          Votre diagnostic est déjà dans le message : ajoutez quelques mots sur votre projet, et je vous réponds
-          sous 48 h avec un devis gratuit si besoin.
-        </p>
-        <ContactForm
-          idPrefix="diag"
-          initialService={wantsRenfort ? 'renfort-equipe' : recommended[0]?.slug ?? 'other'}
-          initialMessage={message}
-          submitLabel="Envoyer ma demande"
-        />
-      </div>
     </div>
   )
 }

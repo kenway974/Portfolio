@@ -12,8 +12,8 @@
     --lava: #e63946;
     --lava-soft: #f08a93;
     --text: #f5efe8;
-    --text-2: rgba(245, 239, 232, 0.66);
-    --text-3: rgba(245, 239, 232, 0.42);
+    --text-2: rgba(245, 239, 232, 0.78);
+    --text-3: rgba(245, 239, 232, 0.62);
     --font-display: 'Familjen Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
     --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
