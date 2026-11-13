@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { SECTORS, sectorPath } from '../data/secteurs'
 import '../styles/volcan.css'
@@ -21,8 +21,8 @@ const DURATION = 720
 const SWIPE = 35                  // glisser : un cran par geste, au lâcher
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v))
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 4)
-const INTRO_DELAY = 700           // ouverture : la roue fait un tour complet…
-const INTRO_SPIN = 1700           // …et ralentit jusqu'au secteur de départ
+const INTRO_DELAY = 250           // ouverture : la roue fait un tour complet…
+const INTRO_SPIN = 1100           // …et ralentit jusqu'au secteur de départ
 const mod = (v: number) => ((v % N) + N) % N
 
 const el = (tag: string, cls?: string) => {
@@ -37,7 +37,7 @@ export default function SectorWheel() {
   const location = useLocation()
   const fromSlug = (location.state as { from?: string } | null)?.from
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const stage = stageRef.current
     if (!stage) return
     const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -141,7 +141,7 @@ export default function SectorWheel() {
         b.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale.toFixed(3)})`
         b.style.opacity = (fade * (0.8 + 0.2 * top)).toFixed(3)
         b.style.pointerEvents = fade < 0.5 ? 'none' : ''
-        b.style.visibility = fade <= 0 ? 'hidden' : ''
+        b.style.visibility = fade <= 0 ? 'hidden' : 'visible'
         b.style.zIndex = String(Math.round(y))
       })
     }
@@ -239,8 +239,8 @@ export default function SectorWheel() {
         io?.disconnect()
         stage.classList.add('intro-play')
         timers.push(window.setTimeout(() => { i0 = performance.now(); introRaf = requestAnimationFrame(introTick) }, INTRO_DELAY))
-        timers.push(window.setTimeout(() => stage.classList.remove('intro', 'intro-play'), 2800))
-      }, { threshold: 0.35 })
+        timers.push(window.setTimeout(() => stage.classList.remove('intro', 'intro-play'), 1800))
+      }, { threshold: 0.15 })
       io.observe(stage)
     }
 
