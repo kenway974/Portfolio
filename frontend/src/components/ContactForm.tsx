@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { t } from '../i18n'
 import services, { SERVICE_CATEGORIES } from '../data/services'
 import { sendContact } from '../utils/contact'
+import ConsentCheckbox from './ConsentCheckbox'
 import './Contact.css'
 
 type FormState = { name: string; email: string; serviceType: string; message: string }
@@ -26,6 +27,7 @@ export default function ContactForm({
 }: Props) {
   const empty: FormState = { name: '', email: '', serviceType: initialService, message: initialMessage }
   const [form, setForm] = useState<FormState>(empty)
+  const [consent, setConsent] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
   const id = (field: string) => `${idPrefix}-${field}`
 
@@ -37,9 +39,10 @@ export default function ContactForm({
     e.preventDefault()
     setStatus('submitting')
     try {
-      await sendContact(form)
+      await sendContact({ ...form, consent })
       setStatus('success')
       setForm({ name: '', email: '', serviceType: '', message: '' })
+      setConsent(false)
     } catch {
       setStatus('error')
     }
@@ -62,8 +65,8 @@ export default function ContactForm({
 
       <div className="form-group">
         <label htmlFor={id('service')}>{t('contact.service')}</label>
-        <select id={id('service')} value={form.serviceType} onChange={set('serviceType')} required>
-          <option value="" disabled>— Choisir —</option>
+        <select id={id('service')} value={form.serviceType} onChange={set('serviceType')}>
+          <option value="">Je ne sais pas encore</option>
           {SERVICE_CATEGORIES.map(category => (
             <optgroup key={category} label={category}>
               {services.filter(s => s.category === category).map(s => (
@@ -83,6 +86,8 @@ export default function ContactForm({
         <textarea id={id('message')} value={form.message} onChange={set('message')}
           placeholder="Votre activité, votre besoin, vos délais…" rows={initialMessage ? 9 : 5} required maxLength={5000} />
       </div>
+
+      <ConsentCheckbox id={id('consent')} checked={consent} onChange={setConsent} />
 
       <div className="form-footer">
         <button type="submit" className="btn-primary" disabled={status === 'submitting'}>

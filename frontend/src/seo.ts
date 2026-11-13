@@ -326,3 +326,14 @@ export function diagnosticSchema(description: string) {
     ],
   }
 }
+
+/** Page d'information (mentions légales, confidentialité) : page web et fil d'Ariane. */
+export function infoPageSchema(path: string, name: string, description: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'WebPage', url: absoluteUrl(path), name: `${name} — ${site.name}`, description, inLanguage: site.language },
+      breadcrumbSchema([['Accueil', '/'], [name, path]]),
+    ],
+  }
+}

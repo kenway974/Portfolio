@@ -26,6 +26,7 @@ test('une page secteur liste des problèmes, leur impact, et mène au contact pr
 
   await page.getByLabel('Votre nom').fill('Paul Durand')
   await page.getByLabel('Votre email').fill('paul@example.com')
+  await page.getByRole('checkbox', { name: /J'accepte/ }).check()
   await page.getByRole('button', { name: 'Envoyer' }).click()
   await expect(page.getByRole('alert')).toContainText('Message envoyé')
   expect(requests[0].message).toContain('Secteur : CVC & artisans du bâtiment')

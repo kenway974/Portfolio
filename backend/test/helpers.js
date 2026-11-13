@@ -16,6 +16,7 @@ export const validPayload = {
   email: 'marie@example.com',
   serviceType: 'creation-site-vitrine',
   message: 'Bonjour, je voudrais un site.',
+  consent: true,
 }
 
 export const post = (url, body) =>

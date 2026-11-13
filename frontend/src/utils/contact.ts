@@ -1,5 +1,5 @@
 /** Envoi d'une demande de contact à l'API (backend Express, route /api/contact). */
-export type ContactRequest = { name: string; email: string; serviceType: string; message: string }
+export type ContactRequest = { name: string; email: string; serviceType: string; message: string; consent: boolean }
 
 const BACKEND_URL = import.meta.env.VITE_API_URL ?? ''
 
