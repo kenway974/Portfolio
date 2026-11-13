@@ -9,6 +9,12 @@
       ]
     },
     {
+      "source": "/cv-kenny-pignolet.pdf",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex" }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Frame-Options",        "value": "DENY" },

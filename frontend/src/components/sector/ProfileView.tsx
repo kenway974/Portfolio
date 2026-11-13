@@ -18,6 +18,7 @@ export default function ProfileView({ page }: { page: ProfilePage }) {
         <p className="sp-who">{page.who}</p>
         <Hook text={page.h1} />
         <p className="pf-intro">{page.intro}</p>
+        <p className="pf-avail">{page.availability}</p>
       </header>
       <section>
         <h2 className="sp-h2">Ce que je sais faire</h2>
@@ -47,6 +48,17 @@ export default function ProfileView({ page }: { page: ProfilePage }) {
         </div>
       </section>
       <section>
+        <h2 className="sp-h2">Mon parcours</h2>
+        <dl className="pf-path">
+          {page.path.map(step => (
+            <div key={step.title}>
+              <dt>{step.period}</dt>
+              <dd>{step.title}{step.detail && <small>{step.detail}</small>}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+      <section>
         <h2 className="sp-h2">Les outils que j’utilise</h2>
         <p className="sp-sub">Une compétence n’est pas un outil : ceux-là sont ceux que je connais aujourd’hui, pas une limite.</p>
         <dl className="pf-stack">
@@ -59,7 +71,8 @@ export default function ProfileView({ page }: { page: ProfilePage }) {
       </section>
       <section className="sp-cta">
         <div className="pf-links">
-          {page.links.map(l => <a key={l.url} className="btn" href={l.url} target="_blank" rel="noopener noreferrer">{l.label}</a>)}
+          <a className="btn" href={page.cv.url} target="_blank" rel="noopener noreferrer">{page.cv.label}</a>
+          {page.links.map(l => <a key={l.url} className="btn btn-ghost" href={l.url} target="_blank" rel="noopener noreferrer">{l.label}</a>)}
           <Link className="btn btn-ghost" to="/contact">Me contacter</Link>
         </div>
         <p>{page.cvNote}</p>
