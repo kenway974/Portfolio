@@ -29,6 +29,8 @@ export type Realisation = {
   features: { title: string; desc: string }[]
   /** Ce que le projet démontre / résultat. */
   outcome: string[]
+  /** Retour du client, à n'ajouter qu'avec son accord (projets de type « Client » uniquement). */
+  testimonial?: { quote: string; author: string; role: string }
   /** Slugs des services liés. */
   services: string[]
 }

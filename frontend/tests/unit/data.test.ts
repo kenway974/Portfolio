@@ -49,8 +49,23 @@ describe('réalisations', () => {
     realisations.forEach(r => r.services.forEach(s => expect(serviceSlugs.has(s), `${r.slug} → ${s}`).toBe(true)))
   })
 
+  it('n\'affichent un retour client que sur un vrai client, avec auteur et rôle', () => {
+    for (const r of realisations.filter(r => r.testimonial)) {
+      expect(r.kind, r.slug).toBe('Client')
+      expect(r.testimonial!.quote.length, r.slug).toBeGreaterThan(20)
+      expect(r.testimonial!.author, r.slug).not.toBe('')
+      expect(r.testimonial!.role, r.slug).not.toBe('')
+    }
+  })
+
   it('ont des liens externes en https', () => {
     realisations.forEach(r => [r.url, r.repo].filter(Boolean).forEach(u => expect(u).toMatch(/^https:\/\//)))
+  })
+})
+
+describe('prix affichés', () => {
+  it('commencent par un montant en euros', () => {
+    for (const s of services.filter(s => s.price)) expect(s.price!.from, s.slug).toMatch(/^\d[\d\s]*\s?€/)
   })
 })
 
