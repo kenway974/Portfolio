@@ -39,13 +39,19 @@ export interface ProfilePage {
   /** Titre H1. */
   h1: string
   intro: string
+  /** Disponibilité et type de contrat recherché, affiché sous l'introduction. */
+  availability: string
   /** Compétences concrètes : ce que je sais faire, pas avec quel outil. */
   skills: { label: string; items: { g: string; h: string }[] }[]
   /** Outils connus, en complément des compétences. */
   stack: { label: string; items: string[] }[]
   projects: { name: string; proves: string; desc: string; stack: string; url: string; link: string }[]
+  /** Parcours daté, du plus récent au plus ancien. */
+  path: { period: string; title: string; detail: string }[]
   work: string[]
   links: { label: string; url: string }[]
+  /** CV à télécharger : fichier du dossier public/. */
+  cv: { url: string; label: string }
   cvNote: string
 }
 

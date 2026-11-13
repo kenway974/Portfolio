@@ -217,6 +217,39 @@
   margin-top: 0.25rem;
 }
 
+/* Prix « dès » sur les cartes de services */
+.content-card__price {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+.content-card__price strong {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Retour du client (page réalisation) */
+.testimonial {
+  max-width: 780px;
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 2px solid var(--accent);
+  background: var(--surface);
+}
+.testimonial blockquote {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+.testimonial figcaption {
+  margin-top: 0.85rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.testimonial figcaption strong { color: var(--text-primary); font-weight: 600; }
+
 /* Badge du type de projet */
 .kind-badge {
   font-size: 0.68rem;

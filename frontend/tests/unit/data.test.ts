@@ -1,5 +1,5 @@
 /* Cohérence des contenus : chaque renvoi pointe vers quelque chose qui existe. */
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import services, { SERVICE_CATEGORIES } from '../../src/data/services'
@@ -50,8 +50,23 @@ describe('réalisations', () => {
     realisations.forEach(r => r.services.forEach(s => expect(serviceSlugs.has(s), `${r.slug} → ${s}`).toBe(true)))
   })
 
+  it('n\'affichent un retour client que sur un vrai client, avec auteur et rôle', () => {
+    for (const r of realisations.filter(r => r.testimonial)) {
+      expect(r.kind, r.slug).toBe('Client')
+      expect(r.testimonial!.quote.length, r.slug).toBeGreaterThan(20)
+      expect(r.testimonial!.author, r.slug).not.toBe('')
+      expect(r.testimonial!.role, r.slug).not.toBe('')
+    }
+  })
+
   it('ont des liens externes en https', () => {
     realisations.forEach(r => [r.url, r.repo].filter(Boolean).forEach(u => expect(u).toMatch(/^https:\/\//)))
+  })
+})
+
+describe('prix affichés', () => {
+  it('commencent par un montant en euros', () => {
+    for (const s of services.filter(s => s.price)) expect(s.price!.from, s.slug).toMatch(/^\d[\d\s]*\s?€/)
   })
 })
 
@@ -101,6 +116,14 @@ describe('secteurs', () => {
       const text = JSON.stringify([rest, problems.map(p => [p.title, p.impact])])
       expect(text, s.slug).not.toMatch(/\d\s?€|\bpacks?\b|à partir de|mes offres/i)
     }
+  })
+
+  it('le profil recruteur indique sa disponibilité, son parcours et un CV qui existe', () => {
+    const profile = SECTORS.find(s => s.slug === 'recruteur')!.page
+    if (profile.kind !== 'profile') throw new Error('le recruteur doit avoir une page de profil')
+    expect(profile.availability.length).toBeGreaterThan(10)
+    expect(profile.path.length).toBeGreaterThanOrEqual(3)
+    expect(existsSync(join(__dirname, '../../public', profile.cv.url)), profile.cv.url).toBe(true)
   })
 
   it('ont une adresse sous /secteurs, sauf le profil recruteur', () => {

@@ -457,6 +457,7 @@ const RECRUTEUR: Sector = {
     "who": "Recruteurs, CTO, responsables techniques",
     "h1": "Développeur fullstack junior : je m’adapte à la stack, pas l’inverse.",
     "intro": "Je conçois, je code et je mets en ligne des applications web complètes : interface, API, base de données, déploiement. Voici l’essentiel en deux minutes.",
+    "availability": "Disponible immédiatement · Île-de-France · CDI, CDD ou mission freelance",
     "skills": [
       {
         "label": "Interface",
@@ -518,6 +519,27 @@ const RECRUTEUR: Sector = {
             "h": "Formé sur Symfony, j’ai livré en Next.js, Node.js et Python : je m’adapte au projet, pas l’inverse."
           }
         ]
+      },
+      {
+        "label": "Qualité et suivi",
+        "items": [
+          {
+            "g": "Tester avant de livrer",
+            "h": "Tests automatisés sur mes projets (Vitest, PHPUnit, pytest), et sur ce site : tests de bout en bout avec Playwright et contrôle d’accessibilité automatique."
+          },
+          {
+            "g": "Une vérification à chaque envoi de code",
+            "h": "GitHub Actions : lint, typage, tests et audit des dépendances avant chaque mise en ligne."
+          },
+          {
+            "g": "Suivre un client après la livraison",
+            "h": "Respusse : première version livrée, puis des mois d’ajustements du back-office et de fiabilisation du site avec l’association."
+          },
+          {
+            "g": "Expliquer clairement à quelqu’un qui n’est pas technique",
+            "h": "Trois ans de vente et de service client : comprendre un besoin, le reformuler, rester clair."
+          }
+        ]
       }
     ],
     "stack": [
@@ -551,7 +573,18 @@ const RECRUTEUR: Sector = {
         "label": "Mise en ligne",
         "items": [
           "Vercel",
-          "Railway"
+          "Railway",
+          "Docker",
+          "GitHub Actions"
+        ]
+      },
+      {
+        "label": "Tests",
+        "items": [
+          "Vitest",
+          "PHPUnit",
+          "pytest",
+          "Playwright"
         ]
       },
       {
@@ -595,6 +628,33 @@ const RECRUTEUR: Sector = {
         "link": "Voir le code"
       }
     ],
+    "path": [
+      {
+        "period": "2026",
+        "title": "Développeur web freelance, micro-entrepreneur",
+        "detail": "Respusse livré en production pour une association, puis sites et outils sur mesure pour des TPE."
+      },
+      {
+        "period": "Fév. 2024 – oct. 2026",
+        "title": "Livreur à Paris (CDI)",
+        "detail": "Autonomie, fiabilité et organisation, en parallèle de ma formation."
+      },
+      {
+        "period": "2024 – février 2027",
+        "title": "Titre professionnel Développeur Web et Web Mobile (Studi)",
+        "detail": "Formation à distance. Examen prévu en février 2027."
+      },
+      {
+        "period": "2020 – 2023",
+        "title": "Vente et service client",
+        "detail": "Vendeur, conseiller et inventoriste."
+      },
+      {
+        "period": "La Réunion",
+        "title": "Baccalauréat scientifique, mention assez bien",
+        "detail": ""
+      }
+    ],
     "work": [
       "Je livre jusqu’à la mise en ligne, pas seulement du code sur mon poste.",
       "Code lisible, documenté, relu : quelqu’un d’autre peut le reprendre.",
@@ -610,7 +670,11 @@ const RECRUTEUR: Sector = {
         "url": "https://www.linkedin.com/in/kenny-pignolet"
       }
     ],
-    "cvNote": "CV sur demande, envoyé sous 24 heures."
+    "cv": {
+      "url": "/cv-kenny-pignolet.pdf",
+      "label": "Télécharger mon CV (PDF)"
+    },
+    "cvNote": "Mon CV tient sur une page. Pour échanger, écrivez-moi depuis la page contact."
   }
 }
 
