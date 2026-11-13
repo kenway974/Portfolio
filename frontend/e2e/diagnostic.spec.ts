@@ -22,6 +22,7 @@ test('le diagnostic recommande des services puis envoie la demande avec le résu
 
   await page.getByLabel('Votre nom').fill('Jean Martin')
   await page.getByLabel('Votre email').fill('jean@example.com')
+  await page.getByRole('checkbox', { name: /J'accepte/ }).check()
   await page.getByRole('button', { name: 'Envoyer ma demande' }).click()
   await expect(page.getByRole('status')).toContainText('Demande envoyée')
 

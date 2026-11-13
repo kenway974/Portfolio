@@ -82,3 +82,27 @@ test('au-delà de la limite d\'envois, les demandes sont bloquées', async () =>
     await limited.close()
   }
 })
+
+test('sans consentement coché, la demande est refusée', async () => {
+  for (const consent of [undefined, false, 'true']) {
+    const res = await post(server.url, { ...validPayload, consent })
+    assert.equal(res.status, 400, String(consent))
+    assert.deepEqual((await res.json()).fields.map(f => f.field), ['consent'])
+  }
+})
+
+test('le type de projet est facultatif', async () => {
+  const sansType = { ...validPayload }
+  delete sansType.serviceType
+  const res = await post(server.url, sansType)
+  assert.equal(res.status, 200)
+})
+
+test('les journaux ne contiennent ni le nom ni l\'e-mail', async t => {
+  const lines = []
+  t.mock.method(console, 'info', (...args) => lines.push(JSON.stringify(args)))
+  await post(server.url, validPayload)
+  const logged = lines.join('\n')
+  assert.ok(!logged.includes(validPayload.name))
+  assert.ok(!logged.includes(validPayload.email))
+})

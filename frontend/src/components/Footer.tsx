@@ -47,6 +47,8 @@ export default function Footer() {
             <li><Link to="/blog">Blog</Link></li>
             <li><Link to="/diagnostic">Diagnostic gratuit</Link></li>
             <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/mentions-legales">Mentions légales</Link></li>
+            <li><Link to="/confidentialite">Confidentialité</Link></li>
           </ul>
         </div>
         <div className="footer__col">

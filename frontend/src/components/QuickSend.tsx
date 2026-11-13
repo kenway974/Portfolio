@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { t } from '../i18n'
 import { sendContact } from '../utils/contact'
+import ConsentCheckbox from './ConsentCheckbox'
 import './Contact.css'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
@@ -20,13 +21,14 @@ export default function QuickSend({ serviceType, buildMessage }: Props) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [note, setNote] = useState('')
+  const [consent, setConsent] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()
     setStatus('submitting')
     try {
-      await sendContact({ name, email, serviceType, message: buildMessage(note) })
+      await sendContact({ name, email, serviceType, message: buildMessage(note), consent })
       setStatus('success')
     } catch {
       setStatus('error')
@@ -67,6 +69,8 @@ export default function QuickSend({ serviceType, buildMessage }: Props) {
           {status === 'submitting' ? t('contact.submitting') : 'Envoyer ma demande'}
         </button>
       </div>
+
+      <ConsentCheckbox id="quick-consent" checked={consent} onChange={setConsent} />
 
       <details className="quick-send__note">
         <summary>Ajouter un mot sur votre projet (facultatif)</summary>

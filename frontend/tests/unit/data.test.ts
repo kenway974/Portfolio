@@ -6,6 +6,7 @@ import services, { SERVICE_CATEGORIES } from '../../src/data/services'
 import realisations from '../../src/data/realisations'
 import { SECTORS, SRC, sectorPath } from '../../src/data/secteurs'
 import blog from '../../src/data/blog.json'
+import site from '../../site.config.json'
 
 const serviceSlugs = new Set(services.map(s => s.slug))
 const realisationSlugs = new Set(realisations.map(r => r.slug))
@@ -127,5 +128,13 @@ describe('formulaire de contact', () => {
     for (const slug of [...serviceSlugs, 'renfort-equipe', 'other']) {
       expect(accepted.has(slug), slug).toBe(true)
     }
+  })
+})
+
+describe('informations légales', () => {
+  // Garde-fou : les mentions légales sont obligatoires, le site ne doit pas partir sans.
+  it('le SIRET et l\'adresse de l\'éditeur sont renseignés', () => {
+    expect(site.legal.siret.replace(/\s/g, '')).toMatch(/^\d{14}$/)
+    expect(site.legal.address.trim().length).toBeGreaterThan(10)
   })
 })

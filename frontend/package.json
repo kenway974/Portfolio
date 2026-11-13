@@ -15,6 +15,8 @@
     "check": "npm run lint && npm run typecheck && npm test && npm run build && npm run test:seo && npm run test:e2e"
   },
   "dependencies": {
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/familjen-grotesk": "^5.3.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-helmet-async": "^3.0.0",
@@ -24,8 +26,6 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
-    "@fontsource/dm-sans": "^5.3.0",
-    "@fontsource/familjen-grotesk": "^5.3.0",
     "@playwright/test": "^1.64.1",
     "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^22.20.5",

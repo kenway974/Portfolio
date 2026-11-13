@@ -3,6 +3,7 @@ import { expect, mockContactApi, test } from './fixtures'
 test('le formulaire n\'est pas envoyé tant que les champs obligatoires sont vides', async ({ page }) => {
   const requests = await mockContactApi(page)
   await page.goto('/contact')
+  await page.getByRole('checkbox', { name: /J'accepte/ }).check()
   await page.getByRole('button', { name: 'Envoyer' }).click()
   await expect(page.getByLabel('Votre nom')).toBeFocused()
   expect(requests).toHaveLength(0)

@@ -24,23 +24,27 @@ const SERVICE_TYPES = [
 
 contactRouter.post('/', async (req, res) => {
   // ── Validate ────────────────────────────────────────────
-  const { name, email, serviceType, message } = req.body
+  const { name, email, serviceType, message, consent } = req.body
 
   const errors = validate({
     name: { value: name, required: true, maxLength: 120, singleLine: true },
     email: { value: email, required: true, isEmail: true, maxLength: 200, singleLine: true },
-    serviceType: { value: serviceType, required: true, oneOf: SERVICE_TYPES },
+    serviceType: { value: serviceType, oneOf: SERVICE_TYPES },
     message: { value: message, required: true, maxLength: 5000 },
   })
+
+  // Consentement explicite (RGPD) : la case doit avoir été cochée.
+  if (consent !== true) errors.push({ field: 'consent', code: 'required' })
 
   if (errors.length > 0) {
     return res.status(400).json({ error: 'validation_failed', fields: errors })
   }
 
-  const payload = { name, email, serviceType, message }
+  const payload = { name, email, serviceType: serviceType || 'non précisé', message }
 
   // ── Log (always) ────────────────────────────────────────
-  console.info('[contact]', new Date().toISOString(), { name, email, serviceType })
+  // Minimisation (RGPD) : ni nom ni e-mail dans les journaux du serveur.
+  console.info('[contact]', new Date().toISOString(), { serviceType: payload.serviceType })
 
   // ── Email (optional) ────────────────────────────────────
   if (process.env.SMTP_HOST) {

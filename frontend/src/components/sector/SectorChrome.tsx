@@ -37,6 +37,8 @@ export function SectorFooter() {
         <Link to="/realisations">Réalisations</Link>
         <Link to="/diagnostic">Diagnostic</Link>
         <Link to="/contact">Contact</Link>
+        <Link to="/mentions-legales">Mentions légales</Link>
+        <Link to="/confidentialite">Confidentialité</Link>
         {site.sameAs.map(url => (
           <a key={url} href={url} target="_blank" rel="noopener noreferrer">
             {url.includes('linkedin') ? 'LinkedIn' : 'GitHub'}

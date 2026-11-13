@@ -9,5 +9,26 @@
   "sameAs": [
     "https://github.com/kenway974",
     "https://www.linkedin.com/in/kenny-pignolet"
-  ]
+  ],
+  "contact": {
+    "email": "kpignolet18@gmail.com",
+    "phone": "06 81 78 73 25",
+    "phoneHref": "+33681787325"
+  },
+  "legal": {
+    "owner": "Kenny Pignolet",
+    "status": "Entrepreneur individuel (micro-entrepreneur)",
+    "siret": "",
+    "address": "",
+    "host": {
+      "name": "Vercel Inc.",
+      "address": "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
+      "url": "https://vercel.com"
+    },
+    "apiHost": {
+      "name": "Railway Corporation",
+      "url": "https://railway.com"
+    },
+    "updated": "13 novembre 2026"
+  }
 }

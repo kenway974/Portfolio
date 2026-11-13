@@ -10,6 +10,8 @@ import RealisationPage from './pages/RealisationPage'
 import SectorPage from './pages/SectorPage'
 import ContactPage from './pages/ContactPage'
 import Diagnostic from './pages/Diagnostic'
+import MentionsLegales from './pages/MentionsLegales'
+import Confidentialite from './pages/Confidentialite'
 import NotFound from './pages/NotFound'
 import blogData from './data/blog.json'
 import { SECTORS, sectorPath } from './data/secteurs'
@@ -38,6 +40,8 @@ const routes: RouteRecord[] = [
       },
       { path: 'contact', element: <ContactPage /> },
       { path: 'diagnostic', element: <Diagnostic /> },
+      { path: 'mentions-legales', element: <MentionsLegales /> },
+      { path: 'confidentialite', element: <Confidentialite /> },
       { path: 'blog', element: <BlogList /> },
       {
         path: 'blog/:slug',

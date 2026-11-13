@@ -1,6 +1,6 @@
 import { test as base, expect, type Page } from '@playwright/test'
 
-type ContactRequest = { name: string; email: string; serviceType: string; message: string }
+type ContactRequest = { name: string; email: string; serviceType: string; message: string; consent: boolean }
 
 /** Intercepte l'API de contact (aucun envoi réel) et garde les demandes reçues. */
 export async function mockContactApi(page: Page, status = 200) {
