@@ -43,7 +43,7 @@
 .vx .hello { position: absolute; left: 0; right: 0; top: 9%; text-align: center; padding-inline: 28px; pointer-events: none; }
 .vx .hello .who { font-size: 0.8rem; color: var(--text-2); }
 .vx .hello .q { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.05; margin-top: 10px; text-shadow: 0 2px 16px rgba(0,0,0,.7); }
-.vx .w-item { position: absolute; left: 0; top: 0; background: rgba(6,5,7,.62); border: 1px solid transparent; cursor: pointer; font-family: var(--font-display); font-weight: 700; white-space: nowrap; font-size: clamp(.78rem, 1.7vw, .98rem); padding: 7px 13px; border-radius: 999px; will-change: transform, opacity; transition: color .35s, background .35s, border-color .35s, box-shadow .35s; }
+.vx .w-item { visibility: hidden; position: absolute; left: 0; top: 0; background: rgba(6,5,7,.62); border: 1px solid transparent; cursor: pointer; font-family: var(--font-display); font-weight: 700; white-space: nowrap; font-size: clamp(.78rem, 1.7vw, .98rem); padding: 7px 13px; border-radius: 999px; will-change: transform, opacity; transition: color .35s, background .35s, border-color .35s, box-shadow .35s; }
 .vx .w-item:hover { border-color: var(--border-accent); }
 .vx .w-item.is-active { color: var(--black); background: var(--accent-bright); box-shadow: 0 0 0 6px rgba(245,200,66,.12), 0 0 30px rgba(245,200,66,.35); }
 .vx .w-bottom { position: absolute; left: 0; right: 0; bottom: 4%; display: grid; justify-items: center; gap: 10px; padding-inline: 28px; text-align: center; }
@@ -193,15 +193,15 @@
 @keyframes introFlare { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.2); } 55% { opacity: 1; transform: translate(-50%, -50%) scale(2.2); } 100% { transform: translate(-50%, -50%) scale(1); } }
 @keyframes introUp { from { opacity: 0; transform: translateY(14px); } }
 .vx .stage.intro-play .mountain { animation: introRise 1.2s var(--ease) backwards; }
-.vx .stage.intro-play .crater { animation: introFlare 1.1s var(--ease) .45s backwards; }
-.vx .stage.intro-play .beam-wrap { animation: fadein 1.4s ease .8s backwards; }
+.vx .stage.intro-play .crater { animation: introFlare .9s var(--ease) .2s backwards; }
+.vx .stage.intro-play .beam-wrap { animation: fadein 1.1s ease .4s backwards; }
 .vx .stage.intro-play .hello > * { animation: introUp .8s var(--ease) backwards; }
-.vx .stage.intro-play .hello .who { animation-delay: .25s; }
-.vx .stage.intro-play .hello .q { animation-delay: .4s; }
+.vx .stage.intro-play .hello .who { animation-delay: .1s; }
+.vx .stage.intro-play .hello .q { animation-delay: .2s; }
 .vx .stage.intro-play .w-bottom > * { animation: introUp .7s var(--ease) backwards; }
-.vx .stage.intro-play .w-bottom > :nth-child(1) { animation-delay: 1.5s; }
-.vx .stage.intro-play .w-bottom > :nth-child(2) { animation-delay: 1.6s; }
-.vx .stage.intro-play .w-bottom > :nth-child(3) { animation-delay: 1.7s; }
+.vx .stage.intro-play .w-bottom > :nth-child(1) { animation-delay: .7s; }
+.vx .stage.intro-play .w-bottom > :nth-child(2) { animation-delay: .8s; }
+.vx .stage.intro-play .w-bottom > :nth-child(3) { animation-delay: .9s; }
 /* Le cratère respire doucement */
 @keyframes breathe { from { opacity: .75; } to { opacity: 1; } }
 .vx .crater { animation: breathe 3.2s ease-in-out infinite alternate; }
