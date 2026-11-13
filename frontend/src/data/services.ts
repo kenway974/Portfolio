@@ -125,6 +125,7 @@ const services: Service[] = [
     h1: 'Création de landing page qui convertit',
     lead: 'Une page unique, construite autour d\'une seule offre et d\'une seule action : remplir un formulaire, réserver un appel, acheter. Idéale pour vos campagnes publicitaires, un lancement ou une offre précise.',
     summary: 'Une page dédiée à une offre et à une action, pensée pour transformer vos visiteurs en prospects.',
+    price: { from: '200 €', detail: 'Une page unique construite autour d’une offre et d’une action, livrée en moins de 2 semaines.' },
     includes: [
       { title: 'Structure orientée conversion', desc: 'Promesse, bénéfices, preuves, objections, appel à l\'action : chaque bloc a un rôle précis.' },
       { title: 'Rédaction persuasive', desc: 'Des textes écrits pour votre cible, avec ses mots, ses problèmes et ses objections.' },
@@ -184,6 +185,7 @@ const services: Service[] = [
     h1: 'Création de site e-commerce',
     lead: 'Vendez en ligne avec une boutique rapide, sécurisée et simple à gérer au quotidien. Shopify, WooCommerce ou développement sur mesure : je choisis avec vous la solution adaptée à votre catalogue et à votre budget.',
     summary: 'Une boutique en ligne rapide et sécurisée, simple à gérer, pensée pour vendre.',
+    price: { from: '900 €', detail: 'Une boutique en ligne avec catalogue et paiement sécurisé. Le prix varie selon le nombre de produits et les options.' },
     includes: [
       { title: 'Catalogue produits', desc: 'Fiches produits, variantes (tailles, couleurs), catégories, filtres et recherche.' },
       { title: 'Paiement sécurisé', desc: 'Carte bancaire, Apple Pay, Google Pay, paiement en plusieurs fois, via Stripe ou la solution de votre plateforme.' },
@@ -242,6 +244,7 @@ const services: Service[] = [
     h1: 'Développeur WordPress freelance',
     lead: 'Un site WordPress propre, rapide et sécurisé, que vous pouvez modifier vous-même sans risquer de tout casser. Création, refonte, optimisation ou reprise d\'un site existant.',
     summary: 'Un WordPress propre, rapide et sécurisé que vous gérez vous-même en toute autonomie.',
+    price: { from: '300 €', detail: 'Un site WordPress que vous pouvez modifier vous-même. Les extensions et fonctions sur mesure sont chiffrées à part.' },
     includes: [
       { title: 'Création de site', desc: 'Un site WordPress complet, avec un thème léger personnalisé plutôt qu\'un thème surchargé.' },
       { title: 'Thème et blocs sur mesure', desc: 'Des blocs Gutenberg adaptés à vos contenus, pour modifier vos pages sans toucher au code.' },
@@ -295,6 +298,7 @@ const services: Service[] = [
     h1: 'Création de blog professionnel',
     lead: 'Un blog d\'entreprise bien construit attire chaque mois des visiteurs depuis Google, montre votre expertise et nourrit vos prospects. Je crée la plateforme et la structure qui rendent vos articles visibles.',
     summary: 'Un blog d\'entreprise structuré pour le référencement, simple à alimenter au quotidien.',
+    price: { from: '200 €', detail: 'Un blog rapide, bien référencé et simple à alimenter. La rédaction des articles est en option.' },
     includes: [
       { title: 'Plateforme de publication', desc: 'Une interface simple pour écrire, illustrer et publier vos articles, sur WordPress ou sur mesure.' },
       { title: 'Architecture SEO', desc: 'Catégories, URLs, maillage interne et pages thématiques pensés pour le référencement.' },
@@ -344,6 +348,7 @@ const services: Service[] = [
     h1: 'Refonte et migration de site internet',
     lead: 'Votre site est daté, lent ou impossible à faire évoluer ? Je le refonds ou le migre vers une technologie adaptée, en conservant votre référencement, vos contenus et vos données.',
     summary: 'Moderniser ou changer de technologie sans perdre votre référencement ni vos données.',
+    price: { from: '300 €', detail: 'Reprise de votre site actuel, sans perdre votre référencement. Le prix varie selon la taille du site.' },
     includes: [
       { title: 'Audit de l\'existant', desc: 'Pages qui génèrent du trafic, mots-clés, liens entrants, contenus à garder ou à fusionner.' },
       { title: 'Nouvelle structure', desc: 'Une arborescence repensée autour de vos services et des recherches de vos clients.' },
@@ -458,6 +463,7 @@ const services: Service[] = [
     h1: 'Développement d\'application mobile',
     lead: 'Une application sur le téléphone de vos clients ou de vos équipes, installable, rapide et utilisable sur le terrain. Je vous aide à choisir entre une application web installable (PWA) et une application native, puis je la développe.',
     summary: 'Une application installable sur iOS et Android, pour vos clients ou vos équipes sur le terrain.',
+    price: { from: '1 500 €', detail: 'Une application mobile simple pour iPhone et Android. Les applications plus complètes sont chiffrées sur devis.' },
     includes: [
       { title: 'Application installable (PWA)', desc: 'Une icône sur l\'écran d\'accueil, sans passer par les stores, et une seule version pour tous les téléphones.' },
       { title: 'Application React Native', desc: 'Une vraie application iOS et Android publiée sur l\'App Store et Google Play, quand c\'est nécessaire.' },
@@ -504,6 +510,7 @@ const services: Service[] = [
     h1: 'Développement d\'API et gestion des données',
     lead: 'Vos outils ne se parlent pas, vos données sont éparpillées dans des fichiers Excel ou bloquées dans un vieux logiciel ? Je crée les API, les connexions et les bases de données qui font circuler l\'information automatiquement.',
     summary: 'Connecter vos outils entre eux, structurer vos données et les faire circuler automatiquement.',
+    price: { from: '500 €', detail: 'Une interface qui relie vos outils ou expose vos données. Le prix varie selon le nombre d’outils à connecter.' },
     includes: [
       { title: 'Développement d\'API', desc: 'API REST documentées (OpenAPI), sécurisées et testées, pour vos applications ou vos partenaires.' },
       { title: 'Intégration d\'API', desc: 'Connexion de votre site ou de vos outils à un CRM, un ERP, Stripe, Google, Notion, HubSpot, etc.' },
@@ -563,6 +570,7 @@ const services: Service[] = [
     h1: 'Automatisation des tâches et intégration d\'IA',
     lead: 'Relances, saisies, devis, comptes rendus, tri des emails : une partie de votre semaine part dans des tâches répétitives. Je les automatise, avec ou sans intelligence artificielle, pour que votre équipe se concentre sur ce qui rapporte.',
     summary: 'Automatiser les tâches répétitives et intégrer l\'IA là où elle fait vraiment gagner du temps.',
+    price: { from: '200 €', detail: 'Une tâche répétitive automatisée, avec ou sans IA. Les parcours plus complets sont chiffrés sur devis.' },
     includes: [
       { title: 'Automatisation de tâches', desc: 'Scripts et workflows (Make, Zapier, n8n ou code sur mesure) qui enchaînent les actions à votre place.' },
       { title: 'Intégration d\'IA', desc: 'Résumés, classement, extraction d\'informations, rédaction assistée, intégrés à vos outils.' },
@@ -616,6 +624,7 @@ const services: Service[] = [
     h1: 'Audit SEO technique et optimisation des performances',
     lead: 'Votre site n\'apparaît pas sur Google ou met trop de temps à charger ? J\'analyse ce qui bloque, je vous explique les priorités en langage clair, et je corrige.',
     summary: 'Être trouvé sur Google et charger vite : audit, plan d\'action et corrections.',
+    price: { from: '150 €', detail: 'Un état des lieux de votre référencement et de la vitesse de votre site, avec les corrections à faire en priorité.' },
     includes: [
       { title: 'Audit technique', desc: 'Indexation, erreurs, pages en double, balises, structure des URLs, maillage interne.' },
       { title: 'Vitesse et Core Web Vitals', desc: 'Mesure et amélioration des indicateurs de performance utilisés par Google.' },
@@ -667,6 +676,7 @@ const services: Service[] = [
     h1: 'Sécurité, RGPD et accessibilité de votre site',
     lead: 'Un site piraté, une amende RGPD ou un site inutilisable pour une partie de vos clients coûtent cher. J\'audite votre site ou votre application, je corrige les failles et je le mets en conformité.',
     summary: 'Audit de sécurité et de code, conformité RGPD et accessibilité numérique.',
+    price: { from: '150 €', detail: 'Une vérification de la sécurité et de la conformité RGPD de votre site, avec la liste des corrections.' },
     includes: [
       { title: 'Audit de sécurité', desc: 'Recherche des failles courantes : injections, accès non protégés, mots de passe, en-têtes, dépendances vulnérables.' },
       { title: 'Audit de code', desc: 'Qualité, maintenabilité, dette technique et risques, avec des recommandations priorisées.' },
@@ -719,6 +729,7 @@ const services: Service[] = [
     h1: 'Maintenance de site web et reprise de projet',
     lead: 'Un site ou une application, ça vit : mises à jour, bugs, évolutions, hébergement. Je m\'en occupe pour vous, et je reprends aussi les projets laissés en plan par un ancien prestataire.',
     summary: 'Mises à jour, sauvegardes, bugs, hébergement, et reprise des projets laissés en plan.',
+    price: { from: '15 € / mois', detail: 'Hébergement, mises à jour et sauvegardes de votre site. Le prix varie selon la taille du site.' },
     includes: [
       { title: 'Mises à jour et sauvegardes', desc: 'Logiciels, dépendances et extensions à jour, sauvegardes automatiques testées.' },
       { title: 'Correction de bugs', desc: 'Diagnostic et correction des erreurs, y compris sur du code que je n\'ai pas écrit.' },
