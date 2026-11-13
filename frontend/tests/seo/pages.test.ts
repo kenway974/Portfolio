@@ -84,7 +84,8 @@ describe.each(indexable.map(p => [p.path, p] as const))('%s', (_path, page) => {
   it('n\'a que des liens internes qui mènent à une page existante', () => {
     for (const a of page.root.querySelectorAll('a[href^="/"]')) {
       const [path, hash] = a.getAttribute('href')!.split('#')
-      expect(paths.has(path || '/'), a.getAttribute('href')).toBe(true)
+      // Une page du site, ou un fichier du dossier public (ex. le CV en PDF).
+      expect(paths.has(path || '/') || existsSync(join(DIST, path)), a.getAttribute('href')).toBe(true)
       if (hash) {
         const target = pages.find(p => p.path === (path || '/'))!
         expect(target.root.querySelector(`[id="${hash}"]`), a.getAttribute('href')).not.toBeNull()

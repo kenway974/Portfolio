@@ -93,6 +93,12 @@
 
 /* Page recruteur */
 .vx .pf-intro { margin: 18px 0 0; color: var(--text-2); max-width: 60ch; }
+.vx .pf-avail { margin: 16px 0 0; display: inline-block; border: 1px solid var(--border-accent); border-radius: 999px; padding: 6px 16px; color: var(--accent-bright); font-size: 0.95rem; }
+.vx .pf-path { margin: 24px 0 0; display: grid; gap: 16px; }
+.vx .pf-path div { display: grid; grid-template-columns: 11rem 1fr; gap: 4px 16px; align-items: baseline; }
+.vx .pf-path dt { color: var(--accent-bright); font-weight: 600; font-size: 0.95rem; }
+.vx .pf-path dd { margin: 0; color: var(--text); }
+.vx .pf-path dd small { display: block; margin-top: 2px; color: var(--text-2); font-size: 0.9rem; }
 .vx .pf-stack { margin: 24px 0 0; display: grid; gap: 14px; }
 .vx .pf-stack div { display: grid; grid-template-columns: 9rem 1fr; gap: 6px 16px; align-items: baseline; }
 .vx .pf-stack dt { color: var(--text-2); font-size: 0.95rem; }
@@ -117,6 +123,7 @@
 @media (max-width: 700px) {
   .vx .pf-projects { grid-template-columns: 1fr; }
   .vx .pf-stack div { grid-template-columns: 1fr; }
+  .vx .pf-path div { grid-template-columns: 1fr; }
 }
 /* ---------- Animations ----------
      Toutes répondent à une action : défilement, clic, changement de choix. */
