@@ -86,6 +86,16 @@ export default function RealisationPage() {
           </section>
         </div>
 
+        {item.testimonial && (
+          <section className="content-block" aria-labelledby="avis-client">
+            <h2 id="avis-client" className="content-block__title">Le retour du client</h2>
+            <figure className="testimonial">
+              <blockquote><p>{item.testimonial.quote}</p></blockquote>
+              <figcaption><strong>{item.testimonial.author}</strong>, {item.testimonial.role}</figcaption>
+            </figure>
+          </section>
+        )}
+
         {services.length > 0 && (
           <section className="content-block" aria-labelledby="services-lies">
             <h2 id="services-lies" className="content-block__title">Services mobilisés</h2>
