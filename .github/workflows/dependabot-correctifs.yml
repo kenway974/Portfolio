@@ -1,0 +1,30 @@
+# Fusion automatique des correctifs de sécurité attendus.
+# Seules les PR Dependabot qui ne touchent QUE les paquets listés ci-dessous, en version
+# corrective ou mineure, sont fusionnées sans intervention. La fusion n'a lieu qu'une fois
+# les checks obligatoires de main (règle « CI Main ») passés.
+#
+# picomatch : faille ReDoS GHSA-fc5q-39xc-vjpf, sans correctif au 18/11/2026 (dépendance de vite).
+# Retirer un paquet de la liste une fois son correctif fusionné.
+name: Dependabot · correctifs de sécurité
+
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fusion-auto:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+      - name: Activer la fusion automatique
+        if: >-
+          steps.meta.outputs.dependency-names == 'picomatch' &&
+          steps.meta.outputs.update-type != 'version-update:semver-major'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
