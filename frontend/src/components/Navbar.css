@@ -58,7 +58,7 @@
   font-size: 0.875rem;
   font-weight: 400;
   color: var(--text-secondary);
-  border-radius: 2px;
+  border-radius: var(--r-pill);
   transition: color 0.2s, background 0.2s;
   background: none;
   border: none;
@@ -84,20 +84,24 @@
 }
 
 .btn-primary.navbar__cta {
-  background: #1a4fa0;
+  background: var(--accent-blue);
+  color: var(--on-blue);
 }
 
 .btn-primary.navbar__cta:hover {
-  background: #2260c4;
+  background: var(--accent-blue-hover);
   box-shadow: 0 6px 24px rgba(26, 79, 160, 0.35);
 }
 
 /* Hamburger */
+/* 44×44 : 22px de traits + 11px de marge de chaque côté */
 .hamburger {
   display: none;
   flex-direction: column;
+  justify-content: center;
   gap: 5px;
-  padding: 4px;
+  padding: 11px;
+  margin-right: -11px;
 }
 
 .hamburger span {

@@ -18,8 +18,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--border);
-  border-radius: 2px;
+  border: 1px solid var(--line-control);
+  border-radius: var(--r-pill);
   color: var(--text-secondary);
   font-size: 1.1rem;
   transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s var(--ease);
@@ -59,7 +59,7 @@
   scroll-snap-align: start;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: var(--r-md);
   padding: 2rem 1.75rem;
   display: flex;
   flex-direction: column;
@@ -81,7 +81,7 @@
 .project-card__glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(108, 92, 231, 0.12) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(232, 156, 26, 0.10) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.4s;
   pointer-events: none;
@@ -90,6 +90,7 @@
 .project-card__logo {
   font-size: 2rem;
   line-height: 1;
+  color: var(--accent-bright);
 }
 
 .project-card__body {
@@ -114,11 +115,11 @@
 }
 
 .project-card__wip {
-  font-size: 0.65rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #e89c1a;
+  color: var(--accent);
   border: 1px solid rgba(232, 156, 26, 0.35);
   border-radius: 999px;
   padding: 0.15rem 0.55rem;

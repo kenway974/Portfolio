@@ -1,3 +1,5 @@
+import type { ProjectIconName } from '../components/ProjectIcon'
+
 // Réalisations : une page par projet.
 // `kind` dit honnêtement de quoi il s'agit (client, outil interne, projet certifiant, démo).
 
@@ -18,7 +20,7 @@ export type Realisation = {
   /** Résumé pour les cartes. */
   summary: string
   lead: string
-  logo: string
+  logo: ProjectIconName
   url?: string
   urlLabel?: string
   repo?: string
@@ -46,7 +48,7 @@ const realisations: Realisation[] = [
     h1: 'Respusse : site et back-office pour une association de dons France–Congo',
     summary: 'Site vitrine, actualités et back-office sur mesure pour une association qui achemine du matériel d\'Île-de-France vers des écoles au Congo.',
     lead: 'Respusse collecte du matériel informatique, électrique et scolaire auprès d\'entreprises d\'Île-de-France et l\'achemine vers des écoles, mairies et associations au Congo, notamment à Kinshasa. J\'ai conçu et développé leur site et leur outil de gestion.',
-    logo: '🤝',
+    logo: 'heart',
     url: 'https://www.respusse.com',
     urlLabel: 'respusse.com',
     tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Resend', 'Vercel'],
@@ -81,7 +83,7 @@ const realisations: Realisation[] = [
     h1: 'Prospection v2 : mon application de prospection, de la recherche à l\'appel',
     summary: 'Mon poste de travail quotidien de prospection : trouver des entreprises, les qualifier, préparer l\'appel, noter le résultat et planifier la relance.',
     lead: 'Pour prospecter les petites entreprises par téléphone et sur le terrain, j\'ai développé mon propre outil. Je m\'en sers tous les jours : il trouve les prospects, les qualifie, prépare chaque appel, garde le suivi et envoie les contacts intéressés dans mon CRM.',
-    logo: '📇',
+    logo: 'contacts',
     tech: ['Python', 'FastAPI', 'PostgreSQL', 'PWA', 'Google Places API', 'Notion API', 'Railway', 'Sentry'],
     context: [
       'Une première version, développée avec Streamlit, trouvait des prospects mais laissait plusieurs manques : impossible de classer un prospect juste après l\'appel (la session se perdait en passant sur le téléphone), aucune vision de la santé de l\'entreprise, aucun angle d\'appel, et pas de très petits commerces locaux pour le terrain.',
@@ -118,7 +120,7 @@ const realisations: Realisation[] = [
     h1: 'Vite & Gourmand : commande en ligne pour un traiteur',
     summary: 'Commande en ligne pour un traiteur : menus, allergènes, zones de livraison, espace client, espace employé et administration.',
     lead: 'Vite & Gourmand est le site de commande en ligne d\'un traiteur bordelais, réalisé pour l\'évaluation (ECF) du titre professionnel Développeur Web et Web Mobile, que j\'ai validée. Un projet complet, du cahier des charges à la mise en production.',
-    logo: '🍽️',
+    logo: 'cutlery',
     repo: 'https://github.com/kenway974/Vite-Gourmand',
     tech: ['Symfony', 'PHP 8.4', 'Doctrine', 'Twig', 'MySQL', 'MongoDB', 'Docker', 'GitHub Actions'],
     context: [
@@ -154,7 +156,7 @@ const realisations: Realisation[] = [
     h1: 'MonChauff : site et tunnel d\'acquisition pour chauffagiste',
     summary: 'Un modèle clé en main pour artisans du chauffage : estimation de devis en ligne avec PDF, prise de rendez-vous, avis, blog et back-office.',
     lead: 'MonChauff est un modèle complet de site et de tunnel d\'acquisition pour les entreprises de chauffage, ventilation et climatisation. Il est entièrement configurable, pour être adapté rapidement à chaque artisan.',
-    logo: '🔥',
+    logo: 'flame',
     url: 'https://jp-topaz.vercel.app',
     urlLabel: 'Voir la démo',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Prisma', 'PostgreSQL', 'PDFKit', 'Nodemailer'],
@@ -187,7 +189,7 @@ const realisations: Realisation[] = [
     h1: 'Maison Camélia : site d\'institut de beauté avec réservation en ligne',
     summary: 'Un modèle de site pour instituts de beauté : 25 prestations, réservation en ligne avec acompte et galerie avant/après.',
     lead: 'Maison Camélia est un institut fictif qui sert de démonstration à un modèle de site pour instituts de beauté et ongleries. Le modèle est conçu pour être présenté aux salons, puis adapté à chacun.',
-    logo: '🌸',
+    logo: 'flower',
     url: 'https://instituts-zeta.vercel.app',
     urlLabel: 'Voir la démo',
     tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Motion'],
@@ -219,7 +221,7 @@ const realisations: Realisation[] = [
     h1: 'Little Stars : site vitrine pour assistante maternelle',
     summary: 'Un site vitrine chaleureux pour une assistante maternelle : accueil, informations pratiques et demande de visite.',
     lead: 'Little Stars est un site vitrine de démonstration pour une assistante maternelle agréée. Il présente l\'accueil des enfants de 3 mois à 6 ans et invite les parents à demander une visite.',
-    logo: '⭐',
+    logo: 'star',
     url: 'https://daycare-three.vercel.app',
     urlLabel: 'Voir la démo',
     tech: ['React', 'Vite', 'TypeScript'],

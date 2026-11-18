@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { t } from '../i18n'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { Link } from 'react-router-dom'
+import ProjectIcon from './ProjectIcon'
 import realisations from '../data/realisations'
 import './Projects.css'
 
@@ -48,7 +49,7 @@ export default function Projects() {
               className={`project-card reveal reveal-delay-${Math.min(i + 1, 4)}`}
             >
               <div className="project-card__logo" aria-hidden="true">
-                {project.logo}
+                <ProjectIcon name={project.logo} />
               </div>
               <div className="project-card__body">
                 <div className="project-card__title-row">

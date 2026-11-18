@@ -1,22 +1,12 @@
 /* Écran d'accueil volcan et pages secteur.
    Tout est rangé sous .vx pour ne pas toucher au reste du portfolio. */
 .vx {
-    
-    --black: #060507;
-    --surface: #0d0b0f;
-    --line: rgba(245, 239, 232, 0.10);
-    --border: rgba(240, 165, 0, 0.10);
-    --border-accent: rgba(240, 165, 0, 0.34);
-    --accent: #e89c1a;
-    --accent-bright: #f5c842;
-    --lava: #e63946;
-    --lava-soft: #f08a93;
-    --text: #f5efe8;
-    --text-2: rgba(245, 239, 232, 0.78);
-    --text-3: rgba(245, 239, 232, 0.62);
-    --font-display: 'Familjen Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Alias vers les variables globales (globals.css) : une seule source pour les couleurs et polices. */
+    --line: var(--line-deco);
+    --lava-soft: var(--lava-text);
+    --text: var(--text-primary);
+    --text-2: var(--text-secondary);
+    --text-3: var(--text-muted);
     --reveal: cubic-bezier(0.65, 0, 0.35, 1);
     color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.6;
 }
