@@ -7,6 +7,7 @@ import CtaBand from '../components/CtaBand'
 import { getService } from '../data/services'
 import { getRealisation } from '../data/realisations'
 import { serviceSchema } from '../seo'
+import Icon from '../components/Icon'
 
 export default function ServicePage() {
   const { slug } = useParams<{ slug: string }>()
@@ -39,7 +40,7 @@ export default function ServicePage() {
             </p>
           )}
           <div className="content-header__actions">
-            <Link to="/contact" className="btn-primary">Demander un devis gratuit <span aria-hidden="true">→</span></Link>
+            <Link to="/contact" className="btn-primary">Demander un devis gratuit <Icon name="arrow-right" /></Link>
             {projects.length > 0 && <a href="#realisations" className="btn-ghost">Voir des exemples</a>}
           </div>
         </header>

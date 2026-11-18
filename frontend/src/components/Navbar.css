@@ -117,22 +117,30 @@
 .hamburger--open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-/* Mobile menu */
+/* Mobile menu : posé sous la barre, animé en transform/opacity (pas de recalcul de mise en page). */
 .mobile-menu {
   display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   flex-direction: column;
-  gap: 0;
-  padding: 0;
-  background: rgba(4, 4, 7, 0.97);
+  padding: 0.5rem 0 1rem;
+  background: var(--black);
   border-top: 1px solid var(--border);
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s var(--ease), padding 0.4s var(--ease);
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.5rem);
+  /* Sortie plus rapide que l'entrée ; visibility attend la fin du fondu pour masquer. */
+  transition: opacity var(--dur-fast) ease-in, transform var(--dur-fast) ease-in, visibility 0s linear var(--dur-fast);
 }
 
 .mobile-menu--open {
-  max-height: 500px;
-  padding: 0.5rem 0 1rem;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease), visibility 0s;
 }
 
 .mobile-menu button,

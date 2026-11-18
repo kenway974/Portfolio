@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import ProjectIcon from './ProjectIcon'
 import type { Realisation } from '../data/realisations'
+import Icon from './Icon'
 
 export default function RealisationCard({ item, className = '' }: { item: Realisation; className?: string }) {
   return (
@@ -15,7 +16,7 @@ export default function RealisationCard({ item, className = '' }: { item: Realis
       <div className="content-card__tags">
         {item.tech.slice(0, 4).map(t => <span key={t} className="tech-tag">{t}</span>)}
       </div>
-      <span className="content-card__more">Voir le projet →</span>
+      <span className="content-card__more">Voir le projet <Icon name="arrow-right" /></span>
     </Link>
   )
 }

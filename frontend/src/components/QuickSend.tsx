@@ -3,6 +3,7 @@ import { t } from '../i18n'
 import { sendContact } from '../utils/contact'
 import ConsentCheckbox from './ConsentCheckbox'
 import './Contact.css'
+import Icon from './Icon'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -38,7 +39,7 @@ export default function QuickSend({ serviceType, buildMessage }: Props) {
   if (status === 'success') {
     return (
       <div className="quick-send quick-send--done" role="status">
-        <p className="quick-send__title">✓ Demande envoyée</p>
+        <p className="quick-send__title"><Icon name="check" /> Demande envoyée</p>
         <p className="quick-send__text">
           Merci {name.split(' ')[0]} ! J’ai bien reçu votre diagnostic. Je vous réponds sous 48 h à <strong>{email}</strong>.
         </p>

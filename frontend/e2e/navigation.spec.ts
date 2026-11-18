@@ -8,7 +8,7 @@ test('l\'accueil présente le métier et mène aux pages principales', async ({ 
   await clickNav(page, 'Services')
   await expect(page).toHaveURL(/\/services$/)
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Services de développement web')
-  await expect(page.getByRole('link', { name: 'Services', exact: true }).first()).toHaveAttribute('aria-current', 'page')
+  await expect(page.getByRole('link', { name: 'Services', exact: true, includeHidden: true }).first()).toHaveAttribute('aria-current', 'page')
 
   await clickNav(page, 'Réalisations')
   await expect(page).toHaveURL(/\/realisations$/)
@@ -62,11 +62,26 @@ test('aucune page principale ne déborde horizontalement', async ({ page }) => {
 test('le menu mobile fermé n\'est pas atteignable au clavier', async ({ page, isMobile }) => {
   test.skip(!isMobile, 'menu mobile')
   await page.goto('/')
-  const menu = page.getByRole('navigation', { name: 'Navigation mobile' })
+  // Fermé, le menu est masqué (visibility: hidden) : on le vise par son id, plus par son rôle.
+  const menu = page.locator('#mobile-menu')
   await expect(menu).toHaveAttribute('inert', '')
+  await expect(menu).toBeHidden()
   await page.getByRole('button', { name: 'Ouvrir le menu' }).click()
   await expect(menu).not.toHaveAttribute('inert', '')
   await menu.getByRole('link', { name: 'Blog' }).click()
   await expect(page).toHaveURL(/\/blog$/)
-  await expect(page.getByRole('navigation', { name: 'Navigation mobile' })).toHaveAttribute('inert', '')
+  await expect(menu).toHaveAttribute('inert', '')
+  await expect(menu).toBeHidden()
+})
+
+test('Échap ferme le menu mobile et rend le focus au bouton', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'menu mobile')
+  await page.goto('/')
+  const menu = page.locator('#mobile-menu')
+  await page.getByRole('button', { name: 'Ouvrir le menu' }).click()
+  await expect(menu).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(menu).toHaveAttribute('inert', '')
+  await expect(menu).toBeHidden()
+  await expect(page.getByRole('button', { name: 'Ouvrir le menu' })).toBeFocused()
 })

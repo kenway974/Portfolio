@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import ProjectIcon from './ProjectIcon'
 import realisations from '../data/realisations'
 import './Projects.css'
+import Icon from './Icon'
 
 export default function Projects() {
   const sectionRef = useScrollReveal<HTMLElement>()
@@ -29,12 +30,12 @@ export default function Projects() {
               className="arrow-btn"
               onClick={() => scroll('left')}
               aria-label="Projets précédents"
-            >←</button>
+            ><Icon name="arrow-left" /></button>
             <button
               className="arrow-btn"
               onClick={() => scroll('right')}
               aria-label="Projets suivants"
-            >→</button>
+            ><Icon name="arrow-right" /></button>
           </div>
         </div>
       </div>
