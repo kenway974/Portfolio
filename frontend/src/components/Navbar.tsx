@@ -15,11 +15,24 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const mobileMenuRef = useRef<HTMLElement>(null)
+  const hamburgerRef = useRef<HTMLButtonElement>(null)
 
   // Menu mobile fermé : ses liens ne doivent pas être atteignables au clavier.
   // Posé par le DOM, car React 18 et React 19 ne typent pas l'attribut inert de la même façon.
   useEffect(() => {
     mobileMenuRef.current?.toggleAttribute('inert', !menuOpen)
+  }, [menuOpen])
+
+  // Échap ferme le menu et rend le focus au bouton qui l'a ouvert.
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      setMenuOpen(false)
+      hamburgerRef.current?.focus()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
   }, [menuOpen])
 
   useEffect(() => {
@@ -46,9 +59,11 @@ export default function Navbar() {
           </Link>
 
           <button
+            ref={hamburgerRef}
+            type="button"
             className={`hamburger${menuOpen ? ' hamburger--open' : ''}`}
             onClick={() => setMenuOpen(v => !v)}
-            aria-label="Ouvrir le menu"
+            aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
           >

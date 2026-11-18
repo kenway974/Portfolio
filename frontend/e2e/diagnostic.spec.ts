@@ -37,7 +37,7 @@ test('le diagnostic recommande des services puis envoie la demande avec le résu
 test('on peut revenir en arrière et modifier ses réponses', async ({ page }) => {
   await page.goto('/diagnostic')
   await page.getByText('Avocat ou cabinet').click()
-  await page.getByRole('button', { name: '← Retour' }).click()
+  await page.getByRole('button', { name: 'Retour' }).click()
   await expect(page.getByRole('heading', { name: 'Vous êtes…' })).toBeVisible()
   await expect(page.getByRole('radio', { name: /Avocat ou cabinet/ })).toBeChecked()
 })

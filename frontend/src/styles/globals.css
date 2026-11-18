@@ -91,6 +91,13 @@ img, svg {
   max-width: 100%;
 }
 
+/* Icônes d'interface (Icon.tsx), alignées sur le texte */
+svg.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: -0.125em;
+}
+
 ul, ol {
   list-style: none;
 }

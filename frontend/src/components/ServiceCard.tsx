@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { Service } from '../data/services'
+import Icon from './Icon'
 
 export default function ServiceCard({ service, className = '' }: { service: Service; className?: string }) {
   return (
@@ -8,7 +9,7 @@ export default function ServiceCard({ service, className = '' }: { service: Serv
       <h3 className="content-card__title">{service.name}</h3>
       <p className="content-card__text">{service.summary}</p>
       {service.price && <p className="content-card__price">Dès <strong>{service.price.from}</strong></p>}
-      <span className="content-card__more">En savoir plus →</span>
+      <span className="content-card__more">En savoir plus <Icon name="arrow-right" /></span>
     </Link>
   )
 }

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { t } from '../i18n'
 import './Hero.css'
+import Icon from './Icon'
 
 // Positions pseudo-aléatoires mais déterministes : identiques au build (SSG)
 // et dans le navigateur, pour éviter les erreurs d'hydratation.
@@ -9,7 +10,8 @@ function seeded(i: number, salt: number) {
   return x - Math.floor(x)
 }
 
-const STARS = Array.from({ length: 60 }, (_, i) => ({
+// 24 étoiles : assez pour l'ambiance, sans 60 animations permanentes sur mobile.
+const STARS = Array.from({ length: 24 }, (_, i) => ({
   left: `${seeded(i, 1) * 100}%`,
   top: `${seeded(i, 2) * 100}%`,
   animationDelay: `${seeded(i, 3) * 4}s`,
@@ -27,16 +29,17 @@ export default function Hero() {
       </div>
 
       <div className="container hero__content">
-        <h1 className="hero__badge reveal">{t('hero.badge')}</h1>
-        <p className="hero__headline reveal reveal-delay-1">
-          {t('hero.headline')}
-        </p>
+        {/* Un seul titre : le métier (mots-clés SEO) en surtitre, l'accroche en grand. */}
+        <h1 className="hero__title">
+          <span className="hero__badge reveal">{t('hero.badge')}</span>
+          <span className="hero__headline reveal reveal-delay-1">{t('hero.headline')}</span>
+        </h1>
         <p className="hero__sub reveal reveal-delay-2">
           {t('hero.sub')}
         </p>
         <div className="hero__actions reveal reveal-delay-3">
           <Link to="/diagnostic" className="btn-primary">
-            {t('hero.cta')} <span aria-hidden="true">→</span>
+            {t('hero.cta')} <Icon name="arrow-right" />
           </Link>
           <Link to="/contact" className="btn-ghost">
             {t('hero.ctaSecondary')}

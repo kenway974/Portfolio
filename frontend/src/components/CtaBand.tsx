@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Icon from './Icon'
 
 type Props = { title?: string; text?: string }
 
@@ -13,7 +14,7 @@ export default function CtaBand({
       <p className="cta-band__text">{text}</p>
       <div className="cta-band__actions">
         <Link to="/contact" className="btn-primary">
-          Parlons de votre projet <span aria-hidden="true">→</span>
+          Parlons de votre projet <Icon name="arrow-right" />
         </Link>
         <Link to="/diagnostic" className="btn-ghost">Identifier mes besoins</Link>
       </div>

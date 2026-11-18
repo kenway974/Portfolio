@@ -4,6 +4,7 @@ import services, { SERVICE_CATEGORIES } from '../data/services'
 import { sendContact } from '../utils/contact'
 import ConsentCheckbox from './ConsentCheckbox'
 import './Contact.css'
+import Icon from './Icon'
 
 type FormState = { name: string; email: string; serviceType: string; message: string }
 type Status = 'idle' | 'submitting' | 'success' | 'error'
@@ -94,7 +95,7 @@ export default function ContactForm({
           {status === 'submitting' ? t('contact.submitting') : submitLabel}
         </button>
         {status === 'success' && (
-          <p className="form-message form-message--success" role="alert">✓ {t('contact.success')}</p>
+          <p className="form-message form-message--success" role="alert"><Icon name="check" /> {t('contact.success')}</p>
         )}
         {status === 'error' && (
           <p className="form-message form-message--error" role="alert">✗ {t('contact.error')}</p>

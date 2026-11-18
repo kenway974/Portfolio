@@ -8,6 +8,7 @@ import { QUESTIONS, rankServices, sectorFor, answerLabels, diagnosticMessage, ty
 import { getService } from '../data/services'
 import { SECTORS, sectorPath } from '../data/secteurs'
 import { diagnosticSchema } from '../seo'
+import Icon from '../components/Icon'
 
 const DESCRIPTION = 'Site, application, automatisation, SEO : répondez à 5 questions et découvrez les services adaptés à votre activité, puis demandez un devis gratuit.'
 
@@ -110,7 +111,7 @@ export default function Diagnostic() {
 
               <div className="wizard__nav">
                 {step > 0 && (
-                  <button type="button" className="btn-ghost" onClick={() => goTo(step - 1)}>← Retour</button>
+                  <button type="button" className="btn-ghost" onClick={() => goTo(step - 1)}><Icon name="arrow-left" /> Retour</button>
                 )}
                 {(question.multiple || selected.length > 0) && (
                   <button
@@ -119,7 +120,7 @@ export default function Diagnostic() {
                     disabled={selected.length === 0}
                     onClick={() => goTo(step + 1)}
                   >
-                    {step === QUESTIONS.length - 1 ? 'Voir mon résultat' : 'Continuer'} <span aria-hidden="true">→</span>
+                    {step === QUESTIONS.length - 1 ? 'Voir mon résultat' : 'Continuer'} <Icon name="arrow-right" />
                   </button>
                 )}
               </div>
@@ -169,7 +170,7 @@ function Result({ answers, headingRef, onRestart }: {
           <span className="wizard__sector-text">
             {sector.pitch} Découvrez les problèmes les plus fréquents dans votre secteur, et ce qu’ils vous coûtent.
           </span>
-          <span className="content-card__more">Voir votre secteur →</span>
+          <span className="content-card__more">Voir votre secteur <Icon name="arrow-right" /></span>
         </Link>
       )}
 

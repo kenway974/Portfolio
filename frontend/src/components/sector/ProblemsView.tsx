@@ -9,6 +9,7 @@ import { contactMessage, sourceOrder } from './text'
 import { countUp, reduced, useReveal } from './motion'
 import { sectorPath } from '../../data/secteurs'
 import type { ProblemsPage, Sector } from '../../data/secteurs.types'
+import Icon from '../Icon'
 
 /* Les pourcentages des constats sont mis en valeur (ils défilent à l'apparition). */
 const withStats = (text: string): ReactNode =>
@@ -69,7 +70,7 @@ export default function ProblemsView({ sector, page }: { sector: Sector; page: P
                   <Link className="btn btn-sm" to="/contact" state={{ service: p.service, message: contactMessage(sector.name, p.title) }}>
                     C’est mon cas
                   </Link>
-                  <Link className="pb-link" to={`/services/${p.service}`}>Comment on règle ça →</Link>
+                  <Link className="pb-link" to={`/services/${p.service}`}>Comment on règle ça <Icon name="arrow-right" /></Link>
                 </div>
               </article>
             </li>

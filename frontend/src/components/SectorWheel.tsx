@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { SECTORS, sectorPath } from '../data/secteurs'
 import '../styles/volcan.css'
+import Icon from './Icon'
 
 /* Bloc « Vous êtes… ? » de l'accueil : le visiteur choisit son secteur sur une roue qui tourne
    autour du volcan, puis la page du secteur s'ouvre depuis le cratère. */
@@ -271,9 +272,9 @@ export default function SectorWheel() {
             <div className="w-bottom">
               <p className="w-pitch" aria-live="polite">{SECTORS[0].pitch}</p>
               <div className="w-controls">
-                <button className="round" type="button" data-dir="-1" aria-label="Secteur précédent">‹</button>
+                <button className="round" type="button" data-dir="-1" aria-label="Secteur précédent"><Icon name="chevron-left" /></button>
                 <button className="btn" type="button" data-enter="">Entrer</button>
-                <button className="round" type="button" data-dir="1" aria-label="Secteur suivant">›</button>
+                <button className="round" type="button" data-dir="1" aria-label="Secteur suivant"><Icon name="chevron-right" /></button>
               </div>
               <Link className="w-alt" to="/diagnostic">Vous ne savez pas ? Faites le diagnostic</Link>
               <nav className="sr-only" aria-label="Accès direct aux secteurs">
