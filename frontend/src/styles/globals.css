@@ -13,9 +13,19 @@
   /* Accent — or volcanique / soleil (flag yellow-gold) */
   --accent: #e89c1a;
   --accent-bright: #f5c842;
-  --accent-blue: #1a4fa0;       /* bleu drapeau */
+  --accent-blue: #1a4fa0;       /* bleu drapeau : action secondaire, toujours en texte blanc */
+  --accent-blue-hover: #2260c4;
+  --on-blue: #ffffff;           /* 7,9:1 ; le noir ne fait que 2,6:1 */
   --accent-glow: rgba(232, 156, 26, 0.25);
   --accent-glow-bright: rgba(245, 200, 66, 0.1);
+
+  /* Rouge lave : réservé à l'état « problème » (pages secteur) */
+  --lava: #e63946;
+  --lava-text: #f08a93;         /* 8,5:1 sur le noir */
+
+  /* Lignes. Un contour de champ ou de bouton-icône doit atteindre 3:1 (WCAG 1.4.11). */
+  --line-deco: rgba(245, 239, 232, 0.10);
+  --line-control: rgba(245, 239, 232, 0.38);
 
   /* Text */
   --text-primary: #f5efe8;
@@ -27,14 +37,24 @@
 
   /* Typography */
   --font-display: 'Familjen Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Plus petite taille de texte du site (12px) */
+  --fs-xs: 0.75rem;
 
   /* Spacing */
   --section-padding: clamp(5rem, 10vw, 9rem);
 
+  /* Rayons : champs et tags, cartes, boutons et pastilles */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-pill: 999px;
+
   /* Transitions */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
 }
 
 /* ============================================================
@@ -88,23 +108,25 @@ input, textarea, select {
   color: inherit;
 }
 
-/* ============================================================
-   SCROLL REVEAL ANIMATION (CORRIGÉ)
-   ============================================================ */
-
-/* 1. L'état caché par défaut */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
-  will-change: opacity, transform; /* Améliore la fluidité */
+/* Focus clavier visible partout, sur tous les fonds sombres */
+:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
 }
 
-/* 2. L'affichage quand le PARENT ou l'élément lui-même est révélé */
-.revealed .reveal, 
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
+/* ============================================================
+   SCROLL REVEAL ANIMATION
+   ============================================================ */
+
+/* Visible par défaut : sans JavaScript, le HTML pré-rendu reste lisible.
+   useScrollReveal ne masque que les sections encore hors de l'écran (.reveal-ready). */
+.reveal {
+  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+}
+
+.reveal-ready:not(.revealed) .reveal {
+  opacity: 0;
+  transform: translateY(28px);
 }
 
 /* Delays */
@@ -131,7 +153,7 @@ body::before {
    ============================================================ */
 .label {
   font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -174,7 +196,7 @@ section {
   font-weight: 600;
   font-size: 0.9rem;
   letter-spacing: 0.03em;
-  border-radius: 2px;
+  border-radius: var(--r-pill);
   transition: background 0.25s var(--ease), transform 0.2s var(--ease), box-shadow 0.25s;
   position: relative;
   overflow: hidden;
@@ -214,7 +236,7 @@ section {
   font-weight: 600;
   font-size: 0.85rem;
   letter-spacing: 0.03em;
-  border-radius: 2px;
+  border-radius: var(--r-pill);
   transition: border-color 0.25s, background 0.25s, color 0.25s, transform 0.2s var(--ease);
 }
 
@@ -227,13 +249,13 @@ section {
 
 /* Étiquette de technologie (cartes et pages réalisations) */
 .tech-tag {
-  font-size: 0.7rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   letter-spacing: 0.04em;
-  padding: 0.2rem 0.55rem;
-  background: rgba(108, 92, 231, 0.1);
-  border: 1px solid rgba(108, 92, 231, 0.2);
-  border-radius: 100px;
+  padding: 0.2rem 0.6rem;
+  background: var(--accent-glow-bright);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--r-pill);
   color: var(--accent-bright);
 }
 
@@ -260,7 +282,7 @@ section {
   background: var(--accent);
   color: #060507;
   font-weight: 600;
-  border-radius: 4px;
+  border-radius: var(--r-sm);
   transform: translateY(-150%);
   transition: transform 0.2s;
 }
@@ -276,7 +298,7 @@ section {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveal {
+  .reveal-ready:not(.revealed) .reveal {
     opacity: 1;
     transform: none;
   }

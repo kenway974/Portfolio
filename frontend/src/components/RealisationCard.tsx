@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
+import ProjectIcon from './ProjectIcon'
 import type { Realisation } from '../data/realisations'
 
 export default function RealisationCard({ item, className = '' }: { item: Realisation; className?: string }) {
   return (
     <Link to={`/realisations/${item.slug}`} className={`content-card ${className}`}>
       <div className="content-card__head">
-        <span className="content-card__logo" aria-hidden="true">{item.logo}</span>
+        <span className="content-card__logo" aria-hidden="true"><ProjectIcon name={item.logo} /></span>
         <span className={`kind-badge kind-badge--${item.kind === 'Démo' ? 'demo' : 'real'}`}>{item.kind}</span>
       </div>
       <h3 className="content-card__title">{item.name}</h3>

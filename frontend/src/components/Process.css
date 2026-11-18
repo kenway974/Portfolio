@@ -17,7 +17,7 @@
   left: calc(16.67% + 2rem);
   right: calc(16.67% + 2rem);
   height: 1px;
-  background: linear-gradient(90deg, var(--border) 0%, rgba(108, 92, 231, 0.4) 50%, var(--border) 100%);
+  background: linear-gradient(90deg, var(--border) 0%, var(--border-accent) 50%, var(--border) 100%);
 }
 
 .process__step {
@@ -27,12 +27,12 @@
 .process__num {
   display: inline-block;
   font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--accent-bright);
-  background: rgba(108, 92, 231, 0.1);
-  border: 1px solid rgba(108, 92, 231, 0.25);
+  background: var(--accent-glow-bright);
+  border: 1px solid var(--border-accent);
   border-radius: 999px;
   padding: 0.2rem 0.75rem;
   margin-bottom: 1.25rem;

@@ -1,6 +1,7 @@
 # Dependabot propose les mises à jour de dépendances sous forme de pull requests.
-# Rien n'est fusionné automatiquement : chaque PR passe par la CI (installation,
-# lint, types, tests, build, tests SEO et de bout en bout) avant toute fusion.
+# Chaque PR passe par la CI (installation, lint, types, tests, build, tests SEO et
+# de bout en bout) avant toute fusion. Rien n'est fusionné automatiquement, sauf les
+# correctifs de sécurité attendus listés dans workflows/dependabot-correctifs.yml.
 #
 # Règles de compatibilité :
 # - les mises à jour mineures et correctives sont groupées : elles ne doivent rien casser ;

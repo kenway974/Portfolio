@@ -6,7 +6,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 60% 50%, rgba(108, 92, 231, 0.06) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 60% 50%, rgba(232, 156, 26, 0.05) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -64,10 +64,10 @@
 .form-group select,
 .form-group textarea {
   background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 2px;
+  border: 1px solid var(--line-control);
+  border-radius: var(--r-sm);
   padding: 0.85rem 1rem;
-  font-size: 0.9rem;
+  font-size: 1rem; /* sous 16px, iOS zoome à la saisie */
   color: var(--text-primary);
   transition: border-color 0.25s, box-shadow 0.25s;
   outline: none;
@@ -88,7 +88,7 @@
 
 .form-group select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236c5ce7' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f5c842' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.5rem;

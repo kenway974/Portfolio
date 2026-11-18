@@ -1,35 +1,39 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * Hook qui ajoute la classe 'revealed' quand l'élément entre dans le viewport.
+ * Fait apparaître les enfants .reveal d'une section quand elle entre dans le viewport.
+ * Le HTML pré-rendu reste visible : la section n'est masquée (.reveal-ready) que si elle
+ * est encore hors de l'écran au chargement, ce qui évite tout clignotement à l'hydratation.
  */
-export function useScrollReveal<T extends HTMLElement>(threshold = 0.1) { // Seuil réduit à 0.1 pour plus de souplesse
+export function useScrollReveal<T extends HTMLElement>(threshold = 0.1) {
   const ref = useRef<T>(null)
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
 
+    const { top, bottom } = el.getBoundingClientRect()
+    if (top < window.innerHeight && bottom > 0) {
+      el.classList.add('revealed')
+      return
+    }
+
+    el.classList.add('reveal-ready')
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           el.classList.add('revealed')
-          // Une fois révélé, on arrête d'observer pour la performance
-          observer.unobserve(el)
+          observer.disconnect()
         }
       },
-      { 
+      {
         threshold,
-        rootMargin: '0px 0px -50px 0px' // Déclenche un peu avant que l'élément soit totalement visible
+        rootMargin: '0px 0px -50px 0px', // Déclenche un peu avant que l'élément soit totalement visible
       }
     )
 
     observer.observe(el)
-
-    return () => {
-      if (el) observer.unobserve(el)
-      observer.disconnect()
-    }
+    return () => observer.disconnect()
   }, [threshold])
 
   return ref
